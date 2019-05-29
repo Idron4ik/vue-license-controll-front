@@ -1,16 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { profile } from './store/user/profile'
+import { products } from './store/products/products'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-
+  modules: {
+    profile,
+    products
   },
-  mutations: {
-
-  },
-  actions: {
-
-  }
 })
+
