@@ -7,12 +7,10 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
-
+import './style/main.scss'
 export default {
   name: "App",
   components: {
-    HelloWorld
   },
   data() {
     return {

@@ -4,11 +4,11 @@
       <v-list class="pa-0">
         <v-list-tile avatar>
           <v-list-tile-avatar>
-            <img src="https://randomuser.me/api/portraits/men/85.jpg">
+            <v-icon large color="#1976d2">lock</v-icon>
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <v-list-tile-title>John Leider</v-list-tile-title>
+            <v-list-tile-title>License Control</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
 export default {
   name: "Navigation",
 
@@ -40,6 +41,7 @@ export default {
       default: false,
     }
   },
+
   data() {
     return {
       drawer: true,
@@ -49,7 +51,17 @@ export default {
       ],
       right: null
     };
+  },
+
+  computed:{
+     ...mapState({
+      user: state => state.profile,
+    }),
+    ...mapGetters('profile',{
+      userName: 'userFullName'
+    }),
   }
+  
 };
 </script>
 

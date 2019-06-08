@@ -1,19 +1,20 @@
 <template>
-  <v-layout>
+  <v-layout fill-height="100%">
     <v-flex>
       <Navigation :miniNavigation="showMiniNavigation"/>
     </v-flex>
-
     <v-flex xs12>
       <v-layout wrap>
         <v-flex xs12>
           <Toolbar @toogle-navigation="toogleNavigation"/>
+          <v-toolbar dark color="#2f343c">
+            <v-toolbar-title class="white--text">{{pageTitle}}</v-toolbar-title>
+          </v-toolbar>
         </v-flex>
-        
+
         <v-flex xs12>
           <div class="profile">
-            <Table v-if="true"/>
-            <Inbox v-else/>
+            <router-view></router-view>
           </div>
         </v-flex>
       </v-layout>
@@ -35,17 +36,31 @@ export default {
 
   data() {
     return {
-      showMiniNavigation: true,
+      showMiniNavigation: true
     };
   },
 
+  computed:{
+    pageTitle(){
+      switch(this.$route.name){
+        case 'ProfileIndex': return 'Dashboard';
+        case 'settings': return 'Account Settings';
+        case 'admin': return 'Admin Dashboard';
+        default: return 'Dashboard'
+      }
+    }
+  },
+
   methods: {
-   toogleNavigation(){
-     this.showMiniNavigation = !this.showMiniNavigation; 
-   },
+    toogleNavigation() {
+      this.showMiniNavigation = !this.showMiniNavigation;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+  .profile{
+    padding: 30px;
+  }
 </style>

@@ -1,12 +1,11 @@
 <template>
   <div>
-    <v-toolbar flat color="white">
-      <v-toolbar-title>My CRUD</v-toolbar-title>
-      <v-divider class="mx-2" inset vertical></v-divider>
+    <v-toolbar flat dark>
+      <v-toolbar-title>Your products</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-dialog v-model="dialog" max-width="500px">
+      <v-dialog v-model="dialog" max-width="500px" dark>
         <template v-slot:activator="{ on }">
-          <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
+          <v-btn color="primary" dark class="mb-2" v-on="on">Add new Product</v-btn>
         </template>
         <v-card>
           <v-card-title>
@@ -36,7 +35,7 @@
     </v-toolbar>
 
 
-    <v-data-table :headers="productsHeaders" :items="productsBody" class="elevation-1" v-model="selected" select-all item-key="title">
+    <v-data-table dark :headers="productsHeaders" :items="productsBody" class="elevation-1" v-model="selected" select-all item-key="title">
       <template v-slot:items="props">
          <td>
         <v-checkbox
@@ -47,8 +46,16 @@
       </td>
         <td>{{ props.item.title }}</td>
         <td class="">{{ props.item.description }}</td>
-        <td class="justify-center layout px-0">
-          <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+        <td class="">  
+          <v-chip 
+            :color="props.item.status === 'pending' ? 'grey' : (props.item.status === 'approved') ? 'green' : 'red'" 
+            :text-color="props.item.status === 'pending' ? 'black' : 'white'"
+          > 
+            {{ props.item.status }}
+          </v-chip
+        ></td>
+        <td class="">
+          <!-- <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon> -->
           <v-icon small @click="deleteItem(props.item)">delete</v-icon>
         </td>
       </template>
@@ -77,6 +84,7 @@ export default {
       defaultItem: {
         title: "",
         description: '',
+        status: 'pending'
       }
     };
   },
@@ -87,8 +95,8 @@ export default {
       productsHeaders: state => state.products.productsHeaders
     }),
     formTitle() {
-      return this.editedIndex ? "New Item" : "Edit Item";
-    }
+      return this.editedIndex ? "Add new product" : "Edit new product";
+    },
   },
 
   watch: {
@@ -102,7 +110,6 @@ export default {
 
     editItem(item) {
       this.editedIndex = false;
-      console.log(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
