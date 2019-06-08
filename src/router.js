@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Settings from './views/profile/ProfileSettings';
-import RegisterForm from './views/RegisterForm';
-import ProfileIndex from './views/profile/ProfileIndex';
-import ProfileIndexAdmin from './views/profile/ProfileIndexAdmin';
+import Settings from './views/profile/childrens/Settings';
+import Dashboard from './views/profile/childrens/Dashboard';
+import RegistrationsForm from './views/RegistrationsForm';
+import Admin from './views/admin/Admin';
 import Profile from './views/profile/Profile';
 
 Vue.use(Router)
@@ -14,8 +14,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'registerForm',
-      component: RegisterForm
+      name: 'registrationsForm',
+      component: RegistrationsForm
     },
     {
       path: '/profile/:id',
@@ -28,8 +28,8 @@ const router = new Router({
       children: [
         {
           path: '',
-          name: 'profileIndex',
-          component: ProfileIndex
+          name: 'dashboard',
+          component: Dashboard
         },
         {
           path: 'settings',
@@ -41,7 +41,7 @@ const router = new Router({
     {
       path: '/admin',
       name: 'admin',
-      component: ProfileIndexAdmin,
+      component: Admin,
       meta: { 
           requiresAuth: true,
       }

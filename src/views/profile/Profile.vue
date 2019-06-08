@@ -43,7 +43,7 @@ export default {
   computed:{
     pageTitle(){
       switch(this.$route.name){
-        case 'ProfileIndex': return 'Dashboard';
+        case 'dashboard': return 'Dashboard';
         case 'settings': return 'Account Settings';
         case 'admin': return 'Admin Dashboard';
         default: return 'Dashboard'
