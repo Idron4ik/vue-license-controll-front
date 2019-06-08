@@ -67,7 +67,7 @@ import { emailValidate, textValidate } from "@/utils/validate";
             ...signForm
           })
           .then((response) => {
-            this.$store.dispatch('setProfileData', response.data);
+            this.$store.dispatch('profile/setProfileData', response.data);
           })
           .catch(function(error) {
             console.log(error);

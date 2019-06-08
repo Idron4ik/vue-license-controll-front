@@ -5,7 +5,7 @@ export const profile = {
     lastName:'Dove',
     email:'johnDove@gmail.com',
     password:'cheburek123',
-    token: '',
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjZmI3ZWI3NjEyZTc0M2FmNDM0ZWM3NyIsImlhdCI6MTU1OTk4NjM2MiwiZXhwIjoxNTYwMDcyNzYyfQ.omzqOFcT_uPzEwMdKOf9liuWygE0FeIkxA_eBfjUtVk',
     phone: '00000000000',
     id: '',
     address: 'Mars',
@@ -35,7 +35,8 @@ export const profile = {
         _id = "",
         phone = "",
         address = "",
-        avatar= ""
+        avatar= "",
+        isAdmin
       } = user;
       state.token = token;
       state.firstName = firstName;
@@ -46,6 +47,8 @@ export const profile = {
       state.phone = phone;
       state.address = address;
       state.avatar = avatar;
+      localStorage.setItem('jwt', token)
+      localStorage.setItem('user', JSON.stringify(user));
 
     }
    },

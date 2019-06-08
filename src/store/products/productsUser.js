@@ -1,4 +1,8 @@
+import axios from "axios";
+
 export const products = {
+  namespaced: true,
+
   state: {
     productsHeaders: [
       {
@@ -71,24 +75,83 @@ export const products = {
    getters:{},
 
    mutations: {
+    setProducts(state, products){
+      state.productsBody = products;
+    },
+
     addProductsItem(state, product){
       state.productsBody.unshift(product);
     },
+    
     deleteProductsItem(state, index){
       state.productsBody.splice(index, 1);
     },
    },
 
    actions:{
-    addProductsItem({state, commit}, product){
-      let productData = {
-        ...product,
-        status: 'pending'
-      }
-      commit('addProductsItem', productData);
+
+    setProducts({commit}, products){
+      let productsResult = products.map((item)=>{
+        let {
+          description,
+          title,
+          status,
+          _id: id
+        } = item;
+  
+          return {
+            description,
+            title,
+            status,
+            id
+          };
+      });
+
+      commit('setProducts', productsResult);
+
     },
-    deleteProductsItem({state, commit}, index){
-      commit('deleteProductsItem', index);
+
+
+
+    addProductsItem({commit}, product){
+      axios
+        .post(`/products`, 
+        {
+          title: product.title,
+          description: product.description
+        },
+        {
+          headers: {
+            Authorization: `JWT ${localStorage.getItem('jwt')}`
+          }
+        })
+        .then(response => {
+            //Add refresh page
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+    },
+
+
+    deleteProductsItem({state, commit}, id){
+      axios
+        .delete(`/products/${id}`, 
+        {
+          headers: {
+            Authorization: `JWT ${localStorage.getItem('jwt')}`
+          }
+        })
+        .then(response => {
+          //Add refresh page
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      // commit('deleteProductsItem', index);
     },
     
    }

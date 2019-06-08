@@ -49,3 +49,22 @@ body{
   }
   }
 }
+
+.user {
+  width: 100%;
+  max-width: 780px;
+  border: 1px solid white;
+  padding: 28px;
+  border-radius: 18px;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  &__sign {
+  }
+
+  &__login {
+  }
+}
+
+.v-overlay--active:before{
+  opacity: 0.1;
+}

@@ -34,27 +34,28 @@
       </v-dialog>
     </v-toolbar>
 
-
-    <v-data-table dark :headers="productsHeaders" :items="productsBody" class="elevation-1" v-model="selected" select-all item-key="title">
+    <v-data-table
+      dark
+      :headers="productsHeaders"
+      :items="productsBody"
+      class="elevation-1"
+      v-model="selected"
+      select-all
+      item-key="id"
+    >
       <template v-slot:items="props">
-         <td>
-        <v-checkbox
-          v-model="props.selected"
-          primary
-          hide-details
-        ></v-checkbox>
-      </td>
+        <td>
+          <v-checkbox v-model="props.selected" primary hide-details></v-checkbox>
+        </td>
         <td>{{ props.item.title }}</td>
-        <td class="">{{ props.item.description }}</td>
-        <td class="">  
-          <v-chip 
-            :color="props.item.status === 'pending' ? 'grey' : (props.item.status === 'approved') ? 'green' : 'red'" 
-            :text-color="props.item.status === 'pending' ? 'black' : 'white'"
-          > 
-            {{ props.item.status }}
-          </v-chip
-        ></td>
-        <td class="">
+        <td class>{{ props.item.description }}</td>
+        <td class>
+          <v-chip
+            :color="props.item.status.toLowerCase() === 'pending' ? 'grey' : (props.item.status.toLowerCase() === 'approved') ? 'green' : 'red'"
+            :text-color="props.item.status.toLowerCase() === 'pending' ? 'black' : 'white'"
+          >{{ props.item.status }}</v-chip>
+        </td>
+        <td class>
           <!-- <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon> -->
           <v-icon small @click="deleteItem(props.item)">delete</v-icon>
         </td>
@@ -63,12 +64,11 @@
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
     </v-data-table>
-
-
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import { mapState } from "vuex";
 export default {
   name: "Table",
@@ -79,12 +79,12 @@ export default {
       editedIndex: true,
       editedItem: {
         title: "",
-        description: '',
+        description: ""
       },
       defaultItem: {
         title: "",
-        description: '',
-        status: 'pending'
+        description: "",
+        status: "pending"
       }
     };
   },
@@ -96,7 +96,7 @@ export default {
     }),
     formTitle() {
       return this.editedIndex ? "Add new product" : "Edit new product";
-    },
+    }
   },
 
   watch: {
@@ -105,9 +105,7 @@ export default {
     }
   },
 
-
   methods: {
-
     editItem(item) {
       this.editedIndex = false;
       this.editedItem = Object.assign({}, item);
@@ -115,9 +113,10 @@ export default {
     },
 
     deleteItem(item) {
-      const index = this.productsBody.indexOf(item);
-      confirm("Are you sure you want to delete this item?") && 
-        this.$store.dispatch('deleteProductsItem', index);
+
+      if(confirm("Are you sure you want to delete this item?")){
+        this.$store.dispatch("products/deleteProductsItem", item.id);
+      } 
     },
 
     close() {
@@ -129,13 +128,7 @@ export default {
     },
 
     save() {
-      console.log(this.editedItem);
-      // if (this.editedIndex > -1) {
-        // Object.assign(this.productsBody[this.editedIndex], this.editedItem);
-      // } else {
-        this.$store.dispatch('addProductsItem', this.editedItem);
-        // this.productsBody.push(this.editedItem);
-      // }
+      this.$store.dispatch("products/addProductsItem", this.editedItem);        
       this.close();
     }
   }

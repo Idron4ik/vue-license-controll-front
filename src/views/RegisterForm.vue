@@ -11,8 +11,8 @@
 <script>
 import axios from "axios";
 import { mapState } from 'vuex';
-import Login from '@/components/registrationForm/Login';
-import Sigin from '@/components/registrationForm/Sigin';
+import Login from '@/components/auth/Login';
+import Sigin from '@/components/auth/Sigin';
 
 import { emailValidate,  textValidate} from '@/utils/validate';
 
@@ -44,20 +44,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.user {
-  width: 100%;
-  max-width: 780px;
-  border: 1px solid white;
-  padding: 28px;
-  border-radius: 18px;
-  background-color: rgba(0, 0, 0, 0.2);
-
-  &__sign {
-  }
-
-  &__login {
-  }
-}
-</style>

@@ -1,7 +1,6 @@
 <template>
   <div class="user__login">
     Login Form
-    {{token}}
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-text-field label="Email" :rules="emailValidate" v-model="mail"></v-text-field>
 
@@ -25,16 +24,16 @@ import { emailValidate, textValidate } from "@/utils/validate";
 export default {
   name: "Login",
 
-  data(){
-    return{
+  data() {
+    return {
       valid: true,
       mail: "haker.kolya@gmai.com",
       gender: {},
       emailValidate,
       textValidate,
       showPassword: false,
-      password: "haker123",
-    }
+      password: "haker123"
+    };
   },
   computed: {
     ...mapState({
@@ -43,24 +42,33 @@ export default {
   },
   methods: {
     login() {
+      let token = localStorage.getItem("jwt");
+
       if (this.$refs.form.validate()) {
         let loginForm = {
           email: this.mail,
-          password: this.password,
-          token: this.token
+          password: this.password
         };
 
-        axios
-          .post("/auth/login", {
+      axios
+        .post(
+          "/auth/login",
+          {
             ...loginForm
-          })
-          .then(response => {
-            this.$store.dispatch("setProfileData", response.data);
-            this.$router.push("/profile");
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+          },
+          {
+            headers: {
+              Authorization: `JWT ${token}`
+            }
+          }
+        )
+        .then(response => {
+          this.$store.dispatch("profile/setProfileData", response.data);
+          this.$router.push(`/profile/${token}`);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
       }
     }
   }
