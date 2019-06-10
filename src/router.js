@@ -4,6 +4,7 @@ import Settings from './views/profile/childrens/Settings';
 import Dashboard from './views/profile/childrens/Dashboard';
 import RegistrationsForm from './views/RegistrationsForm';
 import Admin from './views/admin/Admin';
+import MobileHome from './views/MobileHome';
 import Profile from './views/profile/Profile';
 
 Vue.use(Router)
@@ -19,15 +20,15 @@ const router = new Router({
     },
     {
       path: '/profile/:id',
-      name: 'profile',
+      name: 'home',
       meta: { 
         requiresAuth: true,
         isAdmin : true
       },
-      component: () => import(/* webpackChunkName: "profile" */ './views/profile/Profile'),
+      component: () => import(/* webpackChunkName: "profile" */ './views/MobileHome'),
       children: [
         {
-          path: '',
+          path: 'dashboard',
           name: 'dashboard',
           component: Dashboard
         },

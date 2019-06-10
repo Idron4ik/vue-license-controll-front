@@ -1,7 +1,7 @@
 <template>
-  <v-flex xs10 class="center">
+  <!-- <v-flex xs10 class="center"> -->
     <Table/>
-  </v-flex>
+  <!-- </v-flex> -->
     
 </template>
 

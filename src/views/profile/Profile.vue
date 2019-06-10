@@ -1,6 +1,6 @@
 <template>
   <v-layout fill-height="100%">
-    <v-flex>
+    <v-flex >
       <Navigation :miniNavigation="showMiniNavigation"/>
     </v-flex>
     <v-flex xs12>
@@ -44,6 +44,7 @@ export default {
     pageTitle(){
       switch(this.$route.name){
         case 'dashboard': return 'Dashboard';
+        case 'home': return 'Home';
         case 'settings': return 'Account Settings';
         case 'admin': return 'Admin Dashboard';
         default: return 'Dashboard'

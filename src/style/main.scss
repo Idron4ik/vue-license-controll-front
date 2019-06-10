@@ -1,3 +1,4 @@
+@import './category-m';
 body{
   background-color: green;
 }
@@ -5,14 +6,14 @@ body{
 .profile{
   &__settings{
      &_info{
-    padding-right: 30px;
-    text-align: center;
+    // padding-right: 30px;
+    // text-align: center;
   }
   .settings{
     background-color: #263238;
-    padding: 30px 20px;
+    // padding: 30px 20px;
     .v-label{
-      color: #747d8a;
+      // color: #747d8a;
     }
     input{
       color: #547d8a!important;

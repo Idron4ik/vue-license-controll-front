@@ -1,7 +1,7 @@
 <template>
   <div class="profile__settings">
     <v-layout wrap>
-      <v-flex xs3 class="profile__settings_info">
+      <v-flex xs12 md3 class="profile__settings_info">
         <v-card class="card" dark>
           <div class="card__header">
             <v-img
@@ -16,52 +16,42 @@
           </div>
 
           <v-list class="card__body" dark>
-
             <v-list-tile v-for="(user, index) in accountMiniData" :key="index">
-              <v-text-field :label="user.label" :placeholder="profile[user.placeholder]" disabled></v-text-field>
-            </v-list-tile>
 
+               <TextInput
+                :label="user.label"
+                :placeholder="profile[user.placeholder]"
+                disabled
+               ></TextInput>
+            </v-list-tile>
           </v-list>
         </v-card>
       </v-flex>
-      <v-flex xs9 class="settings">
-        <v-form ref="form" v-model="valid" lazy-validation >
-
+      <v-flex xs12 md9 class="settings">
+        <v-form ref="form" v-model="valid" lazy-validation>
           <div v-for="(user, index) in accountFullData" :key="index">
-            <v-text-field
-              v-if="user.uniqueField != 'age' && user.uniqueField != 'checkbox'"
+            <TextInput
+              v-if="user.uniqueField != 'age' && user.uniqueField != 'checkbox'  && user.uniqueField != 'password'"
               :mask="user.mask"
-              :label="user.label" 
+              :label="user.label"
               :rules="user.rules"
               :value="user.value"
               :placeholder="profile[user.placeholder]"
-            >
-            </v-text-field>
+            ></TextInput>
 
-            <v-slider
-              v-if="user.uniqueField === 'age'"
-              v-model="age"
-              color="blue"
-              label="Age"
-              hint="Be honest"
-              min="18"
-              max="36"
-            ></v-slider>
-
-            <v-checkbox
-              v-if="user.uniqueField === 'checkbox'"
-              v-model="agree"
-              label="Do you agree?"
-              :rules="[v => !!v || 'You must agree to continue!']"
-              required
-            ></v-checkbox>
-
+            <Password
+              v-if="user.uniqueField === 'password'"
+              :label="user.label"
+              :rules="user.rules"
+              :value="user.value"
+              :placeholder="profile[user.placeholder]"
+            ></Password>
+            <SliderInput v-if="user.uniqueField === 'age'" label="Age" :min="18" :max="36"></SliderInput>
+            <Checkbox v-if="user.uniqueField === 'checkbox'" label="Do you agree?"></Checkbox>
           </div>
 
-              <v-btn color="info" @click="updateProfile">Update Profile</v-btn>
-
+          <v-btn color="info" @click="updateProfile">Update Profile</v-btn>
         </v-form>
-
       </v-flex>
     </v-layout>
   </div>
@@ -71,17 +61,19 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import { emailValidate, textValidate } from "@/utils/validate";
+import TextInput from "@/components/sub-components/TextInput";
+import Checkbox from "@/components/sub-components/Checkbox";
+import SliderInput from "@/components/sub-components/SliderInput";
+import Password from "@/components/sub-components/Password";
 
 export default {
   name: "ProfileSettings",
 
+  components: { TextInput, Checkbox, SliderInput, Password },
+
   data() {
     return {
       valid: false,
-      age: '',
-      agree: false,
-      emailValidate,
-      textValidate,
       accountFullData: [
         {
           label: "First name",
@@ -96,7 +88,7 @@ export default {
         {
           label: "Age",
           placeholder: "age",
-          uniqueField: 'age'
+          uniqueField: "age"
         },
         {
           label: "Email address",
@@ -105,14 +97,14 @@ export default {
         },
         {
           label: "Password",
-          placeholder: "password"
+          placeholder: "password",
+          uniqueField: "password"
         },
         {
           label: "Phone",
-          placeholder: "phone",
+          placeholder: "",
           rules: textValidate,
-          mask: 'phone',
-          value: '0123456789'
+          mask: "phone",
         },
         {
           label: "Address",
@@ -122,9 +114,8 @@ export default {
         {
           label: "Do you agree?",
           placeholder: "",
-          uniqueField: 'checkbox'
-        },
-      
+          uniqueField: "checkbox"
+        }
       ],
       accountMiniData: [
         {
@@ -151,19 +142,19 @@ export default {
       userName: "userFullName"
     })
   },
-  methods:{
-    updateProfile(){
+  methods: {
+    updateProfile() {
       this.$refs.form.validate();
     }
-  },
-
-  beforeRouteLeave (to, from, next) {
-  const answer = window.confirm('Вы хотите уйти? У вас есть несохранённые изменения!')
-  if (answer) {
-    next()
-  } else {
-    next(false)
   }
-}
+
+  //   beforeRouteLeave (to, from, next) {
+  //   const answer = window.confirm('Вы хотите уйти? У вас есть несохранённые изменения!')
+  //   if (answer) {
+  //     next()
+  //   } else {
+  //     next(false)
+  //   }
+  // }
 };
 </script>
