@@ -8,6 +8,7 @@
       :value="value"
       :placeholde="placeholder"
       @click:append="show = !show"
+      color="main"
     ></v-text-field>
 </template>
 

@@ -4,6 +4,7 @@
     :label="label"
     :rules="rules"
     required
+    color="main"
   ></v-checkbox>
 </template>
 

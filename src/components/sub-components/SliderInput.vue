@@ -1,7 +1,7 @@
 <template>
   <v-slider
     v-model="age"
-    color="blue"
+    color="main"
     :label="label"
     :min="min"
     :max="max"

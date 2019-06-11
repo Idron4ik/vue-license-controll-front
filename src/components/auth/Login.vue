@@ -62,6 +62,7 @@ export default {
           email: this.mail,
           password: this.password
         };
+        console.log(loginForm);
 
       axios
         .post(

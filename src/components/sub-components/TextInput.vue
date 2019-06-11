@@ -5,6 +5,7 @@
     :mask="mask"
     :value="value"
     :placeholder="placeholder"
+    color="main"
   ></v-text-field>
 </template>
 

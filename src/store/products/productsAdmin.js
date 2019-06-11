@@ -11,7 +11,7 @@ export default {
         value: "title"
       },
       { text: "Description", value: "description" },
-      { text: "Keyword", value: "keyword", sortable: false },
+      { text: "Keywords", value: "keywords", sortable: false },
       { text: "Actions", value: "actions" },
     ],
     productsBody: []

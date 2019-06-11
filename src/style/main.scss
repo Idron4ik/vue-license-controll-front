@@ -12,7 +12,15 @@ body{
   //&.v-input:not(.v-input--is-disabled) textarea{
   //  color: $main;
   //}
+  &.v-sheet{
+    height: 100%;
+  }
+}
 
+.v-list--dense .v-list__tile:not(.v-list__tile--avatar){
+  padding: 10px;
+  align-items: flex-start;
+  height: auto;
 }
 
 
@@ -23,10 +31,11 @@ body{
     // text-align: center;
   }
   .settings{
+    margin-top: 25px;
+    padding: 30px 20px;
     background-color: #263238;
-    // padding: 30px 20px;
     .v-label{
-      // color: #747d8a;
+      color: #747d8a;
     }
     input{
       color: #547d8a!important;
