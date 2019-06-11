@@ -1,7 +1,20 @@
 @import './category-m';
+$main: #5CA28B;
 body{
-  background-color: green;
+  background-color: #303030;
 }
+
+.theme--dark{
+  &.application{
+    background-color: #303030!important;
+  }
+  //&.v-input:not(.v-input--is-disabled) input,
+  //&.v-input:not(.v-input--is-disabled) textarea{
+  //  color: $main;
+  //}
+
+}
+
 
 .profile{
   &__settings{
@@ -53,16 +66,42 @@ body{
 
 .user {
   width: 100%;
-  max-width: 780px;
-  border: 1px solid white;
+  max-width: 320px;
+  //border: 1px solid white;
   padding: 28px;
-  border-radius: 18px;
-  background-color: rgba(0, 0, 0, 0.2);
+  //border-radius: 18px;
+  //background-color: rgba(0, 0, 0, 0.2);
+  color: white;
 
   &__sign {
   }
 
   &__login {
+  }
+  &__title{
+    margin-bottom: 18px;
+  }
+  .v-input{
+    margin-bottom: 8px;
+  }
+  &__btn{
+    width: 100%;
+    border-radius: 20px;
+    background-color: transparent;
+    border: 1px solid $main!important;
+    color: #FDFDFD!important;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  &__footer{
+    display: inline-block;
+    width: 100%;
+    color: $main;
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.22px;
+    text-decoration: none;
   }
 }
 

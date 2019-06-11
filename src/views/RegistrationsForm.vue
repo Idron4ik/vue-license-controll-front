@@ -1,9 +1,16 @@
 <template>
     <v-layout align-center justify-center fill-height>
       <div class="user">
+        <h1 class="user__title">{{textHeader}}</h1>
         <Sigin v-if="activeTab" />
         <Login v-else/>
-        <v-btn color="success" @click="switchForm">{{switchFormText}}</v-btn>
+        <a
+            href="#"
+            @click="switchForm"
+            class="user__footer"
+        >
+            {{textFooter}}
+        </a>
       </div>
     </v-layout>
 </template>
@@ -20,7 +27,7 @@ export default {
   name: "RegisterForm",
 
   components:{
-    Login, 
+    Login,
     Sigin
   },
 
@@ -32,13 +39,17 @@ export default {
   },
 
   computed: {
-    switchFormText() {
-      return this.activeTab ? "Login" : "Sign";
+      textHeader() {
+          return this.activeTab ? "Sigin" : "Login";
+      },
+    textFooter() {
+      return this.activeTab ? "Already a Member? Login" : "Sign";
     }
   },
 
   methods: {
-    switchForm() {
+    switchForm(e) {
+      e.preventDefault();
       this.activeTab = !this.activeTab;
     }
   },

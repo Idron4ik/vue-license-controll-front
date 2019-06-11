@@ -1,14 +1,35 @@
 <template>
   <div class="user__sign">
-    RegisterForm
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field label="First name" :rules="textValidate" :counter="10" v-model="firstName"></v-text-field>
+      <v-text-field
+              label="First name"
+              :rules="textValidate"
+              :counter="10"
+              v-model="firstName"
+              color="main"
+      ></v-text-field>
 
-      <v-text-field label="Last name" :rules="textValidate" :counter="10" v-model="lastName"></v-text-field>
+      <v-text-field
+              label="Last name"
+              :rules="textValidate"
+              :counter="10"
+              v-model="lastName"
+              color="main"
+      ></v-text-field>
 
-      <v-text-field label="Email" :rules="emailValidate" v-model="mail"></v-text-field>
+      <v-text-field
+              label="Email"
+              :rules="emailValidate"
+              v-model="mail"
+              color="main"
+      ></v-text-field>
 
-      <v-select :items="genderSelect" v-model="gender" label="Gender"></v-select>
+      <!--<v-select-->
+              <!--:items="genderSelect"-->
+              <!--v-model="gender"-->
+              <!--label="Gender"-->
+              <!--color="main"-->
+      <!--&gt;</v-select>-->
 
       <v-text-field
         v-model="password"
@@ -16,8 +37,16 @@
         :type="showPassword ? 'text' : 'password'"
         label="Password"
         @click:append="showPassword = !showPassword"
+        color="main"
       ></v-text-field>
-      <v-btn :disabled="!valid" color="success" @click="sign">Sign</v-btn>
+      <v-btn
+          :disabled="!valid"
+          class="user__btn"
+          color="transparent"
+          @click="sign"
+      >
+        Sign
+      </v-btn>
     </v-form>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app dark>
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -19,9 +19,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.theme--light.application {
-  background: linear-gradient(to top, #383f48 0%, #262b32 100%);
-}
-</style>

@@ -1,8 +1,12 @@
 <template>
   <div class="user__login">
-    Login Form
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field label="Email" :rules="emailValidate" v-model="mail"></v-text-field>
+      <v-text-field
+          label="Email"
+          :rules="emailValidate"
+          v-model="mail"
+          color="main"
+      ></v-text-field>
 
       <v-text-field
         v-model="password"
@@ -10,9 +14,18 @@
         :type="showPassword ? 'text' : 'password'"
         label="Password"
         @click:append="showPassword = !showPassword"
+        color="main"
       ></v-text-field>
 
-      <v-btn :disabled="!valid" color="success" @click="login">Log In</v-btn>
+      <v-btn
+        :disabled="!valid"
+        color="transparent"
+        class="user__btn"
+        @click="login"
+      >
+        Log In
+      </v-btn>
+
     </v-form>
   </div>
 </template>
