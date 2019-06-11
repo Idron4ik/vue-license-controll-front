@@ -1,7 +1,7 @@
 <template>
   <div class="profile__settings">
     <v-layout wrap>
-      <v-flex xs12 md3 class="profile__settings_info">
+      <v-flex xs12 md4 class="profile__settings_info">
         <v-card class="card" dark>
           <div class="card__header">
             <v-img
@@ -27,7 +27,7 @@
           </v-list>
         </v-card>
       </v-flex>
-      <v-flex xs12 md9 class="settings">
+      <v-flex xs12 md8 class="settings">
         <v-form ref="form" v-model="valid" lazy-validation>
           <div v-for="(user, index) in accountFullData" :key="index">
             <TextInput

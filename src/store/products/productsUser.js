@@ -127,7 +127,8 @@ export const products = {
         })
         .then(response => {
             //Add refresh page
-          console.log(response);
+          commit('addProductsItem', response.data);
+          
         })
         .catch(function(error) {
           console.log(error);
@@ -136,7 +137,7 @@ export const products = {
     },
 
 
-    deleteProductsItem({state, commit}, id){
+    deleteProductsItem({state, commit}, {id, index}){
       axios
         .delete(`/products/${id}`, 
         {
@@ -146,12 +147,11 @@ export const products = {
         })
         .then(response => {
           //Add refresh page
-          console.log(response);
+          commit('deleteProductsItem', index);
         })
         .catch(function(error) {
           console.log(error);
         });
-      // commit('deleteProductsItem', index);
     },
     
    }

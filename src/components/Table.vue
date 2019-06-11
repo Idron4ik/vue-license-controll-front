@@ -33,6 +33,7 @@
           </v-card>
         </v-dialog>
       </v-toolbar>
+
     <div class="table__desktop" v-if="!isMobile">
       <v-data-table
         dark
@@ -56,8 +57,7 @@
             >{{ props.item.status }}</v-chip>
           </td>
           <td class>
-            <!-- <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon> -->
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item, props.index)">delete</v-icon>
           </td>
         </template>
         <template v-slot:no-data>
@@ -82,22 +82,29 @@
                   <!-- {{productsForMobile}} -->
                   <v-list-tile v-for="(item, index) in productsHeaders" :key="index">
                     <v-list-tile-content>{{item.text}}:</v-list-tile-content>
+
                     <template v-if="item.text.toLowerCase() === 'status' ">
                       <v-list-tile-content class="align-end">
                         <v-chip
-                          :color="props.item[item.text.toLowerCase()] === 'pending' ? 'grey' : (props.item[item.text.toLowerCase()] === 'approved') ? 'green' : 'red'"
-                          :text-color="props.item[item.text.toLowerCase()] === 'pending' ? 'black' : 'white'"
+                          :color="props.item.status.toLowerCase() === 'pending' ? 'grey' : (props.item.status.toLowerCase() === 'approved') ? 'green' : 'red'"
+                          :text-color="props.item.status.toLowerCase() === 'pending' ? 'black' : 'white'"
                         >{{ props.item.status }}</v-chip>
                       </v-list-tile-content>
                     </template>
+
                     <v-list-tile-content
                       v-if="item.text.toLowerCase() !== 'status' && item.text.toLowerCase() !== 'actions'"
                       class="align-end"
-                    >{{ props.item[item.text.toLowerCase()] }}</v-list-tile-content>
+                    >
+                    {{ props.item[item.text.toLowerCase()] }}
+                    </v-list-tile-content>
+
                     <v-list-tile-content
                       v-if="item.text.toLowerCase() === 'actions'"
                       class="align-end"
-                    >delete</v-list-tile-content>
+                    >
+                    <v-icon small @click="deleteItem(props.item, props.index)">delete</v-icon>
+                    </v-list-tile-content>
                   </v-list-tile>
                 </v-list>
               </v-card>
@@ -162,9 +169,10 @@ export default {
       this.dialog = true;
     },
 
-    deleteItem(item) {
+    deleteItem(item, index) {
       if (confirm("Are you sure you want to delete this item?")) {
-        this.$store.dispatch("products/deleteProductsItem", item.id);
+        console.log(item);
+        this.$store.dispatch("products/deleteProductsItem", {id: item.id, index});
       }
     },
 
@@ -183,7 +191,7 @@ export default {
   },
 
   mounted() {
-    this.isMobile = window.screen.width < 900;
+    this.isMobile = window.screen.width < 960;
   }
 };
 </script>

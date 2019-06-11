@@ -199,7 +199,7 @@ export default {
     }
   },
   mounted() {
-    this.isMobile = window.screen.width < 900;
+    this.isMobile = window.screen.width < 960;
 
     axios
       .get(`/admin/products`, {
