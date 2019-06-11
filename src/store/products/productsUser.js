@@ -19,55 +19,64 @@ export const products = {
       {
         title: "Frozen Yogurt",
         description: 'Lorem ipsum dolor',
-        status: 'approved'
-
+        status: 'approved',
+        id: 1,
       },
       {
         title: "Ice cream sandwich",
         description: 'Lorem ipsum dolor',
-        status: 'pending'
+        status: 'pending',
+        id: 1,
       },
       {
         title: "Eclair",
         description: 'Lorem ipsum dolor',
-        status: 'rejected'
+        status: 'rejected',
+        id: 1,
       },
       {
         title: "Cupcake",
         description: 'Lorem ipsum dolor',
-        status: 'pending'
+        status: 'pending',
+        id: 1,
       },
       {
         title: "Gingerbread",
         description: 'Lorem ipsum dolor',
-        status: 'pending'
+        status: 'pending',
+        id: 1,
       },
       {
         title: "Jelly bean",
         description: 'Lorem ipsum dolor',
-        status: 'pending'
+        status: 'pending',
+        id: 1,
       },
       {
         title: "Lollipop",
         description: 'Lorem ipsum dolor',
-        status: 'pending'
+        status: 'pending',
+        id: 1,
 
       },
       {
         title: "Honeycomb",
         description: 'Lorem ipsum dolor',
-        status: 'pending'
+        status: 'pending',
+        id: 1,
 
       },
       {
         title: "Donut",
         description: 'Lorem ipsum dolor',
-        status: 'pending'
+        status: 'pending',
+        id: 1,
       },
       {
         title: "KitKat",
         description: 'Lorem ipsum dolor',
-        status: 'rejected'
+        status: 'rejected',
+        id: 1,
       }
     ]
    },
