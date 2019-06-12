@@ -6,6 +6,8 @@
     :value="value"
     :placeholder="placeholder"
     color="main"
+    :disabled="disabled"
+    @input="$emit('onInput', $event)"
   ></v-text-field>
 </template>
 
@@ -33,6 +35,10 @@ export default {
       type: String,
       default: ''
     },
+    disabled:{
+      type: Boolean,
+      default: false,
+    }
    
   },
    data(){
@@ -40,7 +46,7 @@ export default {
         emailValidate,
         textValidate,
       }
-    }
+    },
 };
 </script>
 

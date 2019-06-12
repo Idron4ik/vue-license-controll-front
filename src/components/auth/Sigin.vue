@@ -1,52 +1,47 @@
 <template>
   <div class="user__sign">
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field
-              label="First name"
-              :rules="textValidate"
-              :counter="10"
-              v-model="firstName"
-              color="main"
-      ></v-text-field>
+      
+      <div class="form__item"
+        v-for="(item, index) in sign"
+        :key="index"
+      >
+        <TextInput
+          v-if="item.uniqueField !== 'password'"
+          :label="item.label"
+          :rules="item.rules"
+          :placeholder="item.placeholder"
+          :value="item.value"
+          @onInput="item.value = $event"
+        />
+        <Password
+          v-if="item.uniqueField === 'password'"
+          :label="item.label"
+          :rules="item.rules"
+          :placeholder="item.placeholder"
+          :value="item.value"
+          @onInput="item.value = $event"
+        />
 
-      <v-text-field
-              label="Last name"
-              :rules="textValidate"
-              :counter="10"
-              v-model="lastName"
-              color="main"
-      ></v-text-field>
-
-      <v-text-field
-              label="Email"
-              :rules="emailValidate"
-              v-model="mail"
-              color="main"
-      ></v-text-field>
+      </div>
 
       <!--<v-select-->
-              <!--:items="genderSelect"-->
-              <!--v-model="gender"-->
-              <!--label="Gender"-->
-              <!--color="main"-->
+      <!--:items="genderSelect"-->
+      <!--v-model="gender"-->
+      <!--label="Gender"-->
+      <!--color="main"-->
       <!--&gt;</v-select>-->
 
-      <v-text-field
+      <!-- <v-text-field
         v-model="password"
         :append-icon="showPassword ? 'visibility' : 'visibility_off'"
         :type="showPassword ? 'text' : 'password'"
         label="Password"
         @click:append="showPassword = !showPassword"
         color="main"
-      ></v-text-field>
-      <v-btn
-          :disabled="!valid"
-          class="user__btn"
-          color="transparent"
-          @click="sign"
-      >
-        Sign
-      </v-btn>
+      ></v-text-field> -->
+
+      <v-btn :disabled="!valid" class="user__btn" color="transparent" @click="signAction">Sign</v-btn>
     </v-form>
   </div>
 </template>
@@ -55,59 +50,78 @@
 import axios from "axios";
 import { mapState } from "vuex";
 import { emailValidate, textValidate } from "@/utils/validate";
-  export default {
-    name: 'Sign',
+import TextInput from "@/components/sub-components/TextInput";
+import Password from "@/components/sub-components/Password";
 
-    data() {
+export default {
+  name: "Sign",
+
+  components: {
+    TextInput,
+    Password
+  },
+
+  data() {
     return {
+      sign:[
+        {
+          label: "First name",
+          value: '',
+          rules: textValidate,
+        },
+        {
+          label: "Last name",
+          value: '',
+          rules: textValidate,
+        },
+        {
+          label: "Email address",
+          value: '',
+          rules: emailValidate,
+        },
+        {
+          label: "Password",
+          value: '',
+          uniqueField: "password",
+        },
+      ],
       valid: true,
-      emailValidate,
-      textValidate,
-      mail: "haker.kolya@gmai.com",
-      firstName: "Kolya",
-      lastName: "Sider",
-      gender: {},
-      password: "haker123",
-      genderSelect: ["Male", "Female"],
-      showPassword: false,
-      activeTab: false
+      // gender: {},
     };
   },
 
   computed: {
-     ...mapState({
-    token: state => state.profile.token,
-  }),
+    ...mapState({
+      token: state => state.profile.token
+    })
   },
 
-  methods:{
-    sign() {
+  methods: {
+    signAction() {
       if (this.$refs.form.validate()) {
         let signForm = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.mail,
+          firstName: this.sign[0].value,
+          lastName: this.sign[1].value,
+          email: this.sign[2].value,
           //  gender: this.gender,
-          password: this.password
+          password: this.sign[3].value
         };
 
         axios
           .post("/auth/register", {
             ...signForm
           })
-          .then((response) => {
-            this.$store.dispatch('profile/setProfileData', response.data);
+          .then(response => {
+            this.$store.dispatch("profile/setProfileData", response.data);
           })
           .catch(function(error) {
             console.log(error);
           });
       }
-    },
+    }
   }
-
-  }
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>

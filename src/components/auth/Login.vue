@@ -1,27 +1,29 @@
 <template>
   <div class="user__login">
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field
-          label="Email"
-          :rules="emailValidate"
-          v-model="mail"
-          color="main"
-      ></v-text-field>
 
-      <v-text-field
-        v-model="password"
-        :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-        :type="showPassword ? 'text' : 'password'"
-        label="Password"
-        @click:append="showPassword = !showPassword"
-        color="main"
-      ></v-text-field>
+      <TextInput
+        :label="login[0].label"
+        :rules="login[0].rules"
+        :placeholder="login[0].placeholder"
+        :value="login[0].value"
+        @onInput="login[0].value = $event"
+      
+      />
+
+      <Password
+        :label="login[1].label"
+        :rules="login[1].rules"
+        :placeholder="login[1].placeholder"
+        :value="login[1].value"
+        @onInput="login[1].value = $event"
+      />
 
       <v-btn
         :disabled="!valid"
         color="transparent"
         class="user__btn"
-        @click="login"
+        @click="loginAction"
       >
         Log In
       </v-btn>
@@ -34,18 +36,33 @@
 import axios from "axios";
 import { mapState } from "vuex";
 import { emailValidate, textValidate } from "@/utils/validate";
+import TextInput from "@/components/sub-components/TextInput";
+import Password from "@/components/sub-components/Password";
+
 export default {
   name: "Login",
 
+  components:{
+    TextInput, Password
+  },
+
   data() {
     return {
+      login:[
+        {
+          label: "Email address",
+          placeholder: "email",
+          rules: emailValidate,
+          value:'haker.kolya@gmai.com'
+        },
+        {
+          label: "Password",
+          placeholder: "password",
+          uniqueField: "password",
+          value:'haker123'
+        },
+      ],
       valid: true,
-      mail: "haker.kolya@gmai.com",
-      gender: {},
-      emailValidate,
-      textValidate,
-      showPassword: false,
-      password: "haker123"
     };
   },
   computed: {
@@ -54,15 +71,14 @@ export default {
     })
   },
   methods: {
-    login() {
+    loginAction() {
       let token = localStorage.getItem("jwt");
 
       if (this.$refs.form.validate()) {
         let loginForm = {
-          email: this.mail,
-          password: this.password
+          email: this.login[0].value,
+          password: this.login[1].value
         };
-        console.log(loginForm);
 
       axios
         .post(

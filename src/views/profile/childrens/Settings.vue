@@ -21,7 +21,7 @@
                <TextInput
                 :label="user.label"
                 :placeholder="profile[user.placeholder]"
-                disabled
+                disabled="disabled"
                ></TextInput>
             </v-list-tile>
           </v-list>
