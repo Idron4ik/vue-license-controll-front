@@ -23,6 +23,5 @@
 <style lang="scss" scoped>
     .validation-errors{
         font-weight: 600;
-        margin-top: 15px;
     }
 </style>

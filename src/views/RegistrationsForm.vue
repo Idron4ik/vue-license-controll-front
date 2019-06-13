@@ -11,7 +11,7 @@
         >
             {{textFooter}}
         </a>
-        <ValidateErrors :msg="msgErrors"/>
+        <ValidateErrors :msg="msgErrors" classes="user__errors"/>
       </div>
     </v-layout>
 </template>
@@ -55,6 +55,8 @@ export default {
     switchForm(e) {
       e.preventDefault();
       this.activeTab = !this.activeTab;
+    this.msgErrors = "";
+
     }
   },
 };

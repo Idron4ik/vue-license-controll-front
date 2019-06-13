@@ -1,5 +1,6 @@
 @import './category-m';
 $main: #5CA28B;
+$error: #b71c1c;
 body{
   background-color: #303030;
 }
@@ -20,8 +21,7 @@ body{
   }
 }
 .errors-border{
-  border: 2px solid #b71c1c!important;
-  border-radius: 10px;
+  border: 2px solid $error!important;
 }
 .v-list--dense .v-list__tile:not(.v-list__tile--avatar){
   padding: 10px;
@@ -80,10 +80,25 @@ body{
 .user {
   width: 100%;
   max-width: 320px;
-  padding: 28px;
+  padding: 28px 28px 50px;
   color: white;
   border: 2px solid transparent;
-
+  border-radius: 10px;
+  position: relative;
+  &.errors-border{
+    .user{
+      &__errors{
+        display: none;
+        position: absolute;
+        bottom: 15px;
+        left: 28px;
+      }
+      &__title{
+        color: $error;
+      }
+    }
+   
+  }
   &__sign {
   }
 
