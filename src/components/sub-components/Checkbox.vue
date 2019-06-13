@@ -1,10 +1,11 @@
 <template>
   <v-checkbox
-    v-model="agree"
+    :value="value"
     :label="label"
     :rules="rules"
     required
     color="main"
+    @change="$emit('onInput', $event)"
   ></v-checkbox>
 </template>
 
@@ -20,6 +21,10 @@ export default {
       type: Array,
       default: () => [v => !!v || 'You must agree to continue!']
     },
+    value:{
+      type: Boolean,
+      default: false
+    }
   },
 
   data(){

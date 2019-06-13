@@ -50,6 +50,11 @@ export default {
           link: "settings"
         },
         {
+          icon: "dashboard",
+          title: "Approved Products",
+          link: "approvedProducts"
+        },
+        {
           icon: "power_settings_new",
           title: "Log out",
           link: "logout"
@@ -64,6 +69,7 @@ export default {
         case 'home': return 'Home';
         case 'settings': return 'Account Settings';
         case 'admin': return 'Admin Dashboard';
+        case 'approvedProducts': return 'Approved Products';
         default: return 'Dashboard'
       }
     },
@@ -78,6 +84,7 @@ export default {
        this.$router.push({ name: 'home' });
     },
     switchContent(link) {
+      console.log(link);
       this.$router.push({ name: link });
     }
   }

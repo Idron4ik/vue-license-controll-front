@@ -1,19 +1,22 @@
 export const profile = {
   namespaced: true,
   state: {
+    token: '',
     firstName:'john',
     lastName:'Dove',
+    age: '20',
     email:'johnDove@gmail.com',
     password:'cheburek123',
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjZmI3ZWI3NjEyZTc0M2FmNDM0ZWM3NyIsImlhdCI6MTU1OTk4NjM2MiwiZXhwIjoxNTYwMDcyNzYyfQ.omzqOFcT_uPzEwMdKOf9liuWygE0FeIkxA_eBfjUtVk',
-    phone: '00000000000',
+    phone: '0997578501',
     id: '',
     address: 'Mars',
-    accuntPlus: true,
+    accountPlus: true,
     avatar:{
       src: 'https://randomuser.me/api/portraits/men/85.jpg',
       title: 'persnal avarat'
-    } 
+    },
+
+    agree: null,
    },
 
    getters: {
@@ -36,28 +39,40 @@ export const profile = {
         phone = "",
         address = "",
         avatar= "",
-        isAdmin
+        age = "",
+        agree = null,
+        accountPlus = false
+
       } = user;
       state.token = token;
       state.firstName = firstName;
       state.lastName = lastName;
+      state.age = age;
       state.email = email;
       state.password = password;
-      state.id = _id;
       state.phone = phone;
+      state.id = _id;
       state.address = address;
+      state.agree = agree;
+      state.accountPlus = accountPlus;
       state.avatar = avatar;
       localStorage.setItem('jwt', token)
       localStorage.setItem('user', JSON.stringify(user));
-
+    },
+    updataProfile(state, {stateValue, value}){
+      console.log(stateValue);
+      console.log(value);
+      state[stateValue] = value;
     }
    },
 
 
    actions:{
      setProfileData({commit}, userData){
-       console.log(userData);
        commit('setProfileData', userData );
+     },
+     updataProfile({commit}, {stateValue, value}){
+      commit('updataProfile',  {stateValue, value} );
      }
    }
 };

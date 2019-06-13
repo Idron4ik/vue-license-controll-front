@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Settings from './views/profile/childrens/Settings';
 import Dashboard from './views/profile/childrens/Dashboard';
+import ApprovedProducts from './views/profile/childrens/ApprovedProducts';
 import RegistrationsForm from './views/RegistrationsForm';
 import Admin from './views/admin/Admin';
 import MobileHome from './views/MobileHome';
@@ -36,6 +37,11 @@ const router = new Router({
           path: 'settings',
           name: 'settings',
           component: Settings
+        },
+        {
+          path: 'approved-products',
+          name: 'approvedProducts',
+          component: ApprovedProducts
         },
       ]
     },

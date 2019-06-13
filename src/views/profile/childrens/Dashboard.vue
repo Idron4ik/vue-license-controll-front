@@ -1,7 +1,6 @@
 <template>
 <div>
    <Table/>
-    <Stepper/>
 </div>
   <!-- <v-flex xs10 class="center"> -->
  
@@ -11,14 +10,13 @@
 
 <script>
 import Table from '@/components/Table';
-import Stepper from '@/components/Stepper';
 
 import axios from "axios";
 import { mapActions } from "vuex";
   export default {
     name: 'profileIndex',
     
-    components: {Table, Stepper},
+    components: {Table},
 
     mounted(){
       

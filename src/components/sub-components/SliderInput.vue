@@ -5,7 +5,8 @@
     :label="label"
     :min="min"
     :max="max"
-    thumb-label
+    :value="20"
+    thumb-label="always"
   ></v-slider>
 </template>
 
@@ -24,6 +25,9 @@ export default {
     max: {
       type: Number,
       default:10
+    },
+    value:{
+      type: Number
     }
   },
 

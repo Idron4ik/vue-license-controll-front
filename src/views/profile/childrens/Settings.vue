@@ -31,25 +31,30 @@
         <v-form ref="form" v-model="valid" lazy-validation>
           <div v-for="(user, index) in accountFullData" :key="index">
             <TextInput
-              v-if="user.uniqueField != 'age' && user.uniqueField != 'checkbox'  && user.uniqueField != 'password'"
+              v-if="user.uniqueField != 'checkbox'  && user.uniqueField != 'password'"
               :mask="user.mask"
               :label="user.label"
               :rules="user.rules"
-              :value="user.value"
+              :value="profile[user.value]"
               :placeholder="profile[user.placeholder]"
-            ></TextInput>
+              @onInput="onInput(index, $event)"
+            />
 
             <Password
               v-if="user.uniqueField === 'password'"
               :label="user.label"
               :rules="user.rules"
-              :value="user.value"
+              :value="profile[user.value]"
               :placeholder="profile[user.placeholder]"
-            ></Password>
-            <SliderInput v-if="user.uniqueField === 'age'" label="Age" :min="18" :max="36"></SliderInput>
-            <Checkbox v-if="user.uniqueField === 'checkbox'" label="Do you agree?"></Checkbox>
+              @onInput="onInput(index, $event)"
+            />
+            <Checkbox 
+              v-if="user.uniqueField === 'checkbox'" 
+              label="Do you agree?"
+              :value="profile[user.value]"
+              @onInput="onInput(index, $event)"
+              />
           </div>
-
           <v-btn color="info" @click="updateProfile">Update Profile</v-btn>
         </v-form>
       </v-flex>
@@ -59,7 +64,8 @@
 
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import axios from "axios";
+import { mapState, mapGetters, mapActions } from "vuex";
 import { emailValidate, textValidate } from "@/utils/validate";
 import TextInput from "@/components/sub-components/TextInput";
 import Checkbox from "@/components/sub-components/Checkbox";
@@ -78,42 +84,49 @@ export default {
         {
           label: "First name",
           placeholder: "firstName",
+          value: 'firstName',
           rules: textValidate
         },
         {
           label: "Last name",
           placeholder: "lastName",
+          value: "lastName",
           rules: textValidate
         },
         {
           label: "Age",
+          value: 'age',
           placeholder: "age",
-          uniqueField: "age"
         },
         {
           label: "Email address",
           placeholder: "email",
+          value: "email",
           rules: emailValidate
         },
         {
           label: "Password",
           placeholder: "password",
+          value: "password",
           uniqueField: "password"
         },
         {
           label: "Phone",
           placeholder: "",
+          value: "phone",
           rules: textValidate,
           mask: "phone",
         },
         {
           label: "Address",
           placeholder: "address",
+          value: "address",
           rules: textValidate
         },
         {
           label: "Do you agree?",
           placeholder: "",
+          value: "agree",
           uniqueField: "checkbox"
         }
       ],
@@ -140,21 +153,63 @@ export default {
     }),
     ...mapGetters("profile", {
       userName: "userFullName"
-    })
+    }),
   },
   methods: {
     updateProfile() {
-      this.$refs.form.validate();
-    }
-  }
+      if(this.$refs.form.validate()){
+        console.log(123);
+         // axios
+    //     .post(
+    //       "/auth/login",
+    //       {
+    //         ...loginForm
+    //       },
+    //       {
+    //         headers: {
+    //           Authorization: `JWT ${token}`
+    //         }
+    //       }
+    //     )
+    //     .then(response => {
+    //       this.$store.dispatch("profile/setProfileData", response.data);
+    //       this.$router.push(`/profile/${token}`);
+    //     })
+    //     .catch(error => {
+    //       this.$emit('errors', error.response.data);
+    //     });
+      }
+    },
 
-  //   beforeRouteLeave (to, from, next) {
-  //   const answer = window.confirm('Вы хотите уйти? У вас есть несохранённые изменения!')
-  //   if (answer) {
-  //     next()
-  //   } else {
-  //     next(false)
-  //   }
-  // }
+    normalizeData(index, value){
+      console.log(this.accountFullData[index]);
+      this.accountFullData[index].value = this.profile[value];
+    },
+    onInput(index, value){
+      this.$store.dispatch('profile/updataProfile', {stateValue: this.accountFullData[index].value ,value});
+    },
+  },
+
+  mounted(){
+    // axios
+    //     .post(
+    //       "/auth/login",
+    //       {
+    //         ...loginForm
+    //       },
+    //       {
+    //         headers: {
+    //           Authorization: `JWT ${token}`
+    //         }
+    //       }
+    //     )
+    //     .then(response => {
+    //       this.$store.dispatch("profile/setProfileData", response.data);
+    //       this.$router.push(`/profile/${token}`);
+    //     })
+    //     .catch(error => {
+    //       this.$emit('errors', error.response.data);
+    //     });
+  }
 };
 </script>

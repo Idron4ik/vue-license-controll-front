@@ -22,10 +22,10 @@ export default {
       type: String
     },
     value: {
-      type: String
+      type: [String, Number]
     },
     placeholder: {
-      type: String
+      type: [String, Number]
     },
     rules:{
       type: Array,
