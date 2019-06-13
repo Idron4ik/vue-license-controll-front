@@ -3,6 +3,9 @@ $main: #5CA28B;
 body{
   background-color: #303030;
 }
+*{
+  box-sizing: border-box
+}
 
 .theme--dark{
   &.application{
@@ -16,7 +19,10 @@ body{
     height: 100%;
   }
 }
-
+.errors-border{
+  border: 2px solid #b71c1c!important;
+  border-radius: 10px;
+}
 .v-list--dense .v-list__tile:not(.v-list__tile--avatar){
   padding: 10px;
   align-items: flex-start;
@@ -76,6 +82,7 @@ body{
   max-width: 320px;
   padding: 28px;
   color: white;
+  border: 2px solid transparent;
 
   &__sign {
   }

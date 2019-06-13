@@ -12,7 +12,7 @@
           :rules="item.rules"
           :placeholder="item.placeholder"
           :value="item.value"
-          @onInput="item.value = $event"
+          @onInput="onInput(item.value, $event)"
         />
         <Password
           v-if="item.uniqueField === 'password'"
@@ -20,26 +20,10 @@
           :rules="item.rules"
           :placeholder="item.placeholder"
           :value="item.value"
-          @onInput="item.value = $event"
+          @onInput="onInput(item.value, $event)"
         />
 
       </div>
-
-      <!--<v-select-->
-      <!--:items="genderSelect"-->
-      <!--v-model="gender"-->
-      <!--label="Gender"-->
-      <!--color="main"-->
-      <!--&gt;</v-select>-->
-
-      <!-- <v-text-field
-        v-model="password"
-        :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-        :type="showPassword ? 'text' : 'password'"
-        label="Password"
-        @click:append="showPassword = !showPassword"
-        color="main"
-      ></v-text-field> -->
 
       <v-btn :disabled="!valid" class="user__btn" color="transparent" @click="signAction">Sign</v-btn>
     </v-form>
@@ -97,6 +81,9 @@ export default {
   },
 
   methods: {
+    onInput(fieldText, value){
+      fieldText = value;
+    },
     signAction() {
       if (this.$refs.form.validate()) {
         let signForm = {
@@ -114,8 +101,8 @@ export default {
           .then(response => {
             this.$store.dispatch("profile/setProfileData", response.data);
           })
-          .catch(function(error) {
-            console.log(error);
+          .catch(error => {
+            this.$emit('errors', error.response.data);
           });
       }
     }

@@ -1,9 +1,9 @@
 <template>
     <v-layout align-center justify-center fill-height>
-      <div class="user">
+      <div :class="['user', {'errors-border': !!msgErrors}]">
         <h1 class="user__title">{{textHeader}}</h1>
-        <Sigin v-if="activeTab" />
-        <Login v-else/>
+        <Sigin v-if="activeTab" @errors="msgErrors = $event"/>
+        <Login v-else @errors="msgErrors = $event"/>
         <a
             href="#"
             @click="switchForm"
@@ -11,6 +11,7 @@
         >
             {{textFooter}}
         </a>
+        <ValidateErrors :msg="msgErrors"/>
       </div>
     </v-layout>
 </template>
@@ -20,19 +21,22 @@ import axios from "axios";
 import { mapState } from 'vuex';
 import Login from '@/components/auth/Login';
 import Sigin from '@/components/auth/Sigin';
-
+import ValidateErrors from "@/components/sub-components/ValidateErrors";
 import { emailValidate,  textValidate} from '@/utils/validate';
+
 
 export default {
   name: "RegisterForm",
 
   components:{
     Login,
-    Sigin
+    Sigin,
+    ValidateErrors
   },
 
   data() {
     return {
+      msgErrors: "",
       showPassword: false,
       activeTab: false
     };

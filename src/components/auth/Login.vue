@@ -7,8 +7,7 @@
         :rules="login[0].rules"
         :placeholder="login[0].placeholder"
         :value="login[0].value"
-        @onInput="login[0].value = $event"
-      
+        @onInput="onInput(0, $event)"
       />
 
       <Password
@@ -16,7 +15,7 @@
         :rules="login[1].rules"
         :placeholder="login[1].placeholder"
         :value="login[1].value"
-        @onInput="login[1].value = $event"
+        @onInput="onInput(1, $event)"
       />
 
       <v-btn
@@ -96,11 +95,15 @@ export default {
           this.$store.dispatch("profile/setProfileData", response.data);
           this.$router.push(`/profile/${token}`);
         })
-        .catch(function(error) {
-          console.log(error);
+        .catch(error => {
+          this.$emit('errors', error.response.data);
         });
       }
-    }
+    },
+    onInput(index, value){
+      this.login[index].value = value;
+      this.$emit('errors', '');
+    },
   }
 };
 </script>
