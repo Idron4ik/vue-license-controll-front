@@ -18,7 +18,7 @@
     <ul class="category" v-if="homePage">
       <li class="category__item" v-for="(category, index) in categories" :key="index">
         <div class="category__title" @click="switchContent(category.link)">
-          <v-icon large color="white" class="category__icon">{{category.icon}}</v-icon>
+          <v-icon large color="main" class="category__icon">{{category.icon}}</v-icon>
           {{category.title}}
         </div>
       </li>

@@ -7,7 +7,7 @@
   &__item{
     width: 50%;
     height: 200px;
-    background-color:#2C315D;
+    background-color:#424242;
     text-align: center;
     display: flex;
     align-items: center;
@@ -16,13 +16,13 @@
     &:nth-child(5),
     &:nth-child(8),
     &:nth-child(9){
-      background-color:#1F2248;
+      background-color:#212121;
     }
   }
   &__title{
     display: inline-block;
     width: 100%;
-    color: white;
+    color: $main;
     font-size: 24px;
     position: relative;
     padding-top: 45px;
