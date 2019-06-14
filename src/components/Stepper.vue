@@ -16,51 +16,93 @@
 
     <v-stepper-items>
       <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n+1">
-        <div class="sttepper" v-if="n===0">
-          <v-card  class="mb-5" color="grey lighten-1" height="200px">
+        <v-form v-if="n===0" :ref="'form' + n" v-model="item.valid" lazy-validation>
+          <v-card class="mb-5" color="grey lighten-1" height="200px">
             <p>Для продовження вам потрыбно пройти повну режстрацію в настройках профіля</p>
-            <v-btn color="main">Account Settings</v-btn>
+            <v-btn color="main" @click="goSetting">Account Settings</v-btn>
           </v-card>
-        </div>
-        
-        <div class="sttepper" v-if="n===1">
-          <v-card  class="mb-5" color="grey lighten-1" height="200px">
+        </v-form>
+
+        <v-form v-if="n===1" :ref="'form' + n" v-model="item.valid" lazy-validation>
+          <v-card class="mb-5" color="grey lighten-1">
             <p>вам потрыбно подати наступны файли</p>
-            <input type="file">
-            <input type="file">
-            <input type="file">
-            <input type="file">
-          </v-card>
-        </div>
+            <FileInput
+              label="Твір в роздрукованому або в електронному вигляді."
+              @file="fileData.push($event)"
+              :rules="vrequired"
+            />
+            <FileInput
+              label="Твір в роздрукованому або в електронному вигляді."
+              @file="fileData.push($event)"
+              :rules="vrequired"
+            />
 
-        <div class="sttepper" v-if="n===2">
-          <v-card  class="mb-5" color="grey lighten-1" height="200px">
-            <p>Вам потрібно оплатити</p>
-            <v-btn color="main">Pay</v-btn>
+            <v-textarea label="Additional information" v-model="additionalInformation"/>
           </v-card>
-        </div>
+        </v-form>
 
-        <div class="sttepper" v-if="n===3">
-          <v-card  class="mb-5" color="grey lighten-1" height="200px">
+        <v-form v-if="n===2" :ref="'form' + n" v-model="item.valid" lazy-validation>
+          <v-card class="mb-5" color="grey lighten-1">
+            <p>Вам потрібно оплатити {{needToPay}} uhy</p>
+            <TextInput
+              label="Card number"
+              :rules="textValidate"
+              placeholder="credit-card"
+              :value="card"
+              mask="credit-card"
+              @onInput="card = $event"
+            />
+            <TextInput
+              label="Price"
+              :rules="textValidate"
+              placeholder="price"
+              :value="price"
+              @onInput="price = $event"
+            />
+          </v-card>
+        </v-form>
+
+        <v-form v-if="n === 3" :ref="'form' + n" v-model="item.valid" lazy-validation>
+          <v-card class="mb-5" color="grey lighten-1" height="200px">
             <p>Дякую за все чекайте результатыв на пошту</p>
-            <v-btn color="main">Pay</v-btn>
           </v-card>
-        </div>
+        </v-form>
       </v-stepper-content>
-      <v-btn color="primary" @click="nextStep(activeStep)" :disabled="canNext">Continue</v-btn>
-      <v-btn color="primary" @click="prevStep(activeStep)" :disabled="canPrev">prev</v-btn>
+      <template v-if="!success">
+        <v-btn color="primary" @click="nextStep(activeStep)" :disabled="canNext">{{btnNextText}}</v-btn>
+        <v-btn color="primary" @click="prevStep(activeStep)" v-if="!canPrev" :disabled="canPrev">prev</v-btn>
+      </template>
     </v-stepper-items>
   </v-stepper>
 </template>
 
 <script>
+import { vrequired, textValidate } from "@/utils/validate";
 import { mapState, mapGetters, mapActions } from "vuex";
+import FileInput from "@/components/sub-components/FileInput";
+import TextInput from "@/components/sub-components/TextInput";
+import { setTimeout } from 'timers';
 
 export default {
   name: "Stepper",
 
+  components: { FileInput, TextInput },
+
+  props:{
+    productId:{
+      type: [String, Number] 
+    },
+    
+    needToPay:{
+      type: [String, Number] 
+    }
+  },
+
   data() {
     return {
+      success: false,
+      vrequired,
+      textValidate,
       activeStep: 1,
       stepStart: 1,
       header: [
@@ -80,31 +122,42 @@ export default {
           title: "Await results",
           tooltip: "lorem ipsum dplor"
         }
-      ]
+      ],
+      fileData: [],
+      additionalInformation: "",
+      card: "",
+      price: "",
+      id: ""
     };
   },
 
   computed: {
     ...mapState({
-      profile: state => state.profile
+      accountPlus: state => state.profile.accountPlus
     }),
-    completeStep(){
+    completeStep() {
       return this.activeStep;
     },
-    canNext(){
-      return this.activeStep >= this.header.length;
+    canNext() {
+      return this.activeStep >= this.header.length || !this.accountPlus;
     },
-    canPrev(){
+    canPrev() {
       return this.activeStep <= this.stepStart;
+    },
+
+    btnNextText() {
+      return this.activeStep === this.header.length - 1 ? "pay" : "Continue";
     }
   },
 
   methods: {
     nextStep(n) {
-      if (n === this.header.length) {
-        this.activeStep = this.header.length;
-      } else {
-        this.activeStep = n + 1;
+      if (this.$refs[`form${n - 1}`][0].validate() && this.accountPlus) {
+        if (n < 3) {
+          if (n === this.header.length) {
+            this.activeStep = this.header.length;
+          } else this.activeStep = n + 1;
+        } else this.sendData();
       }
     },
     prevStep(n) {
@@ -114,14 +167,37 @@ export default {
         this.activeStep = n - 1;
       }
     },
-  },
-    mounted(){
-      if(this.profile.accountPlus){
-        this.activeStep = 2;
-        this.stepStart = 2;
-      }
-    }
 
+    goSetting() {
+      this.$router.push({ name: "settings" });
+    },
+
+    sendData(){
+      setTimeout(()=>{
+        console.log('response');
+        let data = {
+          card: this.card, 
+          price: this.price, 
+          id: this.productId, 
+          file: this.fileData,
+          additional: this.additionalInformation
+        }
+        console.log(data);
+        this.activeStep = this.header.length;
+        this.success = true;
+      }, 1000);
+      
+    }
+  },
+  mounted() {
+    this.header.forEach(item => {
+      item.valid = false;
+    });
+    if (this.accountPlus) {
+      this.activeStep = 2;
+      this.stepStart = 2;
+    }
+  }
 };
 </script>
 

@@ -7,11 +7,11 @@
         <h2>Chose your product</h2>
         <v-radio-group v-model="radioGroup">
           <v-radio
-            v-for="(products, index) in products"
-            :key="index"
-            :label="products.title"
-            :value="products.title"
-          ></v-radio>
+            v-for="product in products"
+            :key="product.id"
+            :label="product.title"
+            :value="{id: product.id, title: product.title, price: product.price}"
+          />
         </v-radio-group>
         <v-btn 
           color="success" 
@@ -20,13 +20,14 @@
         >
           Apply
         </v-btn>
+
     </div>
     <div 
       class="approved-products__stepper"
       v-else
     >
-      <h2>Your products - {{radioGroup}}</h2>
-      <Stepper/>
+      <h2>Your products - {{radioGroup.title}}</h2>
+      <Stepper :productId="radioGroup.id" :needToPay="radioGroup.price"/>
     </div>
 
 

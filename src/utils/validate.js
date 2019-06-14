@@ -8,3 +8,7 @@ export const emailValidate = [
 export const textValidate = [
   v => (v && v.length >= 3) || "Minimum text length 3 character"
 ];
+
+export const vrequired = [
+  v => !!v || 'Item is required'
+];
