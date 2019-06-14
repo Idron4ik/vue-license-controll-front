@@ -45,7 +45,7 @@
 
     data () {
       return {
-        step: true,
+        step: false,
         radioGroup: null,
         approvedProducts:[
           {

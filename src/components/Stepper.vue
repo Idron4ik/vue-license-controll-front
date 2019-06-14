@@ -1,68 +1,80 @@
 <template>
-  <v-stepper v-model="e1">
-    <v-stepper-header >
-      <div
-        v-for="n in header.length"
-        :key="`${n}-stepper`"
-      >
-        <v-stepper-step :complete="e1 > n" :step="n">{{header[n]}}</v-stepper-step>
+  <v-stepper v-model="completeStep">
+    <v-stepper-header>
+      <div v-for="(item, n) in header" :key="`${n}-stepper`">
+        <v-stepper-step :complete="completeStep > n+1" :step="n+1">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <div flat color="primary" dark v-on="on">{{item.title}}</div>
+            </template>
+            <span>{{item.tooltip}}</span>
+          </v-tooltip>
+        </v-stepper-step>
         <v-divider></v-divider>
       </div>
-      <!-- <v-stepper-step :complete="e1 > 1" step="1">Name of step 1</v-stepper-step>
-
-      <v-divider></v-divider>
-
-      <v-stepper-step :complete="e1 > 2" step="2">Name of step 2</v-stepper-step>
-
-      <v-divider></v-divider>
-
-      <v-stepper-step step="3">Name of step 3</v-stepper-step> -->
     </v-stepper-header>
 
     <v-stepper-items>
-      <v-stepper-content
-          v-for="n in header.length"
-          :key="`${n}-content`"
-          :step="n"
+      <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n+1">
+        <v-card 
+          class="mb-5" 
+          color="grey lighten-1" 
+          height="200px"
         >
-          <v-card
-            class="mb-5"
-            color="grey lighten-1"
-            height="200px"
-          ></v-card>
+          {{n+1}}
+        </v-card>
 
-          <v-btn
-            color="primary"
-            @click="nextStep(n)"
-          >
-            Continue
-          </v-btn>
-
-          <v-btn flat>Cancel</v-btn>
-        </v-stepper-content>
+        <v-btn color="primary" @click="nextStep(n+1)">Continue</v-btn>
+        <!-- <v-btn flat>Cancel</v-btn> -->
+      </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Stepper",
 
   data() {
     return {
-      e1: 0,
-      header:['Registrations', 'Load fiels', 'Pay', 'Await results']
+      completeStep: 0,
+      header: [
+        {
+          title: "Registrations",
+          tooltip: "lorem ipsum dplor"
+        },
+        {
+          title: "Load fiels",
+          tooltip: "lorem ipsum dplor"
+        },
+        {
+          title: "Pay",
+          tooltip: "lorem ipsum dplor"
+        },
+        {
+          title: "Await results",
+          tooltip: "lorem ipsum dplor"
+        }
+      ]
     };
   },
 
-  methods:{
-      nextStep (n) {
-        if (n === this.steps) {
-          this.e1 = 1
-        } else {
-          this.e1 = n + 1
-        }
+computed:{
+  ...mapState({
+      profile: state => state.profile
+    }),
+},
+
+  methods: {
+    nextStep(n) {
+      if (n === this.steps) {
+        this.completeStep = 1;
+      } else {
+        this.completeStep = n + 1;
       }
+    }
   }
 };
 </script>
