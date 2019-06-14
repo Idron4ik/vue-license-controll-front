@@ -1,4 +1,4 @@
-# kindle
+# Vue License
 
 ## Project setup
 ```
