@@ -1,5 +1,5 @@
 <template>
-  <v-stepper v-model="completeStep">
+  <v-stepper :value="activeStep">
     <v-stepper-header>
       <div v-for="(item, n) in header" :key="`${n}-stepper`">
         <v-stepper-step :complete="completeStep > n+1" :step="n+1">
@@ -16,16 +16,40 @@
 
     <v-stepper-items>
       <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n+1">
-        <v-card 
-          class="mb-5" 
-          color="grey lighten-1" 
-          height="200px"
-        >
-          {{n+1}}
-        </v-card>
 
-        <v-btn color="primary" @click="nextStep(n+1)">Continue</v-btn>
-        <!-- <v-btn flat>Cancel</v-btn> -->
+        <div class="sttepper" v-if="n===0">
+          <v-card  class="mb-5" color="grey lighten-1" height="200px">
+            <p>Для продовження вам потрыбно пройти повну режстрацію в настройках профіля</p>
+            <v-btn color="main">Account Settings</v-btn>
+          </v-card>
+          <v-btn color="primary" @click="nextStep(n+1)">Continue</v-btn>
+        </div>
+        
+        <div class="sttepper" v-if="n===1">
+          <v-card  class="mb-5" color="grey lighten-1" height="200px">
+            <p>вам потрыбно подати наступны файли</p>
+            <input type="file">
+            <input type="file">
+            <input type="file">
+            <input type="file">
+          </v-card>
+          <v-btn color="primary" @click="nextStep(n+1)">Continue</v-btn>
+        </div>
+
+        <div class="sttepper" v-if="n===2">
+          <v-card  class="mb-5" color="grey lighten-1" height="200px">
+            <p>Вам потрібно оплатити</p>
+            <v-btn color="main">Pay</v-btn>
+          </v-card>
+          <v-btn color="primary" @click="nextStep(n+1)">Continue</v-btn>
+        </div>
+        <div class="sttepper" v-if="n===3">
+          <v-card  class="mb-5" color="grey lighten-1" height="200px">
+            <p>Дякую за все чекайте результатыв на пошту</p>
+            <v-btn color="main">Pay</v-btn>
+          </v-card>
+          <v-btn color="primary" @click="nextStep(n+1)">Continue</v-btn>
+        </div>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -39,7 +63,7 @@ export default {
 
   data() {
     return {
-      completeStep: 0,
+      activeStep: 2,
       header: [
         {
           title: "Registrations",
@@ -61,21 +85,37 @@ export default {
     };
   },
 
-computed:{
-  ...mapState({
+  computed: {
+    ...mapState({
       profile: state => state.profile
     }),
-},
+    completeStep(){
+      return this.activeStep;
+    }
+  },
 
   methods: {
     nextStep(n) {
       if (n === this.steps) {
-        this.completeStep = 1;
+        this.activeStep = 1;
       } else {
-        this.completeStep = n + 1;
+        this.activeStep = n + 1;
+      }
+    },
+
+   
+  },
+   updated(){
+      // console.log(123);
+      // console.log(this.activeStep);
+    },
+
+    mounted(){
+      if(this.profile.accountPlus){
+        this.activeStep = 2;
       }
     }
-  }
+
 };
 </script>
 
