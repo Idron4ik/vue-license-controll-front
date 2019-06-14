@@ -115,11 +115,6 @@ export default {
       }
     },
   },
-   updated(){
-      // console.log(123);
-      // console.log(this.activeStep);
-    },
-
     mounted(){
       if(this.profile.accountPlus){
         this.activeStep = 2;

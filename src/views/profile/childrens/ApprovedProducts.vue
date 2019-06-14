@@ -7,7 +7,7 @@
         <h2>Chose your product</h2>
         <v-radio-group v-model="radioGroup">
           <v-radio
-            v-for="(products, index) in approvedProducts"
+            v-for="(products, index) in products"
             :key="index"
             :label="products.title"
             :value="products.title"
@@ -30,13 +30,12 @@
     </div>
 
 
-
-    
   </div>
 </template>
 
 <script>
   import Stepper from '@/components/Stepper';
+  import { mapState, mapGetters, mapActions } from "vuex";
 
   export default {
     name: 'approvedProducts',
@@ -45,22 +44,15 @@
 
     data () {
       return {
-        step: false,
+        step: true,
         radioGroup: null,
-        approvedProducts:[
-          {
-            title: 'Lorem ipsum 1'
-          },
-          {
-            title: 'Lorem ipsum 2'
-          },
-          {
-            title: 'Lorem ipsum 3'
-          }
-        ]
       }
     },
-
+    computed:{
+      ...mapState({
+        products: state => state.products.approved
+      }),
+    },
     methods:{
       apply(){
         console.log(this.radioGroup);

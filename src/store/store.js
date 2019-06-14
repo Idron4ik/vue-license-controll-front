@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { profile } from './user/profile'
-import { products } from './products/productsUser'
+import { products } from './products/user/index'
 import productsAdmin  from './products/productsAdmin'
 
 Vue.use(Vuex)
