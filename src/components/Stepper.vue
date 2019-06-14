@@ -2,7 +2,7 @@
   <v-stepper :value="activeStep">
     <v-stepper-header>
       <div v-for="(item, n) in header" :key="`${n}-stepper`">
-        <v-stepper-step :complete="completeStep > n" :step="n+1">
+        <v-stepper-step :complete="completeStep > n+1" :step="n+1" edit-icon="create">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <div flat color="primary" dark v-on="on">{{item.title}}</div>
@@ -15,15 +15,12 @@
     </v-stepper-header>
 
     <v-stepper-items>
-      <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n">
-
+      <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n+1">
         <div class="sttepper" v-if="n===0">
           <v-card  class="mb-5" color="grey lighten-1" height="200px">
             <p>Для продовження вам потрыбно пройти повну режстрацію в настройках профіля</p>
             <v-btn color="main">Account Settings</v-btn>
           </v-card>
-          <!-- <v-btn color="primary" @click="nextStep(n+1)">Continue</v-btn>
-          <v-btn color="primary" @click="prevStep(n-1)" :disabled="canPrev">prev</v-btn> -->
         </div>
         
         <div class="sttepper" v-if="n===1">
@@ -34,8 +31,6 @@
             <input type="file">
             <input type="file">
           </v-card>
-          <!-- <v-btn color="primary" @click="nextStep(n+1)">Continue</v-btn>
-          <v-btn color="primary" @click="prevStep(n-1)" :disabled="canPrev">prev</v-btn> -->
         </div>
 
         <div class="sttepper" v-if="n===2">
@@ -43,18 +38,17 @@
             <p>Вам потрібно оплатити</p>
             <v-btn color="main">Pay</v-btn>
           </v-card>
-          <!-- <v-btn color="primary" @click="nextStep(n+1)">Continue</v-btn>
-          <v-btn color="primary" @click="prevStep(n-1)" :disabled="canPrev">prev</v-btn> -->
         </div>
+
         <div class="sttepper" v-if="n===3">
           <v-card  class="mb-5" color="grey lighten-1" height="200px">
             <p>Дякую за все чекайте результатыв на пошту</p>
             <v-btn color="main">Pay</v-btn>
           </v-card>
         </div>
-          <v-btn color="primary" @click="nextStep(n)" :disabled="canNext">Continue</v-btn>
-          <v-btn color="primary" @click="prevStep(n)" :disabled="canPrev">prev</v-btn>
       </v-stepper-content>
+      <v-btn color="primary" @click="nextStep(activeStep)" :disabled="canNext">Continue</v-btn>
+      <v-btn color="primary" @click="prevStep(activeStep)" :disabled="canPrev">prev</v-btn>
     </v-stepper-items>
   </v-stepper>
 </template>
@@ -67,7 +61,8 @@ export default {
 
   data() {
     return {
-      activeStep: 2,
+      activeStep: 1,
+      stepStart: 1,
       header: [
         {
           title: "Registrations",
@@ -97,10 +92,10 @@ export default {
       return this.activeStep;
     },
     canNext(){
-      return this.activeStep >= this.header.length - 1;
+      return this.activeStep >= this.header.length;
     },
     canPrev(){
-      return this.activeStep < 1;
+      return this.activeStep <= this.stepStart;
     }
   },
 
@@ -119,8 +114,6 @@ export default {
         this.activeStep = n - 1;
       }
     },
-
-   
   },
    updated(){
       // console.log(123);
@@ -129,7 +122,8 @@ export default {
 
     mounted(){
       if(this.profile.accountPlus){
-        this.activeStep = 0;
+        this.activeStep = 2;
+        this.stepStart = 2;
       }
     }
 
