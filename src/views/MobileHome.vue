@@ -1,12 +1,12 @@
 <template>
   <div>
 
-    <v-toolbar color="white" flat>
+    <v-toolbar :color="pageTitle.color" flat>
       <v-btn icon light @click="turnBack">
         <v-icon color="grey darken-2">{{homePage ? 'menu' : 'arrow_back'}}</v-icon>
       </v-btn>
 
-      <v-toolbar-title class="grey--text text--darken-4">{{pageTitle}}</v-toolbar-title>
+      <v-toolbar-title class="grey--text text--darken-4">{{pageTitle.title}}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -45,15 +45,21 @@ export default {
           link: "dashboard"
         },
         {
+          icon: "view_agenda",
+          title: "Approved Products",
+          link: "approvedProducts"
+        },
+        {
+          icon: "mail",
+          title: "Inbox",
+          link: "inbox"
+        },
+        {
           icon: "settings",
           title: "Settings",
           link: "settings"
         },
-        {
-          icon: "dashboard",
-          title: "Approved Products",
-          link: "approvedProducts"
-        },
+        
         {
           icon: "power_settings_new",
           title: "Log out",
@@ -66,11 +72,12 @@ export default {
   computed:{
     pageTitle(){
       switch(this.$route.name){
-        case 'home': return 'Home';
-        case 'settings': return 'Account Settings';
-        case 'admin': return 'Admin Dashboard';
-        case 'approvedProducts': return 'Approved Products';
-        default: return 'Dashboard'
+        case 'home': return { title: 'Home', color: 'orange' };
+        case 'settings': return { title: 'Account Settings', color: 'teal'};
+        case 'admin': return { title: 'Admin Dashboard', color: 'purple'};
+        case 'approvedProducts': return { title: 'Approved Products', color: 'pink'};
+        case 'inbox': return { title: 'Inbox', color: 'cyan'};
+        default: return { title: 'Dashboard', color: 'light-blue'};
       }
     },
 

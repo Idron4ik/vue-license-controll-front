@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Settings from './views/profile/childrens/Settings';
 import Dashboard from './views/profile/childrens/Dashboard';
 import ApprovedProducts from './views/profile/childrens/ApprovedProducts';
+import Inbox from './views/profile/childrens/Inbox';
 import RegistrationsForm from './views/RegistrationsForm';
 import Admin from './views/admin/Admin';
 import MobileHome from './views/MobileHome';
@@ -42,6 +43,11 @@ const router = new Router({
           path: 'approved-products',
           name: 'approvedProducts',
           component: ApprovedProducts
+        },
+        {
+          path: 'inbox',
+          name: 'inbox',
+          component: Inbox
         },
       ]
     },
