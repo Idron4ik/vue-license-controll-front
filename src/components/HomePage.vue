@@ -1,6 +1,5 @@
 <template>
-  <div>
-
+   <div>
     <v-toolbar :color="pageTitle.color" flat>
       <v-btn icon light @click="turnBack">
         <v-icon color="grey darken-2">{{homePage ? 'menu' : 'arrow_back'}}</v-icon>
@@ -33,40 +32,22 @@
 import Toolbar from "@/components/profile/Toolbar";
 
 export default {
-  name: "mobileHome",
+  name: "homePage",
   
   components: {Toolbar},
 
+  props:{
+    categories:{
+      type: Array
+    },
+    indexPage:{
+      type: String
+    }
+  },
+
   data() {
     return {
-      categories: [
-        {
-          icon: "dashboard",
-          title: "Dashboard",
-          link: "dashboard"
-        },
-        {
-          icon: "view_agenda",
-          title: "Approved Products",
-          link: "approvedProducts"
-        },
-        {
-          icon: "mail",
-          title: "Inbox",
-          link: "inbox"
-        },
-        {
-          icon: "settings",
-          title: "Settings",
-          link: "settings"
-        },
-        
-        {
-          icon: "power_settings_new",
-          title: "Log out",
-          link: "logout"
-        }
-      ]
+      
     };
   },
 
@@ -83,13 +64,13 @@ export default {
     },
 
     homePage(){
-      return this.$route.name === 'home';
+      return this.$route.name === this.indexPage;
     }
   },
 
   methods: {
     turnBack(){
-       this.$router.push({ name: 'home' });
+       this.$router.push({ name: this.indexPage });
     },
     switchContent(link) {
       console.log(link);

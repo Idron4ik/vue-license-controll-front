@@ -41,7 +41,7 @@ export const profile = {
         avatar= "",
         age = "",
         agree = null,
-        accountPlus = false
+        accountPlus = true
 
       } = user;
       state.token = token;

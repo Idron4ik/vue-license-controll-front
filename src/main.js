@@ -9,7 +9,7 @@ import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 Vue.prototype.$token = localStorage.getItem('jwt');
-axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.baseURL = 'https://frozen-headland-66798.herokuapp.com/';
 
 new Vue({
   router,

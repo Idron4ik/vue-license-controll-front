@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Settings from './views/profile/childrens/Settings';
 import Dashboard from './views/profile/childrens/Dashboard';
+import DashboardAdmin from './views/admin/childrens/DashboardAdmin';
 import ApprovedProducts from './views/profile/childrens/ApprovedProducts';
 import Inbox from './views/profile/childrens/Inbox';
 import RegistrationsForm from './views/RegistrationsForm';
@@ -52,12 +53,34 @@ const router = new Router({
       ]
     },
     {
-      path: '/admin',
+      path: '/admin/',
       name: 'admin',
       component: Admin,
       meta: { 
           requiresAuth: true,
-      }
+      },
+      children: [
+        {
+          path: 'dashboard',
+          name: 'dashboardAdmin',
+          component: DashboardAdmin
+        },
+      //   {
+      //     path: 'settings',
+      //     name: 'settings',
+      //     component: Settings
+      //   },
+      //   {
+      //     path: 'approved-products',
+      //     name: 'approvedProducts',
+      //     component: ApprovedProducts
+      //   },
+      //   {
+      //     path: 'inbox',
+      //     name: 'inbox',
+      //     component: Inbox
+      //   },
+      ]
   }, 
   ]
 });
