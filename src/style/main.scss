@@ -152,3 +152,15 @@ body{
     }
   }
 }
+
+
+
+// TableAdmin
+.card{
+  &__item{
+    display: flex;
+    .label{
+      width: 100px;
+    }
+  }
+}

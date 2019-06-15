@@ -1,17 +1,20 @@
 <template>
   <div class="table">
     <div class="table__desktop" v-if="!isMobile">
-        <TableDesktop 
+        <!-- <TableDesktop 
             :productsBody="productsBody"
             :productsHeaders="productsHeaders"
-        ></TableDesktop>
+        ></TableDesktop> -->
     </div>
 
     <div class="table__mobile" v-else>
-        <TableMobile 
-            :productsBody="productsBody"
-            :productsHeaders="productsHeaders"
-        ></TableMobile>
+        
+      
+      <TableMobile 
+        :productsBody="productsBody"
+        :productsHeaders="productsHeaders"
+      ></TableMobile>
+
     </div>
   </div>
 </template>
