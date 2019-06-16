@@ -3,20 +3,16 @@
     <v-text-field 
       :label="label" 
       @click='pickFile' 
-      v-model='imageName'
+      v-model='name'
       :rules="rules"
       prepend-icon='attach_file'
     />
-    <input
-      type="file"
-      style="display: none"
-      ref="image"
-      @change="onFilePicked"
-    >
+     <input type="file" style="display: none" ref="file" @change="handleFileUpload($event)"/>
   </v-flex>
 </template>
 
 <script>
+import { setTimeout } from 'timers';
   export default {
     name: 'fileInput',
 
@@ -33,38 +29,40 @@
 
     data(){
       return {
-        title: "Image Upload",
-        imageName: '',
-    		imageUrl: '',
-		    imageFile: ''
+        file: '',
+        name: ''
       }
     },
 
     methods: {
-      pickFile () {
-          this.$refs.image.click ()
+      pickFile(){
+        this.$refs.file.click ()
       },
-		
-      onFilePicked (e) {
+      
+      handleFileUpload(e){
+        // this.file = this.$refs.file.files;
         const files = e.target.files
-        if(files[0] !== undefined) {
-          this.imageName = files[0].name
-          if(this.imageName.lastIndexOf('.') <= 0) {
-            return
-          }
-          const fr = new FileReader ()
-          fr.readAsDataURL(files[0])
-          fr.addEventListener('load', () => {
-            this.imageUrl = fr.result
-            this.imageFile = files[0]
-            this.$emit('file', files[0])
-          })
-        } else {
-          this.imageName = ''
-          this.imageFile = ''
-          this.imageUrl = ''
-        }
-      }
+
+        let fr = new FileReader ();
+        
+        fr.readAsDataURL(files[0])
+        
+        fr.addEventListener('load', () => {
+          this.name = files[0].name;
+
+          // console.log(fr.result);
+          
+          // console.log(files[0]);
+          // this.imageFile =  // this is an image file that can be sent to server...
+          let fd = new FormData();
+            fd.append('file', files[0]);
+            console.log(fd);
+          // this.$emit('file', {file: this.file});
+        }) 
+       
+      },
+
+        
     }
 
     

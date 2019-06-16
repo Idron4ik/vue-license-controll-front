@@ -1,19 +1,19 @@
 export const profile = {
   namespaced: true,
   state: {
-    token: '',
-    firstName:'john',
-    lastName:'Dove',
-    age: '20',
-    email:'johnDove@gmail.com',
-    password:'cheburek123',
-    phone: '0997578501',
+    firstName:'',
+    lastName:'',
+    age: '',
+    email:'',
+    password:'',
+    phone: '',
     id: '',
-    address: 'Mars',
-    accountPlus: true,
+    address: '',
+    accountPlus: null,
     avatar:{
-      src: 'https://randomuser.me/api/portraits/men/85.jpg',
-      title: 'persnal avarat'
+      src: 'https://previews.123rf.com/images/stalkerstudent/stalkerstudent1601/stalkerstudent160101173/50961996-user-icon-vector-flat-design-style-eps-10.jpg',
+      title: 'persnal avarat',
+      file: ''
     },
 
     agree: null,
@@ -29,7 +29,7 @@ export const profile = {
    },
 
    mutations: {
-    setProfileData(state, {token = "", user} ){
+    setProfileData(state, {token = '', user} ){
       let { 
         firstName = "",
         lastName = "", 
@@ -38,13 +38,11 @@ export const profile = {
         _id = "",
         phone = "",
         address = "",
-        avatar= "",
+        avatarUrl= "",
         age = "",
         agree = null,
-        accountPlus = true
-
+        accountPlus = null,
       } = user;
-      state.token = token;
       state.firstName = firstName;
       state.lastName = lastName;
       state.age = age;
@@ -55,13 +53,17 @@ export const profile = {
       state.address = address;
       state.agree = agree;
       state.accountPlus = accountPlus;
-      state.avatar = avatar;
-      localStorage.setItem('jwt', token)
-      localStorage.setItem('user', JSON.stringify(user));
+      state.avatar.src = avatarUrl;
+
+      if(token) localStorage.setItem('jwt', token);
+      if(user) localStorage.setItem('user', JSON.stringify(user));
     },
     updataProfile(state, {stateValue, value}){
-      console.log(stateValue);
-      console.log(value);
+      if(stateValue === 'avatar.src') {
+        state['avatar']['src'] = value.result;
+        state['avatar']['file'] = value.file;
+        return
+      }
       state[stateValue] = value;
     }
    },

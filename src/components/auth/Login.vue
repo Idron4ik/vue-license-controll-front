@@ -64,11 +64,7 @@ export default {
       valid: true,
     };
   },
-  computed: {
-    ...mapState({
-      token: state => state.profile.token
-    })
-  },
+
   methods: {
     loginAction() {
       let token = localStorage.getItem("jwt");
@@ -93,7 +89,7 @@ export default {
         )
         .then(response => {
           this.$store.dispatch("profile/setProfileData", response.data);
-          this.$router.push(`/profile/${token}`);
+          this.$router.push(`/profile/${response.data.token}`);
         })
         .catch(error => {
           this.$emit('errors', error.response.data);

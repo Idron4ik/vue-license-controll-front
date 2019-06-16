@@ -31,13 +31,19 @@
         <v-form ref="form" v-model="valid" lazy-validation>
           <div v-for="(user, index) in accountFullData" :key="index">
             <TextInput
-              v-if="user.uniqueField != 'checkbox'  && user.uniqueField != 'password'"
+              v-if="user.uniqueField != 'checkbox'  && user.uniqueField != 'password' && user.uniqueField  != 'avatar'"
               :mask="user.mask"
               :label="user.label"
               :rules="user.rules"
               :value="profile[user.value]"
               :placeholder="profile[user.placeholder]"
               @onInput="onInput(index, $event)"
+            />
+
+            <FileInput
+              v-if="user.uniqueField  === 'avatar'"
+              :label="user.label"
+              @file="onInput(index, $event)"
             />
 
             <Password
@@ -71,11 +77,13 @@ import TextInput from "@/components/sub-components/TextInput";
 import Checkbox from "@/components/sub-components/Checkbox";
 import SliderInput from "@/components/sub-components/SliderInput";
 import Password from "@/components/sub-components/Password";
+import FileInput from "@/components/sub-components/FileInput";
+
 
 export default {
   name: "ProfileSettings",
 
-  components: { TextInput, Checkbox, SliderInput, Password },
+  components: { TextInput, Checkbox, SliderInput, Password, FileInput },
 
   data() {
     return {
@@ -92,6 +100,11 @@ export default {
           placeholder: "lastName",
           value: "lastName",
           rules: textValidate
+        },
+        {
+          label: "Avatar",
+          value: 'avatar.src',
+          uniqueField: "avatar"
         },
         {
           label: "Age",
@@ -114,14 +127,12 @@ export default {
           label: "Phone",
           placeholder: "",
           value: "phone",
-          rules: textValidate,
           mask: "phone",
         },
         {
           label: "Address",
           placeholder: "address",
           value: "address",
-          rules: textValidate
         },
         {
           label: "Do you agree?",
@@ -158,26 +169,30 @@ export default {
   methods: {
     updateProfile() {
       if(this.$refs.form.validate()){
-        console.log(123);
-         // axios
-    //     .post(
-    //       "/auth/login",
-    //       {
-    //         ...loginForm
-    //       },
-    //       {
-    //         headers: {
-    //           Authorization: `JWT ${token}`
-    //         }
-    //       }
-    //     )
-    //     .then(response => {
-    //       this.$store.dispatch("profile/setProfileData", response.data);
-    //       this.$router.push(`/profile/${token}`);
-    //     })
-    //     .catch(error => {
-    //       this.$emit('errors', error.response.data);
-    //     });
+        let { avatar, ...rest} = this.profile;
+        console.log(avatar);
+        let newData = {...rest, avatarUrl:  avatar}
+
+        let token = localStorage.getItem("jwt");
+       axios
+        .put(
+          "/auth/me",
+          {
+            file: formData 
+          },
+          {
+            headers: {
+              Authorization: `JWT ${token}`,
+            }
+          }
+        )
+        .then(response => {
+          console.log('success');
+          // this.$store.dispatch("profile/setProfileData", {user: response.data});
+        })
+        .catch(error => {
+          // this.$emit('errors', error.response.data);
+        });
       }
     },
 
@@ -191,25 +206,23 @@ export default {
   },
 
   mounted(){
-    // axios
-    //     .post(
-    //       "/auth/login",
-    //       {
-    //         ...loginForm
-    //       },
-    //       {
-    //         headers: {
-    //           Authorization: `JWT ${token}`
-    //         }
-    //       }
-    //     )
-    //     .then(response => {
-    //       this.$store.dispatch("profile/setProfileData", response.data);
-    //       this.$router.push(`/profile/${token}`);
-    //     })
-    //     .catch(error => {
-    //       this.$emit('errors', error.response.data);
-    //     });
+      let token = localStorage.getItem("jwt");
+
+    axios
+        .get(
+          "/auth/me",
+          {
+            headers: {
+              Authorization: `JWT ${token}`
+            }
+          }
+        )
+        .then(response => {
+          this.$store.dispatch("profile/setProfileData", {user: response.data});
+        })
+        .catch(error => {
+          // this.$emit('errors', error.response.data);
+        });
   }
 };
 </script>

@@ -75,9 +75,6 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      token: state => state.profile.token
-    })
   },
 
   methods: {
