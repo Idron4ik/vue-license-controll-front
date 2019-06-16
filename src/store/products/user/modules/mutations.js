@@ -2,6 +2,10 @@ export default {
   setProducts(state, products){
     state.productsBody = products;
   },
+  setCartProducts(state, products){
+    state.approved = products;
+  },
+
 
   addProductsItem(state, product){
     state.productsBody.unshift(product);

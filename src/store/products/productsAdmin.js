@@ -35,7 +35,8 @@ export default {
           status,
           ownerId,
           _id: id,
-          keywords
+          keywords,
+          links
         } = item;
   
           return {
@@ -44,7 +45,8 @@ export default {
             status,
             ownerId,
             id,
-            keywords
+            keywords,
+            links
           };
       });
 

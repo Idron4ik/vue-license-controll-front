@@ -73,7 +73,13 @@ export default {
        this.$router.push({ name: this.indexPage });
     },
     switchContent(link) {
-      console.log(link);
+      if(link === 'logout'){
+        localStorage.removeItem('jwt');
+        localStorage.removeItem('user');
+        this.$router.push('/');
+
+        return
+      }
       this.$router.push({ name: link });
     }
   }

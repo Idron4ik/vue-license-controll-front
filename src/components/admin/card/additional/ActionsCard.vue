@@ -1,5 +1,9 @@
 <template>
-  <v-container fluid grid-list-md>
+  <v-container 
+    fluid 
+    grid-list-md
+    class="status__table"
+  >
     <v-bottom-sheet v-model="isOpenModel">
       <v-combobox
         v-model="keywords"
@@ -23,9 +27,9 @@
       <template v-slot:item="props">
         <v-flex xs12 sm6 md4 lg3>
           <StatusCard
-            :countStep="4"
+            :countStep="5"
             :activeStep="
-              (props.item.status === 'PENDING' ) ? (1) : 
+              (props.item.status === 'PENDING') ? (1) : 
               (props.item.status === 'REJECTED') ? (1) : 
               (props.item.status === 'SCRIPT_WORKING') ? (2) : 
               (props.item.status === 'WAITING_FOR_RESULTS_REVIEW') ? (3) :
@@ -34,21 +38,27 @@
             "
           >
             <template #step-1>
-              <v-card :class=" {
-                  'error-border': props.item.status === 'REJECTED',
-                  'waiting': props.item.status === 'SCRIPT_WORKING'
-                }"
+              <div :class="[
+                  'products-card__container',
+                  {'error-border': props.item.status === 'REJECTED'},
+                  {'waiting': props.item.status === 'SCRIPT_WORKING'}
+                ]"
               >
-                <ul class="card__items">
-                  <li class="card__item" v-for="(item, index) in productsHeaders" :key="index">
+                <ul class="products-card__items">
+                  <li class="products-card__item" v-for="(item, index) in productsHeaders" :key="index">
                     <div class="label">{{item.text}}:</div>
                     <div class="value">
                       <template
                         v-if="item.text.toLowerCase() !== 'actions'"
                         class="align-end"
-                      >{{ props.item[item.text.toLowerCase()] }}</template>
+                      >
+                        {{ props.item[item.text.toLowerCase()] }}
+                      </template>
 
-                      <template v-if="item.text.toLowerCase() === 'actions'">
+                      <template 
+                        v-if="item.text.toLowerCase() === 'actions'"
+                        class="actions"  
+                      >
                         <v-btn 
                           color="success" 
                           :disabled="!props.item.keywords.length > 0"
@@ -66,93 +76,102 @@
                     </div>
                   </li>
                 </ul>
-              </v-card>
+              </div>
             </template>
             
 
             <template #step-2>
-              <v-card>
-                <ul class="card__items">
-                  <li class="card__item">
+              <div class="products-card__container">
+                <ul class="products-card__items">
+                  <li class="products-card__item">
                     <div class="label">{{productsHeaders[0].text}}</div>
-                    <div class="value">{{productsBody[0].title}}</div>
+                    <div class="value">{{props.item.title}}</div>
                   </li>
 
-                  <li class="card__item">
+                  <li class="products-card__item">
                     <div class="label">{{productsHeaders[1].text}}</div>
-                    <div class="value">{{productsBody[1].title}}</div>
+                    <div class="value">{{props.item.description}}</div>
                   </li>
 
-                  <li class="card__item">
+                  <li class="products-card__item">
                     <h2>Ожидаеться пока Отработает Парсер</h2>
                   </li>
                 </ul>
-              </v-card>
+              </div>
             </template>
 
             <template #step-3>
-              <v-card class="">
-                <ul class="card__items">
-                  <li class="card__item">
+              <div class="products-card__container">
+                <ul class="products-card__items">
+                  <li class="products-card__item">
                     <div class="label">{{productsHeaders[0].text}}</div>
-                    <div class="value">{{productsBody[0].title}}</div>
+                    <div class="value">{{props.item.title}}</div>
                   </li>
 
-                  <li class="card__item">
+                  <li class="products-card__item">
                     <div class="label">{{productsHeaders[1].text}}</div>
-                    <div class="value">{{productsBody[1].title}}</div>
+                    <div class="value">{{props.item.description}}</div>
                   </li>
 
-                  <li class="card__item">
-                    <div v-for="(link, index) in links" :key="index">
-                      {{index+1}}.
-                      <a :href="link">{{link}}</a>
-                      <i @click="removeLink(index)">remove</i>
-                    </div>
-                    <v-btn @click="sendLinks">submit</v-btn>
+                  <li class="products-card__item links">
+                    <ul
+                      class="links__container"
+                    >
+                      <li
+                        v-for="(link, index) in props.item.links" 
+                        :key="index"
+                         class="links__item"
+                      >
+                        
+                        {{index+1}}.
+                        <a :href="link">{{link}}</a>
+                        <v-icon @click="removeLink(props.index ,index)" >delete</v-icon>
+                      </li>
+                    </ul>
+                    <v-btn @click="sendLinks(props.item.id, props.index)">submit</v-btn>
                   </li>
                 </ul>
-              </v-card>
+              </div>
             </template>
 
             <template #step-4>
-              <v-card>
-                <ul class="card__items">
-                  <li class="card__item">
+              <div class="products-card__container">
+                <ul class="products-card__items">
+                  <li class="products-card__item">
                     <div class="label">{{productsHeaders[0].text}}</div>
-                    <div class="value">{{productsBody[0].title}}</div>
+                    <div class="value">{{props.item.title}}</div>
                   </li>
 
-                  <li class="card__item">
+                  <li class="products-card__item">
                     <div class="label">{{productsHeaders[1].text}}</div>
-                    <div class="value">{{productsBody[1].title}}</div>
+                    <div class="value">{{props.item.description}}</div>
                   </li>
 
-                  <li class="card__item">
+                  <li class="products-card__item">
                     <h2>Ожидаеться пока клиен оплатит</h2>
                   </li>
                 </ul>
-              </v-card>
+              </div>
             </template>
 
             <template #step-5>
-              <v-card>
-                <ul class="card__items">
-                  <li class="card__item">
+              <div class="products-card__container">
+                <ul class="products-card__items">
+                  <li class="products-card__item">
                     <div class="label">{{productsHeaders[0].text}}</div>
-                    <div class="value">{{productsBody[0].title}}</div>
+                    <div class="value">{{props.item.title}}</div>
                   </li>
 
-                  <li class="card__item">
+                  <li class="products-card__item">
                     <div class="label">{{productsHeaders[1].text}}</div>
-                    <div class="value">{{productsBody[1].title}}</div>
+                    <div class="value">{{props.item.description}}</div>
                   </li>
 
-                  <li class="card__item">
+                  <li class="products-card__item">
                      <h2>Клиент Оплатил</h2>
                   </li>
                 </ul>
-              </v-card>
+              </div>
             </template>
           </StatusCard>
         </v-flex>
@@ -188,12 +207,6 @@ export default {
       selected: [],
       keywords: [],
       index: null,
-      links: [
-        "https://google.com",
-        "https://lorem.i.psum.com",
-        "https://lorem.ips.um.com",
-        "https://lo.rem.ipsum.com"
-      ]
     };
   },
 
@@ -258,30 +271,32 @@ export default {
         });
     },
 
-    removeLink(index) {
-      this.links.splice(index, 1);
+    removeLink(parentIndex, elemIndex) {
+      this.productsBody[parentIndex].links.splice(elemIndex, 1);
     },
-    sendLinks() {
-      console.log("sendLinks");
-      console.log(this.links);
-      // axios
-      //   .put(
-      //     `/admin/products/${item.id}`,
-      //     {
-      //       status: "REJECTED"
-      //     },
-      //     {
-      //       headers: {
-      //         Authorization: `JWT ${localStorage.getItem("jwt")}`
-      //       }
-      //     }
-      //   )
-      //   .then(response => {
-      //     console.log(response);
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error);
-      //   });
+    sendLinks(id, parendId) {
+      // console.log("sendLinks");
+      // console.log(id);
+      // console.log(this.productsBody[parendId].links);
+      axios
+        .put(
+          `/admin/products/${id}`,
+          {
+            status: "WAITING_FOR_PAYMENT",
+            links: this.productsBody[parendId].links
+          },
+          {
+            headers: {
+              Authorization: `JWT ${localStorage.getItem("jwt")}`
+            }
+          }
+        )
+        .then(response => {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };

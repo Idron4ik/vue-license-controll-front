@@ -1,11 +1,11 @@
 <template>
 <div>
-    <AdminTable/>
+    <AdminCards/>
 </div>
 </template>
 
 <script>
-import AdminTable from '@/components/admin/table/AdminTable';
+import AdminCards from '@/components/admin/card/AdminCards';
 
 
 import axios from "axios";
@@ -13,7 +13,7 @@ import { mapActions } from "vuex";
   export default {
     name: 'profileIndex',
     
-    components: {AdminTable},
+    components: {AdminCards},
 
   }
 </script>

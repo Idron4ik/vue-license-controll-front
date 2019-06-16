@@ -82,9 +82,11 @@ import { mapState, mapGetters, mapActions } from "vuex";
 import FileInput from "@/components/sub-components/FileInput";
 import TextInput from "@/components/sub-components/TextInput";
 import { setTimeout } from 'timers';
+import axios from "axios";
+
 
 export default {
-  name: "Stepper",
+  name: "StepperCard",
 
   components: { FileInput, TextInput },
 
@@ -173,20 +175,32 @@ export default {
     },
 
     sendData(){
-      setTimeout(()=>{
-        console.log('response');
-        let data = {
-          card: this.card, 
-          price: this.price, 
-          id: this.productId, 
-          file: this.fileData,
-          additional: this.additionalInformation
+      let token = localStorage.getItem('jwt') ;
+
+      console.log(this.fileData);
+      axios
+        .put(`/admin/products/${this.productId}`,
+        {
+          // card: this.card, 
+          // price: this.price, 
+          documents: this.fileData,
+          // additional: this.additionalInformation
+        },
+        {
+          headers: {
+          "Authorization" : `JWT ${token}` 
         }
-        console.log(data);
-        this.activeStep = this.header.length;
+       })
+        .then((response) => {
+          console.log(response.data);
+          // this.$store.dispatch('products/setCartProducts', response.data);
+          this.activeStep = this.header.length;
         this.success = true;
-      }, 1000);
-      
+
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
   mounted() {

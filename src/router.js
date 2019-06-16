@@ -3,12 +3,11 @@ import Router from 'vue-router';
 import Settings from './views/profile/childrens/Settings';
 import Dashboard from './views/profile/childrens/Dashboard';
 import DashboardAdmin from './views/admin/childrens/DashboardAdmin';
-import ApprovedProducts from './views/profile/childrens/ApprovedProducts';
+import Cart from './views/profile/childrens/Cart';
 import Inbox from './views/profile/childrens/Inbox';
 import RegistrationsForm from './views/RegistrationsForm';
-import Admin from './views/admin/Admin';
-import MobileHome from './views/MobileHome';
-import Profile from './views/profile/Profile';
+import Admin from './views/admin/AdminHome';
+import MobileHome from './views/profile/ProfileHome';//chank
 
 Vue.use(Router)
 
@@ -28,7 +27,7 @@ const router = new Router({
         requiresAuth: true,
         isAdmin : true
       },
-      component: () => import(/* webpackChunkName: "profile" */ './views/MobileHome'),
+      component: () => import(/* webpackChunkName: "profile" */ './views/profile/ProfileHome'),
       children: [
         {
           path: 'dashboard',
@@ -41,9 +40,9 @@ const router = new Router({
           component: Settings
         },
         {
-          path: 'approved-products',
-          name: 'approvedProducts',
-          component: ApprovedProducts
+          path: 'cart',
+          name: 'cart',
+          component: Cart
         },
         {
           path: 'inbox',
@@ -57,7 +56,8 @@ const router = new Router({
       name: 'admin',
       component: Admin,
       meta: { 
-          requiresAuth: true,
+        requiresAuth: true,
+        isAdmin : true
       },
       children: [
         {
@@ -65,21 +65,6 @@ const router = new Router({
           name: 'dashboardAdmin',
           component: DashboardAdmin
         },
-      //   {
-      //     path: 'settings',
-      //     name: 'settings',
-      //     component: Settings
-      //   },
-      //   {
-      //     path: 'approved-products',
-      //     name: 'approvedProducts',
-      //     component: ApprovedProducts
-      //   },
-      //   {
-      //     path: 'inbox',
-      //     name: 'inbox',
-      //     component: Inbox
-      //   },
       ]
   }, 
   ]
@@ -87,13 +72,11 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
-      console.log(localStorage.getItem('jwt') );
-      next();
-      // if (localStorage.getItem('jwt') == null) {
-      //     next({
-      //         path: '/login',
-      //     })
-      // } else {
+      if (localStorage.getItem('jwt') == null) {
+        next({
+              path: '/',
+          })
+      } else {
           let user = JSON.parse(localStorage.getItem('user'));
           if(to.matched.some(record => record.meta.isAdmin)) {
             if(user.isAdmin){
@@ -102,10 +85,10 @@ router.beforeEach((to, from, next) => {
             else{
               next()
             }
-      //     }else {
-      //         next()
-      //     }
-      }
+          } else {
+              next()
+            }
+        }
   // } else if(to.matched.some(record => record.meta.guest)) {
   //     if(localStorage.getItem('jwt') == null){
   //         next()

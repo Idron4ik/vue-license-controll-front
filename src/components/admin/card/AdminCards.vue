@@ -1,20 +1,10 @@
 <template>
   <div class="table">
-    <div class="table__desktop" v-if="!isMobile">
-        <!-- <TableDesktop 
-            :productsBody="productsBody"
-            :productsHeaders="productsHeaders"
-        ></TableDesktop> -->
-    </div>
-
-    <div class="table__mobile" v-else>
-        
-      
-      <TableMobile 
+    <div class="table__mobile">
+      <ActionsCard 
         :productsBody="productsBody"
         :productsHeaders="productsHeaders"
-      ></TableMobile>
-
+      />
     </div>
   </div>
 </template>
@@ -22,16 +12,14 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
-import TableDesktop from "./additional/TableDesktop";
-import TableMobile from "./additional/TableMobile";
+import ActionsCard from "./additional/ActionsCard";
 export default {
-  name: "adminTable",
+  name: "AdminCards",
 
-  components: {TableDesktop, TableMobile },
+  components: { ActionsCard },
 
   data() {
     return {
-      isMobile: false,
       selected: [],
       expand: false
     };
@@ -45,7 +33,6 @@ export default {
   },
 
   mounted() {
-    this.isMobile = window.screen.width < 960;
 
     axios
       .get(`/admin/products`, {

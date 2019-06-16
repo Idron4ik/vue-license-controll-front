@@ -1,15 +1,15 @@
 <template>
   <div>
-      <HomePage :categories="categories" indexPage="admin" />
+      <HomePage :categories="categories" indexPage="home" />
   </div>
 
 </template>
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
-import HomePage from '@/components/HomePage';
+import HomePage from '@/components/sub-modules/HomePage';
 export default {
-  name: "profileIndexAdmin",
+  name: "ProfileHome",
 
   components: {
     HomePage
@@ -21,18 +21,24 @@ export default {
         {
           icon: "dashboard",
           title: "Dashboard",
-          link: "dashboardAdmin"
+          link: "dashboard"
         },
         {
-          icon: "view_agenda",
-          title: "Approved Products",
-          link: "approvedProductsAdmin"
+          icon: "shopping_cart",
+          title: "Cart",
+          link: "cart"
         },
         {
           icon: "mail",
           title: "Inbox",
-          link: "inboxAdmin"
+          link: "inbox"
         },
+        {
+          icon: "settings",
+          title: "Settings",
+          link: "settings"
+        },
+        
         {
           icon: "power_settings_new",
           title: "Log out",

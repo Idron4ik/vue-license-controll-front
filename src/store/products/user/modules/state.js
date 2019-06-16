@@ -76,30 +76,6 @@ export default {
     }
   ],
 
-  approved:[
-    {
-      title: "Ice cream sandwich",
-      id: 1,
-      price: 900
-    },
-    {
-      title: "Eclair",
-      id: 2,
-      price: 400
-
-    },
-    {
-      title: "Cupcake",
-      id: 3,
-      price: 200
-
-    },
-    {
-      title: "Gingerbread",
-      id: 4,
-      price: 100
-
-    }
-  ]
+  approved:[]
 
 };

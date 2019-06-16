@@ -1,6 +1,6 @@
 <template>
 <div>
-   <Table/>
+   <UserCards/>
 </div>
   <!-- <v-flex xs10 class="center"> -->
  
@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import Table from '@/components/Table';
+import UserCards from '@/components/profile/card/UserCards';
 
 import axios from "axios";
 import { mapActions } from "vuex";
   export default {
     name: 'profileIndex',
     
-    components: {Table},
+    components: {UserCards},
 
     mounted(){
       
@@ -29,6 +29,7 @@ import { mapActions } from "vuex";
         }
        })
         .then((response) => {
+          console.log(1);
           this.$store.dispatch('products/setProducts', response.data);
           // this.$store.dispatch('profile/setProfileData', response.data);
         })

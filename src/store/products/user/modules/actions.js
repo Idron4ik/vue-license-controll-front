@@ -19,8 +19,25 @@ export default {
     });
 
     commit('setProducts', productsResult);
-
   },
+
+  setCartProducts({commit}, products){
+    let productsResult = products.map((item)=>{
+      let {
+        title,
+        links,
+        _id: id
+      } = item;
+
+        return {
+          title,
+          links,
+          id
+        };
+    });
+    commit('setCartProducts', productsResult);
+  },
+
 
 
 

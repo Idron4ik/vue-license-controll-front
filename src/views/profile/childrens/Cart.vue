@@ -1,7 +1,7 @@
 <template>
-  <div class="approved-products">
+  <div class="cart">
     <div 
-      class="approved-products__select"
+      class="cart__select"
       v-if="step"
     >
         <h2>Chose your product</h2>
@@ -23,7 +23,7 @@
 
     </div>
     <div 
-      class="approved-products__stepper"
+      class="cart__stepper"
       v-else
     >
       <h2>Your products - {{radioGroup.title}}</h2>
@@ -35,11 +35,12 @@
 </template>
 
 <script>
-  import Stepper from '@/components/Stepper';
+  import axios from "axios";
+  import Stepper from '../../../components/profile/cart/StepperCard';
   import { mapState, mapGetters, mapActions } from "vuex";
 
   export default {
-    name: 'approvedProducts',
+    name: 'Cart',
 
     components: {Stepper},
 
@@ -59,6 +60,30 @@
         console.log(this.radioGroup);
         this.step = false
       }
+    },
+
+    mounted(){
+      if(this.$route.params.title){
+        this.step = false;
+        this.radioGroup = this.$route.params;
+      }
+
+      let token = localStorage.getItem('jwt') ;
+      axios
+        .get(`/products?status=WAITING_FOR_PAYMENT`,
+        {
+          headers: {
+          "Authorization" : `JWT ${token}` 
+        }
+       })
+        .then((response) => {
+          console.log(response.data);
+          this.$store.dispatch('products/setCartProducts', response.data);
+
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
 
   }
