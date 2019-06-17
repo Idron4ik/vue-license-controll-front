@@ -2,6 +2,7 @@ import axios from "axios";
 
 export default {
   setProducts({commit}, products){
+    console.log(products);
     let productsResult = products.map((item)=>{
       let {
         description,

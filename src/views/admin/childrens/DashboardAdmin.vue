@@ -15,6 +15,18 @@ import { mapActions } from "vuex";
     
     components: {AdminCards},
 
+  mounted() {
+
+    axios
+      .get(`/admin/products`)
+      .then(response => {
+        //Add refresh page
+        this.$store.dispatch("productsAdmin/setProducts", response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
   }
 </script>
 

@@ -30,19 +30,6 @@ export default {
       productsBody: state => state.productsAdmin.productsBody,
       productsHeaders: state => state.productsAdmin.productsHeaders
     })
-  },
-
-  mounted() {
-
-    axios
-      .get(`/admin/products`)
-      .then(response => {
-        //Add refresh page
-        this.$store.dispatch("productsAdmin/setProducts", response.data);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 };
 </script>

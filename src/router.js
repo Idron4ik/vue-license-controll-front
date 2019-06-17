@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Settings from './views/profile/childrens/Settings';
 import Dashboard from './views/profile/childrens/Dashboard';
 import DashboardAdmin from './views/admin/childrens/DashboardAdmin';
+import InboxAdmin from './views/admin/childrens/InboxAdmin';
 import Cart from './views/profile/childrens/Cart';
 import Inbox from './views/profile/childrens/Inbox';
 import RegistrationsForm from './views/RegistrationsForm';
@@ -23,9 +24,8 @@ const router = new Router({
     {
       path: '/profile/:id',
       name: 'home',
-      meta: { 
+      meta: {
         requiresAuth: true,
-        isAdmin : true
       },
       component: () => import(/* webpackChunkName: "profile" */ './views/profile/ProfileHome'),
       children: [
@@ -52,12 +52,12 @@ const router = new Router({
       ]
     },
     {
-      path: '/admin/',
+      path: '/admin',
       name: 'admin',
       component: Admin,
-      meta: { 
+      meta: {
         requiresAuth: true,
-        isAdmin : true
+        isAdmin: true
       },
       children: [
         {
@@ -65,39 +65,41 @@ const router = new Router({
           name: 'dashboardAdmin',
           component: DashboardAdmin
         },
+        {
+          path: 'inbox',
+          name: 'inboxAdmin',
+          component: InboxAdmin
+        },
       ]
-  }, 
+    },
   ]
 });
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-      if (localStorage.getItem('jwt') == null) {
-        next({
-              path: '/',
-          })
-      } else {
-          let user = JSON.parse(localStorage.getItem('user'));
-          if(to.matched.some(record => record.meta.isAdmin)) {
-            if(user.isAdmin){
-              next({ path: '/admin'})
-            }
-            else{
-              next()
-            }
-          } else {
-              next()
-            }
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem('jwt') == null) {
+      next({
+        path: '/',
+      })
+    } else {
+      let user = JSON.parse(localStorage.getItem('user'));
+
+      if (to.matched.some(record => record.meta.isAdmin)) {
+        if (user.isAdmin) {
+          next()
         }
-  // } else if(to.matched.some(record => record.meta.guest)) {
-  //     if(localStorage.getItem('jwt') == null){
-  //         next()
-  //     }
-  //     else{
-  //         next({ name: 'userboard'})
-  //     }
-  }else {
-      next() 
+        // else{
+        //   next()
+        // }
+      }
+      else {
+          next()
+        }
+    }
+  } 
+  else {
+    next()
   }
 });
 

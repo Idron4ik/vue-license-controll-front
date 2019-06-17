@@ -29,22 +29,22 @@ export const profile = {
    },
 
    mutations: {
-    setProfileData(state, {token = '', user} ){
-      console.log(user);
-      let { 
-        firstName = "",
-        lastName = "", 
-        email = "", 
-        password = "", 
-        _id = "",
-        phone = "",
-        address = "",
-        avatarUrl= "",
-        age = "",
-        agree = null,
-        accountPlus = null,
-      } = user;
-
+    setProfileData(state, {
+    token = '', 
+    firstName = "",
+    lastName = "", 
+    email = "", 
+    password = "", 
+    _id = "",
+    phone = "",
+    address = "",
+    avatarUrl= "",
+    age = "",
+    agree = null,
+    accountPlus = null,
+    isAdmin = false,
+    user = isAdmin
+  }){
       if (firstName) state.firstName = firstName;
       if (lastName) state.lastName = lastName;
       if (age) state.age = age;

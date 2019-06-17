@@ -1,7 +1,7 @@
 <template>
   <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
-      <InboxPage :items="items" url="products"/>
+      <InboxPage :items="items" url="admin/products"/>
     </v-flex>
   </v-layout>
 </template>
@@ -24,7 +24,7 @@ export default {
 
     mounted(){
       axios
-        .get("/products?status=PAYED")
+        .get("/admin/products?status=PAYED")
         .then(response => {
           this.items = response.data;
         })
@@ -34,7 +34,3 @@ export default {
     }
   }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

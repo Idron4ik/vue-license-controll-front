@@ -49,14 +49,16 @@ export default {
   },
 
   mounted(){
-    axios
-      .get("/auth/me")
-      .then(response => {
-        this.$store.dispatch("profile/setProfileData", {user: response.data});
-      })
-      .catch(error => {
-        // this.$emit('errors', error.response.data);
-      });
-  }
+      axios
+        .get(`/auth/me`)
+        .then((response) => {
+          this.$store.dispatch('profile/setProfileData', response.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+    }
+
 };
 </script>

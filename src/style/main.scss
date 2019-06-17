@@ -214,3 +214,31 @@ body{
   }
 }
 }
+
+.chat{
+  &__main{
+    overflow-y: scroll;
+  }
+  .message{
+    &__item{
+      margin-bottom: 10px;
+      width: 90%;
+      .text{
+        border-radius: 10px;
+        padding: 10px 20px;
+        display: inline-block;
+        background-color: #212121;
+      }
+    }
+    &__admin{
+      margin-left: auto;  
+      text-align: right;
+    }
+  }
+  
+  &__footer{
+    display: flex;
+    align-items: center;
+    padding: 16px;
+  }
+}

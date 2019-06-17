@@ -177,7 +177,7 @@ export default {
         .put("/auth/me", rest)
         .then(response => {
           console.log('success');
-          this.$store.dispatch("profile/setProfileData", {user: response.data});
+          this.$store.dispatch("profile/setProfileData", response.data);
         })
         .catch(error => {
           console.log(error);
@@ -189,7 +189,7 @@ export default {
         axios
         .put("/auth/me", fd)
         .then(response => {
-          this.$store.dispatch("profile/setProfileData", {user: response.data});
+          this.$store.dispatch("profile/setProfileData", response.data);
         })
         .catch(error => {
           console.log(error);
@@ -206,16 +206,5 @@ export default {
       this.$store.dispatch('profile/updataProfile', {stateValue: this.accountFullData[index].value ,value});
     },
   },
-
-  // mounted(){
-  //   axios
-  //       .get("/auth/me")
-  //       .then(response => {
-  //         this.$store.dispatch("profile/setProfileData", {user: response.data});
-  //       })
-  //       .catch(error => {
-  //         // this.$emit('errors', error.response.data);
-  //       });
-  // }
 };
 </script>

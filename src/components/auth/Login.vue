@@ -52,13 +52,15 @@ export default {
           label: "Email address",
           placeholder: "email",
           rules: emailValidate,
-          value:'recon@gmail.com'
+          // value:'admin@gmail.com'
+          value:'imrecon@gmail.com'
         },
         {
           label: "Password",
           placeholder: "password",
           uniqueField: "password",
           value:'qwerty123'
+          // value:'kek123'
         },
       ],
       valid: true,
@@ -72,21 +74,25 @@ export default {
           email: this.login[0].value,
           password: this.login[1].value
         };
-
-      axios
-        .post(
-          "/auth/login",
-          {
-            ...loginForm
-          },
-        )
-        .then(response => {
-          this.$store.dispatch("profile/setProfileData", response.data);
-          this.$router.push(`/profile/${response.data.token}`);
-        })
-        .catch(error => {
-          this.$emit('errors', error.response.data);
-        });
+        console.log(loginForm);
+        axios
+          .post(
+            "/auth/login",
+            {
+              ...loginForm
+            },
+          )
+          .then(response => {
+            this.$store.dispatch("profile/setProfileData", response.data);
+            if(JSON.parse(localStorage.getItem('user')).isAdmin) {
+              this.$router.push({name: 'admin'});
+              return
+            }
+            this.$router.push(`/profile/${response.data.token}`);
+          })
+          .catch(error => {
+            this.$emit('errors', error.response.data);
+          });
       }
     },
     onInput(index, value){
