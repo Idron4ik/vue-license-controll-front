@@ -30,6 +30,7 @@ export const profile = {
 
    mutations: {
     setProfileData(state, {token = '', user} ){
+      console.log(user);
       let { 
         firstName = "",
         lastName = "", 
@@ -43,22 +44,25 @@ export const profile = {
         agree = null,
         accountPlus = null,
       } = user;
-      state.firstName = firstName;
-      state.lastName = lastName;
-      state.age = age;
-      state.email = email;
-      state.password = password;
-      state.phone = phone;
-      state.id = _id;
-      state.address = address;
-      state.agree = agree;
-      state.accountPlus = accountPlus;
-      state.avatar.src = avatarUrl;
+
+      if (firstName) state.firstName = firstName;
+      if (lastName) state.lastName = lastName;
+      if (age) state.age = age;
+      if (email) state.email = email;
+      if (password) state.password = password;
+      if (phone) state.phone = phone;
+      if (_id) state.id = _id;
+      if (address) state.address = address;
+      if (agree) state.agree = agree;
+      if (accountPlus) state.accountPlus = accountPlus;
+      if (avatarUrl) state.avatar.src = avatarUrl;
 
       if(token) localStorage.setItem('jwt', token);
       if(user) localStorage.setItem('user', JSON.stringify(user));
     },
     updataProfile(state, {stateValue, value}){
+      console.log(stateValue);
+      console.log(value);
       if(stateValue === 'avatar.src') {
         state['avatar']['src'] = value.result;
         state['avatar']['file'] = value.file;

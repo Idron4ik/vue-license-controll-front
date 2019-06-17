@@ -52,13 +52,13 @@ export default {
           label: "Email address",
           placeholder: "email",
           rules: emailValidate,
-          value:'haker.kolya@gmai.com'
+          value:'recon@gmail.com'
         },
         {
           label: "Password",
           placeholder: "password",
           uniqueField: "password",
-          value:'haker123'
+          value:'qwerty123'
         },
       ],
       valid: true,
@@ -67,8 +67,6 @@ export default {
 
   methods: {
     loginAction() {
-      let token = localStorage.getItem("jwt");
-
       if (this.$refs.form.validate()) {
         let loginForm = {
           email: this.login[0].value,
@@ -81,11 +79,6 @@ export default {
           {
             ...loginForm
           },
-          {
-            headers: {
-              Authorization: `JWT ${token}`
-            }
-          }
         )
         .then(response => {
           this.$store.dispatch("profile/setProfileData", response.data);

@@ -47,11 +47,6 @@ export default {
       {
         title: product.title,
         description: product.description
-      },
-      {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem('jwt')}`
-        }
       })
       .then(response => {
           //Add refresh page
@@ -67,12 +62,7 @@ export default {
 
   deleteProductsItem({state, commit}, {id, index}){
     axios
-      .delete(`/products/${id}`, 
-      {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem('jwt')}`
-        }
-      })
+      .delete(`/products/${id}`)
       .then(response => {
         //Add refresh page
         commit('deleteProductsItem', index);

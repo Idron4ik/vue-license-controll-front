@@ -236,11 +236,6 @@ export default {
             status: "SCRIPT_WORKING",
             keywords: item.keywords
           },
-          {
-            headers: {
-              Authorization: `JWT ${localStorage.getItem("jwt")}`
-            }
-          }
         )
         .then(response => {
           console.log(response);
@@ -257,11 +252,6 @@ export default {
           {
             status: "REJECTED"
           },
-          {
-            headers: {
-              Authorization: `JWT ${localStorage.getItem("jwt")}`
-            }
-          }
         )
         .then(response => {
           console.log(response);
@@ -285,11 +275,6 @@ export default {
             status: "WAITING_FOR_PAYMENT",
             links: this.productsBody[parendId].links
           },
-          {
-            headers: {
-              Authorization: `JWT ${localStorage.getItem("jwt")}`
-            }
-          }
         )
         .then(response => {
           console.log(response);

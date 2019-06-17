@@ -35,11 +35,7 @@ export default {
   mounted() {
 
     axios
-      .get(`/admin/products`, {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem("jwt")}`
-        }
-      })
+      .get(`/admin/products`)
       .then(response => {
         //Add refresh page
         this.$store.dispatch("productsAdmin/setProducts", response.data);

@@ -12,7 +12,7 @@
           :rules="item.rules"
           :placeholder="item.placeholder"
           :value="item.value"
-          @onInput="onInput(item.value, $event)"
+          @onInput="onInput(item, $event)"
         />
         <Password
           v-if="item.uniqueField === 'password'"
@@ -20,7 +20,7 @@
           :rules="item.rules"
           :placeholder="item.placeholder"
           :value="item.value"
-          @onInput="onInput(item.value, $event)"
+          @onInput="onInput(item, $event)"
         />
 
       </div>
@@ -79,7 +79,7 @@ export default {
 
   methods: {
     onInput(fieldText, value){
-      fieldText = value;
+      fieldText.value = value;
     },
     signAction() {
       if (this.$refs.form.validate()) {

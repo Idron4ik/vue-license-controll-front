@@ -3,23 +3,26 @@
     <div 
       class="cart__select"
       v-if="step"
-    >
-        <h2>Chose your product</h2>
-        <v-radio-group v-model="radioGroup">
-          <v-radio
-            v-for="product in products"
-            :key="product.id"
-            :label="product.title"
-            :value="{id: product.id, title: product.title, price: product.price}"
-          />
-        </v-radio-group>
-        <v-btn 
-          color="success" 
-          @click="apply"
-          :disabled="!radioGroup"
-        >
-          Apply
-        </v-btn>
+    >   
+        <template v-if="products.length > 0">
+          <h2>Chose your product</h2>
+          <v-radio-group v-model="radioGroup">
+            <v-radio
+              v-for="product in products"
+              :key="product.id"
+              :label="product.title"
+              :value="{id: product.id, title: product.title, price: product.price}"
+            />
+          </v-radio-group>
+          <v-btn 
+            color="success" 
+            @click="apply"
+            :disabled="!radioGroup"
+          >
+            Apply
+          </v-btn>
+        </template>
+        <div v-else>No data Set</div>
 
     </div>
     <div 
@@ -68,14 +71,8 @@
         this.radioGroup = this.$route.params;
       }
 
-      let token = localStorage.getItem('jwt') ;
       axios
-        .get(`/products?status=WAITING_FOR_PAYMENT`,
-        {
-          headers: {
-          "Authorization" : `JWT ${token}` 
-        }
-       })
+        .get(`/products?status=WAITING_FOR_PAYMENT`)
         .then((response) => {
           console.log(response.data);
           this.$store.dispatch('products/setCartProducts', response.data);

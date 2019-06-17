@@ -20,14 +20,8 @@ import { mapActions } from "vuex";
 
     mounted(){
       
-      let token = localStorage.getItem('jwt') ;
       axios
-        .get(`/products`,
-        {
-          headers: {
-          "Authorization" : `JWT ${token}` 
-        }
-       })
+        .get(`/products`)
         .then((response) => {
           console.log(1);
           this.$store.dispatch('products/setProducts', response.data);
@@ -40,12 +34,7 @@ import { mapActions } from "vuex";
       // UserDATA
 
       // axios
-      //   .get(`/auth/me`,
-      //   {
-      //     headers: {
-      //     "Authorization" : `JWT ${token}` 
-      //   }
-      //  })
+      //   .get(`/auth/me`)
       //   .then((response) => {
       //     this.$store.dispatch('products/setProducts', response.data);
       //     // this.$store.dispatch('profile/setProfileData', response.data);

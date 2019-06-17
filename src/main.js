@@ -8,8 +8,8 @@ import axios from "axios";
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
-Vue.prototype.$token = localStorage.getItem('jwt');
 axios.defaults.baseURL = 'https://frozen-headland-66798.herokuapp.com/';
+axios.defaults.headers.common['Authorization'] = `JWT ${localStorage.getItem("jwt")}`;
 
 new Vue({
   router,

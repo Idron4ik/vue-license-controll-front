@@ -28,6 +28,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 md8 class="settings">
+        <div v-if="profile.accountPlus" style="text-align: right">Congratulations on your account completely filled</div>
         <v-form ref="form" v-model="valid" lazy-validation>
           <div v-for="(user, index) in accountFullData" :key="index">
             <TextInput
@@ -169,28 +170,29 @@ export default {
   methods: {
     updateProfile() {
       if(this.$refs.form.validate()){
+        console.log(this.profile);
         let { avatar, ...rest} = this.profile;
-        console.log(avatar);
-        let newData = {...rest, avatarUrl:  avatar}
 
-        let token = localStorage.getItem("jwt");
        axios
-        .put(
-          "/auth/me",
-          {
-            file: formData 
-          },
-          {
-            headers: {
-              Authorization: `JWT ${token}`,
-            }
-          }
-        )
+        .put("/auth/me", rest)
         .then(response => {
           console.log('success');
-          // this.$store.dispatch("profile/setProfileData", {user: response.data});
+          this.$store.dispatch("profile/setProfileData", {user: response.data});
         })
         .catch(error => {
+          console.log(error);
+          // this.$emit('errors', error.response.data);
+        });
+
+        let fd = new FormData();
+        fd.append('avatar', avatar.file);
+        axios
+        .put("/auth/me", fd)
+        .then(response => {
+          this.$store.dispatch("profile/setProfileData", {user: response.data});
+        })
+        .catch(error => {
+          console.log(error);
           // this.$emit('errors', error.response.data);
         });
       }
@@ -205,24 +207,15 @@ export default {
     },
   },
 
-  mounted(){
-      let token = localStorage.getItem("jwt");
-
-    axios
-        .get(
-          "/auth/me",
-          {
-            headers: {
-              Authorization: `JWT ${token}`
-            }
-          }
-        )
-        .then(response => {
-          this.$store.dispatch("profile/setProfileData", {user: response.data});
-        })
-        .catch(error => {
-          // this.$emit('errors', error.response.data);
-        });
-  }
+  // mounted(){
+  //   axios
+  //       .get("/auth/me")
+  //       .then(response => {
+  //         this.$store.dispatch("profile/setProfileData", {user: response.data});
+  //       })
+  //       .catch(error => {
+  //         // this.$emit('errors', error.response.data);
+  //       });
+  // }
 };
 </script>

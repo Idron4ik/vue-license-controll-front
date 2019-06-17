@@ -44,7 +44,7 @@
         <v-form v-if="n===2" :ref="'form' + n" v-model="item.valid" lazy-validation>
           <v-card class="mb-5" color="grey lighten-1">
             <p>Вам потрібно оплатити {{needToPay}} uhy</p>
-            <TextInput
+             <TextInput
               label="Card number"
               :rules="textValidate"
               placeholder="credit-card"
@@ -52,7 +52,7 @@
               mask="credit-card"
               @onInput="card = $event"
             />
-            <TextInput
+           <TextInput
               label="Price"
               :rules="textValidate"
               placeholder="price"
@@ -175,24 +175,18 @@ export default {
     },
 
     sendData(){
-      let token = localStorage.getItem('jwt') ;
+      let fd = new FormData();
+      fd.append('documents', this.fileData[0].file);
+      fd.append('documents', this.fileData[1].file);
+      fd.append('card', this.card);
+      fd.append('price', this.price);
+      fd.append('additional', this.additionalInformation);
+      fd.append('status', 'PAYED');
 
-      console.log(this.fileData);
       axios
-        .put(`/admin/products/${this.productId}`,
-        {
-          // card: this.card, 
-          // price: this.price, 
-          documents: this.fileData,
-          // additional: this.additionalInformation
-        },
-        {
-          headers: {
-          "Authorization" : `JWT ${token}` 
-        }
-       })
+        .put(`/products/${this.productId}`, fd)
         .then((response) => {
-          console.log(response.data);
+          console.log('YEAHHHHHHHHHh');
           // this.$store.dispatch('products/setCartProducts', response.data);
           this.activeStep = this.header.length;
         this.success = true;
@@ -201,6 +195,7 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+        
     }
   },
   mounted() {

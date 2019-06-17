@@ -6,7 +6,7 @@
 </template>
 <script>
 import axios from "axios";
-import { mapState } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import HomePage from '@/components/sub-modules/HomePage';
 export default {
   name: "ProfileHome",
@@ -46,6 +46,17 @@ export default {
         }
       ]
     }
+  },
+
+  mounted(){
+    axios
+      .get("/auth/me")
+      .then(response => {
+        this.$store.dispatch("profile/setProfileData", {user: response.data});
+      })
+      .catch(error => {
+        // this.$emit('errors', error.response.data);
+      });
   }
 };
 </script>
