@@ -50,17 +50,14 @@ export default {
       login:[
         {
           label: "Email address",
-          placeholder: "email",
           rules: emailValidate,
-          // value:'admin@gmail.com'
-          value:'imrecon@gmail.com'
+          value:''
         },
         {
           label: "Password",
           placeholder: "password",
           uniqueField: "password",
-          value:'qwerty123'
-          // value:'kek123'
+          value:''
         },
       ],
       valid: true,

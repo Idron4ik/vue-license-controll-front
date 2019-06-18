@@ -54,5 +54,9 @@ export default {
 
     },
 
+    updateProduct({commit}, product){
+      console.log(product);
+    }
+
    }
 };

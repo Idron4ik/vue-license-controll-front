@@ -7,7 +7,7 @@
     <v-bottom-sheet v-model="isOpenModel">
       <v-combobox
         v-model="keywords"
-        label="Your favorite hobbies"
+        label="Your keywords"
         chips
         clearable
         solo
@@ -238,7 +238,8 @@ export default {
           },
         )
         .then(response => {
-          console.log(response);
+          console.log(123);
+          console.log(response.data);
         })
         .catch(function(error) {
           console.log(error);

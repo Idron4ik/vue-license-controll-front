@@ -29,6 +29,7 @@
         :messages="messages"
         :url="`/${url}/${this.id}/messages`"
         @back="activeMessageBox = true"
+        @add-message="messages.push($event);"
       />
 
     </v-card>
@@ -57,7 +58,7 @@
       return {
         activeMessageBox: true,
         id: null,
-        messages: ''
+        messages: []
       }
     },
 

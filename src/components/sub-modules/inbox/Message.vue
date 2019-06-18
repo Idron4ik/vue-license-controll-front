@@ -98,7 +98,18 @@ import TextInput from "@/components/sub-components/TextInput";
           'text': this.textareaText
         })
         .then(response => {
-          console.log(response);
+          let sender = 'USER'
+          if(this.url.includes('admin')){
+            console.log(123);
+            sender = 'ADMIN'
+          }
+
+          this.$emit('add-message', {
+            text: this.textareaText,
+            sender 
+          });
+          this.textareaText = '';
+
         })
         .catch(error => {
           console.log(error);
