@@ -13,6 +13,7 @@
 import axios from "axios";
 import { mapState } from "vuex";
 import ActionsCard from "./additional/ActionsCard";
+import { setTimeout } from 'timers';
 export default {
   name: "AdminCards",
 
@@ -30,6 +31,7 @@ export default {
       productsBody: state => state.productsAdmin.productsBody,
       productsHeaders: state => state.productsAdmin.productsHeaders
     })
-  }
+  },
+
 };
 </script>

@@ -1,5 +1,4 @@
-import axios from "axios";
-
+import Vue from 'vue';
 export default {
   namespaced: true,
   state: {
@@ -21,13 +20,17 @@ export default {
 
    mutations: {
     setProducts(state, products){
+      console.log(state);
       state.productsBody = products;
+    },
+    updateProduct(state, {product, index}){
+      let obj = {...state.productsBody[index], ...product,}
+      Vue.set(state.productsBody, index, obj)
     }
    },
 
    actions:{
     setProducts({commit}, products){
-      console.log(products);
       let productsResult = products.map((item)=>{
         let {
           description,
@@ -55,7 +58,7 @@ export default {
     },
 
     updateProduct({commit}, product){
-      console.log(product);
+      commit('updateProduct', product);
     }
 
    }

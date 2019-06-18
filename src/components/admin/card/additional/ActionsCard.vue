@@ -62,7 +62,7 @@
                         <v-btn 
                           color="success" 
                           :disabled="!props.item.keywords.length > 0"
-                          @click="approve(props.item)"
+                          @click="approve(props.item, props.index)"
                         >
                           send for processing
                         </v-btn>
@@ -228,7 +228,7 @@ export default {
       keywords.splice(keywords.indexOf(word), 1);
     },
 
-    approve(item) {
+    approve(item, index) {
       axios
         .put(
           `/admin/products/${item.id}`,
@@ -238,8 +238,7 @@ export default {
           },
         )
         .then(response => {
-          console.log(123);
-          console.log(response.data);
+          this.$store.dispatch("productsAdmin/updateProduct", {product: response.data, index});
         })
         .catch(function(error) {
           console.log(error);
@@ -262,22 +261,20 @@ export default {
         });
     },
 
-    removeLink(parentIndex, elemIndex) {
-      this.productsBody[parentIndex].links.splice(elemIndex, 1);
+    removeLink(id, elemIndex) {
+      this.productsBody[id].links.splice(elemIndex, 1);
     },
-    sendLinks(id, parendId) {
-      // console.log("sendLinks");
-      // console.log(id);
-      // console.log(this.productsBody[parendId].links);
+    sendLinks(id, index) {
       axios
         .put(
           `/admin/products/${id}`,
           {
             status: "WAITING_FOR_PAYMENT",
-            links: this.productsBody[parendId].links
+            links: this.productsBody[index].links
           },
         )
         .then(response => {
+          this.$store.dispatch("productsAdmin/updateProduct", {product: response.data, index});
           console.log(response);
         })
         .catch(function(error) {
