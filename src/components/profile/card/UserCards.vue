@@ -5,7 +5,7 @@
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500px" dark>
         <template v-slot:activator="{ on }">
-          <v-btn color="primary" dark class="mb-2" v-on="on">Add new Product</v-btn>
+          <v-btn color="primary" dark class="mb-2" v-on="on"> <v-icon dark>add</v-icon>Add new Product</v-btn>
         </template>
         <v-card>
           <v-card-title>

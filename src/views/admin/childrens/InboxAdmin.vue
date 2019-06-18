@@ -1,7 +1,7 @@
 <template>
   <v-layout row>
-    <v-flex xs12 sm6 offset-sm3>
-      <InboxPage :items="items" url="admin/products"/>
+    <v-flex xs12 lg6 offset-lg3>
+      <InboxPage :items="items" url="admin/products" :loading='loadedMes'/>
     </v-flex>
   </v-layout>
 </template>
@@ -18,15 +18,18 @@ export default {
 
     data () {
       return {
-        items: []
+        items: [],
+        loadedMes: false,
       }
     },
 
     mounted(){
+      this.loadedMes = true;
       axios
         .get("/admin/products?status=PAYED")
         .then(response => {
-          this.items = response.data;
+            this.loadedMes = false;
+            this.items = response.data;
         })
         .catch(error => {
           console.log(error);

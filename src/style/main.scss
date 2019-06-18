@@ -2,6 +2,7 @@ $main: #5CA28B;
 $error: #b71c1c;
 
 @import './category-m';
+@import './animations';
 
 
 body{
@@ -21,6 +22,9 @@ body{
   //}
   &.v-sheet{
     height: 100%;
+  }
+  .container.grid-list-md .layout .flex{
+    
   }
 }
 .errors-border{

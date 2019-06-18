@@ -14,7 +14,7 @@
       </div>
     </v-stepper-header>
 
-    <v-stepper-items>
+    <v-stepper-items :class="{'vue-loading': loadingPay}">
       <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n+1">
         <v-form v-if="n===0" :ref="'form' + n" v-model="item.valid" lazy-validation>
           <v-card class="mb-5" color="grey lighten-1" height="200px">
@@ -68,10 +68,13 @@
           </v-card>
         </v-form>
       </v-stepper-content>
+
       <template v-if="!success">
         <v-btn color="primary" @click="nextStep(activeStep)" :disabled="canNext">{{btnNextText}}</v-btn>
         <v-btn color="primary" @click="prevStep(activeStep)" v-if="!canPrev" :disabled="canPrev">prev</v-btn>
       </template>
+
+      <AnimationAjax/>
     </v-stepper-items>
   </v-stepper>
 </template>
@@ -81,6 +84,7 @@ import { vrequired, textValidate } from "@/utils/validate";
 import { mapState, mapGetters, mapActions } from "vuex";
 import FileInput from "@/components/sub-components/FileInput";
 import TextInput from "@/components/sub-components/TextInput";
+import AnimationAjax from "@/components/sub-components/AnimationAjax";
 import { setTimeout } from 'timers';
 import axios from "axios";
 
@@ -88,7 +92,11 @@ import axios from "axios";
 export default {
   name: "StepperCard",
 
-  components: { FileInput, TextInput },
+  components: { 
+    FileInput, 
+    TextInput,
+    AnimationAjax
+  },
 
   props:{
     productId:{
@@ -102,6 +110,7 @@ export default {
 
   data() {
     return {
+      loadingPay: false,
       success: false,
       vrequired,
       textValidate,
@@ -182,14 +191,13 @@ export default {
       fd.append('price', this.price);
       fd.append('additional', this.additionalInformation);
       fd.append('status', 'PAYED');
-
+      this.loadingPay= true;
       axios
         .put(`/products/${this.productId}`, fd)
         .then((response) => {
-          console.log('YEAHHHHHHHHHh');
-          // this.$store.dispatch('products/setCartProducts', response.data);
           this.activeStep = this.header.length;
-        this.success = true;
+          this.success = true;
+          this.loadingPay= false;
 
         })
         .catch(function(error) {

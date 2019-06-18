@@ -61,15 +61,7 @@ export default {
   },
 
 
-  deleteProductsItem({state, commit}, {id, index}){
-    axios
-      .delete(`/products/${id}`)
-      .then(response => {
-        //Add refresh page
-        commit('deleteProductsItem', index);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+  deleteProductsItem({state, commit}, index){
+    commit('deleteProductsItem', index);
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="cart">
+  <div :class="['cart',{'vue-loading': cartLoaded}]">
     <div 
       class="cart__select"
       v-if="step"
@@ -33,24 +33,30 @@
       <Stepper :productId="radioGroup.id" :needToPay="radioGroup.price"/>
     </div>
 
-
+    <AnimationAjax/>
   </div>
 </template>
 
 <script>
   import axios from "axios";
-  import Stepper from '../../../components/profile/cart/StepperCard';
+  import Stepper from '@/components/profile/cart/StepperCard';
   import { mapState, mapGetters, mapActions } from "vuex";
+  import AnimationAjax from "@/components/sub-components/AnimationAjax";
+
 
   export default {
     name: 'Cart',
 
-    components: {Stepper},
+    components: {
+      Stepper,
+      AnimationAjax
+    },
 
     data () {
       return {
         step: true,
         radioGroup: null,
+        cartLoaded: false
       }
     },
     computed:{
@@ -70,13 +76,12 @@
         this.step = false;
         this.radioGroup = this.$route.params;
       }
-
+      this.cartLoaded = true;
       axios
         .get(`/products?status=WAITING_FOR_PAYMENT`)
         .then((response) => {
-          console.log(response.data);
-          this.$store.dispatch('products/setCartProducts', response.data);
-
+            this.cartLoaded = false;
+            this.$store.dispatch('products/setCartProducts', response.data);
         })
         .catch(function(error) {
           console.log(error);

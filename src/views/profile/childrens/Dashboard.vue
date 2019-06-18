@@ -1,30 +1,41 @@
 <template>
-<div>
-   <UserCards/>
-</div>
-  <!-- <v-flex xs10 class="center"> -->
- 
-  <!-- </v-flex> -->
+  <div :class="['dashboard', {'vue-loading': loading}]">
+      <UserCards/>
+      <AnimationAjax/>
+  </div>
     
 </template>
 
 <script>
 import UserCards from '@/components/profile/card/UserCards';
+import AnimationAjax from "@/components/sub-components/AnimationAjax";
+
 
 import axios from "axios";
 import { mapActions } from "vuex";
   export default {
     name: 'profileIndex',
     
-    components: {UserCards},
+    components: {
+      UserCards,
+      AnimationAjax
+    },
+
+    data(){
+      return {
+        loading: true
+      }
+    },
 
     mounted(){
+      this.loading = true;
       
       axios
         .get(`/products`)
         .then((response) => {
-          console.log(1);
           this.$store.dispatch('products/setProducts', response.data);
+          this.loading = false;
+
           // this.$store.dispatch('profile/setProfileData', response.data);
         })
         .catch(function(error) {

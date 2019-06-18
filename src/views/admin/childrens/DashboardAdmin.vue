@@ -1,27 +1,35 @@
 <template>
-<div>
-    <AdminCards/>
-</div>
+  <div :class="['dashboard', {'vue-loading': loading}]">
+      <AdminCards/>
+      <AnimationAjax/>
+  </div>
 </template>
 
 <script>
 import AdminCards from '@/components/admin/card/AdminCards';
 
-
 import axios from "axios";
 import { mapActions } from "vuex";
+import AnimationAjax from "@/components/sub-components/AnimationAjax";
+
   export default {
     name: 'profileIndex',
     
     components: {AdminCards},
 
-  mounted() {
+    data(){
+      return {
+        loading: true
+      }
+    },
 
+  mounted() {
+    this.loading = true;
     axios
       .get(`/admin/products`)
       .then(response => {
-        //Add refresh page
         this.$store.dispatch("productsAdmin/setProducts", response.data);
+        this.loading = false;
       })
       .catch(function(error) {
         console.log(error);

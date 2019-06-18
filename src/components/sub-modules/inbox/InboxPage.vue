@@ -1,48 +1,56 @@
 <template>
-    <v-card>
-      <v-list 
-        three-line
-        v-if="activeMessageBox"
-      >
-        <template v-for="(item, index) in items">
-          <v-list-tile
-            :key="item._id"
-            avatar
-            @click="messageClick(item._id)"
-          >
-            <v-list-tile-content>
-              <v-list-tile-title v-html="item.title"></v-list-tile-title>
-              <v-list-tile-sub-title v-html="item.description"></v-list-tile-sub-title>
-            </v-list-tile-content>
+    <div :class="['inbox__container', {'vue-loading': loading}]">
 
-            <v-list-tile-action>
-              <v-icon :color="true ? 'main' : 'grey'">chat_bubble</v-icon>
-            </v-list-tile-action>
-          </v-list-tile>
-            <v-divider/>
+      <v-card>
+        <v-list
+          three-line
+          v-if="activeMessageBox"
+        >
+          <template v-for="(item, index) in items">
+            <v-list-tile
+              :key="item._id"
+              avatar
+              @click="messageClick(item._id)"
+            >
+              <v-list-tile-content>
+                <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="item.description"></v-list-tile-sub-title>
+              </v-list-tile-content>
 
-        </template>
-      </v-list>
-      <Message 
-        v-else
-        :id="id"
-        :messages="messages"
-        :url="`/${url}/${this.id}/messages`"
-        @back="activeMessageBox = true"
-        @add-message="messages.push($event);"
-      />
+              <v-list-tile-action>
+                <v-icon :color="true ? 'main' : 'grey'">chat_bubble</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+              <v-divider/>
 
-    </v-card>
+          </template>
+        </v-list>
+        <Message 
+          v-else
+          :id="id"
+          :messages="messages"
+          :url="`/${url}/${this.id}/messages`"
+          @back="activeMessageBox = true"
+          @add-message="messages.push($event);"
+        />
+
+      </v-card>
+
+      <AnimationAjax/>
+    </div>
 </template>
 
 <script>
   import axios from "axios";
   import Message from './Message'
+  import AnimationAjax from "@/components/sub-components/AnimationAjax";
+
   export default {
     name: 'InboxPage',
     
     components: {
-      Message
+      Message,
+      AnimationAjax
     },
 
     props:{
@@ -51,6 +59,10 @@
       },
       url:{
         type: String
+      },
+      loading:{
+        type: Boolean,
+        default: false
       }
     },
 
