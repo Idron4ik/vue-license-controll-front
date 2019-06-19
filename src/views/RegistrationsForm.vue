@@ -44,10 +44,10 @@ export default {
 
   computed: {
       textHeader() {
-          return this.activeTab ? "Sigin" : "Login";
+          return this.activeTab ? "Sigin Up" : "Login";
       },
     textFooter() {
-      return this.activeTab ? "Already a Member? Login" : "Sign";
+      return this.activeTab ? "Already a Member? Login" : "Sigin";
     }
   },
 

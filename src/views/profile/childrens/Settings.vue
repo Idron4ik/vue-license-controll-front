@@ -1,5 +1,5 @@
 <template>
-  <div class="profile__settings">
+  <div :class="['profile__settings', {'vue-loading': ajaxProfile}]">
     <v-layout wrap>
       <v-flex xs12 md4 class="profile__settings_info">
         <v-card class="card" dark>
@@ -66,6 +66,7 @@
         </v-form>
       </v-flex>
     </v-layout>
+    <AnimationAjax/>
   </div>
 </template>
 
@@ -79,12 +80,19 @@ import Checkbox from "@/components/sub-components/Checkbox";
 import SliderInput from "@/components/sub-components/SliderInput";
 import Password from "@/components/sub-components/Password";
 import FileInput from "@/components/sub-components/FileInput";
-
+import AnimationAjax from "@/components/sub-components/AnimationAjax";
 
 export default {
   name: "ProfileSettings",
 
-  components: { TextInput, Checkbox, SliderInput, Password, FileInput },
+  components: { 
+    TextInput, 
+    Checkbox, 
+    SliderInput, 
+    Password, 
+    FileInput, 
+    AnimationAjax 
+  },
 
   data() {
     return {
@@ -155,7 +163,8 @@ export default {
           label: "Address",
           placeholder: "address"
         }
-      ]
+      ],
+      ajaxProfile: false
     };
   },
 
@@ -170,12 +179,13 @@ export default {
   methods: {
     updateProfile() {
       if(this.$refs.form.validate()){
-        console.log(this.profile);
         let { avatar, ...rest} = this.profile;
+        this.ajaxProfile = true;
 
        axios
         .put("/auth/me", rest)
         .then(response => {
+          this.ajaxProfile = false;
           console.log('success');
           this.$store.dispatch("profile/setProfileData", response.data);
         })
@@ -183,18 +193,19 @@ export default {
           console.log(error);
           // this.$emit('errors', error.response.data);
         });
-
-        let fd = new FormData();
-        fd.append('avatar', avatar.file);
-        axios
-        .put("/auth/me", fd)
-        .then(response => {
-          this.$store.dispatch("profile/setProfileData", response.data);
-        })
-        .catch(error => {
-          console.log(error);
-          // this.$emit('errors', error.response.data);
-        });
+        if(!!avatar.file){
+          let fd = new FormData();
+          fd.append('avatar', avatar.file);
+          axios
+          .put("/auth/me", fd)
+          .then(response => {
+            this.$store.dispatch("profile/setProfileData", response.data);
+          })
+          .catch(error => {
+            console.log(error);
+            // this.$emit('errors', error.response.data);
+          });
+        }
       }
     },
 
@@ -206,5 +217,19 @@ export default {
       this.$store.dispatch('profile/updataProfile', {stateValue: this.accountFullData[index].value ,value});
     },
   },
+
+  
+  mounted(){
+    this.ajaxProfile = true;
+    axios
+      .get(`/auth/me`)
+      .then((response) => {
+        this.ajaxProfile = false;
+        this.$store.dispatch('profile/setProfileData', response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }
 };
 </script>

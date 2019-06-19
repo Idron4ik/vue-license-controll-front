@@ -47,18 +47,5 @@ export default {
       ]
     }
   },
-
-  mounted(){
-      axios
-        .get(`/auth/me`)
-        .then((response) => {
-          this.$store.dispatch('profile/setProfileData', response.data);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-
-    }
-
 };
 </script>

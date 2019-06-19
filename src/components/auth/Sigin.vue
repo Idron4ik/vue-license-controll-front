@@ -25,7 +25,7 @@
 
       </div>
 
-      <v-btn :disabled="!valid" class="user__btn" color="transparent" @click="signAction">Sign</v-btn>
+      <v-btn :disabled="!valid" class="user__btn" color="transparent" @click="signAction">Sign Up</v-btn>
     </v-form>
   </div>
 </template>
@@ -96,7 +96,11 @@ export default {
             ...signForm
           })
           .then(response => {
-            this.$store.dispatch("profile/setProfileData", response.data);
+            if(response.data.user) localStorage.setItem('user', JSON.stringify(response.data.user));
+            if(response.data.token) {
+              localStorage.setItem('jwt', response.data.token);
+              this.$router.push(`/profile/${response.data.token}`);
+            }
           })
           .catch(error => {
             this.$emit('errors', error.response.data);

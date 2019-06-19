@@ -80,12 +80,17 @@ export default {
             },
           )
           .then(response => {
-            this.$store.dispatch("profile/setProfileData", response.data);
-            if(JSON.parse(localStorage.getItem('user')).isAdmin) {
-              this.$router.push({name: 'admin'});
-              return
+            if(response.data.user) localStorage.setItem('user', JSON.stringify(response.data.user));
+            if(response.data.token) {
+              localStorage.setItem('jwt', response.data.token);
+
+              if(JSON.parse(localStorage.getItem('user')).isAdmin) {
+                this.$router.push({name: 'admin'});
+                return
+              }
+
+              this.$router.push(`/profile/${response.data.token}`);
             }
-            this.$router.push(`/profile/${response.data.token}`);
           })
           .catch(error => {
             this.$emit('errors', error.response.data);
