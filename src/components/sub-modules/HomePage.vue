@@ -1,8 +1,10 @@
 <template>
    <div>
     <v-toolbar :color="pageTitle.color" flat>
-      <v-btn icon light @click="turnBack">
-        <v-icon color="grey darken-2">{{homePage ? 'menu' : 'arrow_back'}}</v-icon>
+      <v-btn icon light @click="showMenu = !showMenu">
+      <!-- <v-btn icon light @click="turnBack"> -->
+        <!-- <v-icon color="grey darken-2">{{homePage ? 'menu' : 'arrow_back'}}</v-icon> -->
+        <v-icon color="grey darken-2">menu</v-icon>
       </v-btn>
 
       <v-toolbar-title class="grey--text text--darken-4">{{pageTitle.title}}</v-toolbar-title>
@@ -22,6 +24,41 @@
         </div>
       </li>
     </ul>
+    <v-navigation-drawer
+      v-model="showMenu"
+      absolute
+      temporary
+    >
+      <v-list class="pa-1">
+        <v-list-tile avatar >
+          <v-list-tile-avatar>
+            <v-icon>lock</v-icon>
+          </v-list-tile-avatar>
+
+          <v-list-tile-content>
+            <v-list-tile-title>Vue License Control</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
+
+        <v-list-tile
+          v-for="(category, index) in categories" 
+          :key="index"
+          @click="switchContent(category.link)"
+        >
+          <v-list-tile-action>
+            <v-icon>{{ category.icon }}</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>{{ category.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+
+    </v-navigation-drawer>
     <div class="main">
       <router-view></router-view>
     </div>
@@ -47,7 +84,11 @@ export default {
 
   data() {
     return {
-      
+      showMenu: false,
+      items: [
+          { title: 'Home', icon: 'dashboard' },
+          { title: 'About', icon: 'question_answer' }
+        ]
     };
   },
 

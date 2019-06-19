@@ -26,17 +26,23 @@
         <v-form v-if="n===1" :ref="'form' + n" v-model="item.valid" lazy-validation>
           <v-card class="mb-5" color="grey lighten-1">
             <p>вам потрыбно подати наступны файли</p>
-            <FileInput
-              label="Твір в роздрукованому або в електронному вигляді."
-              @file="fileData.push($event)"
-              :rules="vrequired"
-            />
-            <FileInput
-              label="Твір в роздрукованому або в електронному вигляді."
-              @file="fileData.push($event)"
-              :rules="vrequired"
-            />
-
+            <div class="inputs__container">
+               <v-btn 
+                color="primary" 
+                dark
+                @click="countInputFile.push({})"
+              >
+                <v-icon dark right>add</v-icon>
+                add input
+              </v-btn>
+              <FileInput
+                v-for="(input, index) in countInputFile"
+                :key="index"
+                label="Твір в роздрукованому або в електронному вигляді."
+                @file="fileData.push($event)"
+                :rules="vrequired"
+              />
+            </div>
             <v-textarea label="Additional information" v-model="additionalInformation"/>
           </v-card>
         </v-form>
@@ -138,7 +144,8 @@ export default {
       additionalInformation: "",
       card: "",
       price: "",
-      id: ""
+      id: "",
+      countInputFile: [{}]
     };
   },
 
@@ -185,8 +192,13 @@ export default {
 
     sendData(){
       let fd = new FormData();
-      fd.append('documents', this.fileData[0].file);
-      fd.append('documents', this.fileData[1].file);
+      // fd.append('documents', this.fileData[0].file);
+      // fd.append('documents', this.fileData[1].file);
+      this.fileData.forEach((item, index)=>{
+        console.log(index);
+      fd.append('documents', this.fileData[index].file);
+
+      });
       fd.append('card', this.card);
       fd.append('price', this.price);
       fd.append('additional', this.additionalInformation);
@@ -207,13 +219,25 @@ export default {
     }
   },
   mounted() {
+        this.ajaxProfile = true;
+    axios
+      .get(`/auth/me`)
+      .then((response) => {
+        this.ajaxProfile = false;
+        this.$store.dispatch('profile/setProfileData', response.data);
+           if (this.accountPlus) {
+            this.activeStep = 2;
+            this.stepStart = 2;
+          };
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
     this.header.forEach(item => {
       item.valid = false;
     });
-    if (this.accountPlus) {
-      this.activeStep = 2;
-      this.stepStart = 2;
-    }
+ 
+
   }
 };
 </script>

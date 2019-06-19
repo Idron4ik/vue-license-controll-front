@@ -109,7 +109,9 @@
                     </li>
 
                     <li class="products-card__item links">
-                      <ul class="links__container">
+
+                      <LinksContainer :links="props.item.links" :indexBody="props.index" :productsBody="productsBody"/>
+                      <!-- <ul class="links__container">
                         <li
                           v-for="(link, index) in props.item.links"
                           :key="index"
@@ -119,7 +121,7 @@
                           <a :href="link">{{link}}</a>
                           <v-icon @click="removeLink(props.index ,index)">delete</v-icon>
                         </li>
-                      </ul>
+                      </ul> -->
                       <v-btn @click="sendLinks(props.item.id, props.index)">submit</v-btn>
                     </li>
                   </ul>
@@ -180,11 +182,16 @@
 import axios from "axios";
 import { mapState } from "vuex";
 import StatusCard from "@/components/sub-components/default/StatusCard";
+import LinksContainer from "@/components/sub-components/default/LinksContainer";
 import AnimationAjax from "@/components/sub-components/AnimationAjax";
 export default {
   name: "AdminCards",
 
-  components: { StatusCard, AnimationAjax },
+  components: { 
+    StatusCard, 
+    AnimationAjax,
+    LinksContainer 
+  },
 
   data() {
     return {
@@ -257,9 +264,6 @@ export default {
         });
     },
 
-    removeLink(id, elemIndex) {
-      this.productsBody[id].links.splice(elemIndex, 1);
-    },
     sendLinks(id, index) {
       this.ajaxStatusCards = true;
 

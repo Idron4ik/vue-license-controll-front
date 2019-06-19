@@ -13,9 +13,9 @@ import { mapActions } from "vuex";
 import AnimationAjax from "@/components/sub-components/AnimationAjax";
 
   export default {
-    name: 'profileIndex',
+    name: 'dashboardAdmin',
     
-    components: {AdminCards},
+    components: {AdminCards, AnimationAjax},
 
     data(){
       return {

@@ -8,6 +8,7 @@ export default {
         description,
         title,
         status,
+        links,
         _id: id
       } = item;
 
@@ -15,6 +16,7 @@ export default {
           description,
           title,
           status,
+          links,
           id
         };
     });

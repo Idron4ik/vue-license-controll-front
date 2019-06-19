@@ -64,7 +64,7 @@
                       <div class="label">{{productsHeaders[1].text}}</div>
                       <div class="value">{{props.item.description}}</div>
                     </li>
-
+                    <LinksContainer :links="props.item.links" :indexBody="props.index" :productsBody="productsBody"/>
                     <li class="products-card__item">
                       <h2>Вам потрібно оплатити</h2>
                       <v-btn @click="goPay({id: props.item.id, title: props.item.title})">pay</v-btn>
@@ -103,6 +103,8 @@
 import axios from "axios";
 import { mapState } from "vuex";
 import StatusCard from "@/components/sub-components/default/StatusCard";
+import LinksContainer from "@/components/sub-components/default/LinksContainer";
+
 
 export default {
   name: "tableMobile",
@@ -117,7 +119,8 @@ export default {
   },
 
   components: {
-    StatusCard
+    StatusCard,
+    LinksContainer
   },
 
   data() {
@@ -150,6 +153,7 @@ export default {
     },
 
     goPay({id, title}){
+      
       this.$router.push({ name: "cart", params: { id, title } });
     }
   }

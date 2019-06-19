@@ -16,10 +16,10 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.title" label="Title"></v-text-field>
+                  <v-text-field v-model="editedItem.title" label="Title"/>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.description" label="Description"></v-text-field>
+                  <v-textarea v-model="editedItem.description" label="Description"/>
                 </v-flex>
               </v-layout>
             </v-container>
