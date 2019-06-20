@@ -2,6 +2,9 @@
   <v-container fluid grid-list-md class="status__table">
 
     <div :class="['products__container', {'vue-loading': ajaxStatusCards}]">
+       <div class="paginations" v-if="productsBody.length > pagination.rowsPerPage">
+        <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+    </div>
       <v-data-iterator 
         content-tag="v-layout" 
         :items="productsBody" 
@@ -52,7 +55,7 @@
                         >{{ props.item[item.text.toLowerCase()] }}</template>
 
                         <template v-if="item.text.toLowerCase() === 'actions'" class="align-end">
-                          <v-icon small @click="deleteItem(props.item, props.index)">delete</v-icon>
+                          <v-icon small @click="deleteItem(props.item, props.item.index)">delete</v-icon>
                         </template>
                       </div>
                     </li>
@@ -71,10 +74,10 @@
                       <div class="label">{{productsHeaders[1].text}}</div>
                       <div class="value">{{props.item.description}}</div>
                     </li>
-                    <LinksContainer :links="props.item.links" :indexBody="props.index" :productsBody="productsBody"/>
+                    <LinksContainer :links="props.item.links" :indexBody="props.item.index" :productsBody="productsBody"/>
                     <li class="products-card__item">
                       <h2>Вам потрібно оплатити</h2>
-                      <v-btn @click="goPay({id: props.item.id, title: props.item.title})">pay</v-btn>
+                      <v-btn @click="goPay(props.item)">pay</v-btn>
                     </li>
                   </ul>
                 </div>
@@ -171,9 +174,8 @@ export default {
       }
     },
 
-    goPay({id, title}){
-      
-      this.$router.push({ name: "cart", params: { id, title } });
+    goPay(item){
+      this.$router.push({ name: "checkout", params: item });
     }
   }
 };

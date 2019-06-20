@@ -19,7 +19,10 @@
       </v-combobox>
     </v-bottom-sheet>
     <div :class="['products__container', {'vue-loading': ajaxStatusCards}]">
-
+      <div class="paginations" 
+          v-if="productsBody.length > pagination.rowsPerPage">
+        <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+      </div>
       <v-data-iterator 
         content-tag="v-layout" 
         :items="productsBody" 
@@ -42,6 +45,7 @@
                 (props.item.status === 'PAYED') ? (5) : 0
               "
             >
+           
               <template #step-1>
                 <div
                   :class="[
@@ -67,13 +71,13 @@
                           <v-btn
                             color="success"
                             :disabled="!props.item.keywords.length > 0"
-                            @click="approve(props.item, props.index)"
+                            @click="approve(props.item, props.item.index)"
                           >send for processing</v-btn>
                           <v-btn color="error" @click="rejected(props.item)">rejected</v-btn>
                           <v-btn
                             color="purple"
                             dark
-                            @click="openModal(props.item.keywords, props.index)"
+                            @click="openModal(props.item.keywords, props.item.index)"
                           >Add keywords</v-btn>
                         </template>
                       </div>
@@ -116,20 +120,8 @@
                     </li>
 
                     <li class="products-card__item links">
-
-                      <LinksContainer :links="props.item.links" :indexBody="props.index" :productsBody="productsBody"/>
-                      <!-- <ul class="links__container">
-                        <li
-                          v-for="(link, index) in props.item.links"
-                          :key="index"
-                          class="links__item"
-                        >
-                          {{index+1}}.
-                          <a :href="link">{{link}}</a>
-                          <v-icon @click="removeLink(props.index ,index)">delete</v-icon>
-                        </li>
-                      </ul> -->
-                      <v-btn @click="sendLinks(props.item.id, props.index)">submit</v-btn>
+                      <LinksContainer :links="props.item.links" :indexBody="props.item.index" :productsBody="productsBody"/>
+                      <v-btn @click="sendLinks(props.item, props.item.index)">submit</v-btn>
                     </li>
                   </ul>
                 </div>
@@ -154,7 +146,6 @@
                   </ul>
                 </div>
               </template>
-
               <template #step-5>
                 <div class="products-card__container">
                   <ul class="products-card__items">
@@ -177,15 +168,12 @@
             </StatusCard>
           </v-flex>
         </template>
-
         
       </v-data-iterator>
 
       <AnimationAjax/>
     </div>
-    <div class="text-xs-center pt-2">
-      <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
-    </div>
+
   </v-container>
 </template>
 
@@ -229,7 +217,11 @@ export default {
         ) return 0
 
         return Math.ceil(this.productsBody.length / this.pagination.rowsPerPage)
-      }
+      },
+    activePage(){
+      // return 
+    }
+    
   },
 
   methods: {
@@ -255,7 +247,8 @@ export default {
       axios
         .put(`/admin/products/${item.id}`, {
           status: "SCRIPT_WORKING",
-          keywords: item.keywords
+          keywords: item.keywords,
+          ownerId: item.ownerId
         })
         .then(response => {
           this.$store.dispatch("productsAdmin/updateProduct", {
@@ -273,7 +266,8 @@ export default {
       this.ajaxStatusCards = true;
       axios
         .put(`/admin/products/${item.id}`, {
-          status: "REJECTED"
+          status: "REJECTED",
+          ownerId: item.ownerId
         })
         .then(response => {
           console.log(response);
@@ -285,13 +279,14 @@ export default {
         });
     },
 
-    sendLinks(id, index) {
+    sendLinks(item, index) {
       this.ajaxStatusCards = true;
 
       axios
-        .put(`/admin/products/${id}`, {
+        .put(`/admin/products/${item.id}`, {
           status: "WAITING_FOR_PAYMENT",
-          links: this.productsBody[index].links
+          links: this.productsBody[index].links,
+          ownerId: item.ownerId
         })
         .then(response => {
           this.$store.dispatch("productsAdmin/updateProduct", {

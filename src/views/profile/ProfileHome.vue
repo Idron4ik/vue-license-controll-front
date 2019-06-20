@@ -23,11 +23,11 @@ export default {
           title: "Dashboard",
           link: "dashboard"
         },
-        {
-          icon: "shopping_cart",
-          title: "Cart",
-          link: "cart"
-        },
+        // {
+        //   icon: "shopping_cart",
+        //   title: "Cart",
+        //   link: "cart"
+        // },
         {
           icon: "mail",
           title: "Inbox",

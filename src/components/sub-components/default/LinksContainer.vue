@@ -8,7 +8,6 @@
           <v-icon @click="removeLink(index)">delete</v-icon>
         </li>
       </ul>
-      <!-- <v-btn @click="sendLinks(props.item.id, props.index)">submit</v-btn> -->
     </div>
   </div>
 </template>
@@ -40,6 +39,8 @@ export default {
 
   methods:{
     removeLink(index) {
+      console.log(this.indexBody);
+      console.log(this.productsBody);
       this.productsBody[this.indexBody].links.splice(index, 1);
     }
   }

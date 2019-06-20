@@ -31,7 +31,7 @@ export default {
 
    actions:{
     setProducts({commit}, products){
-      let productsResult = products.map((item)=>{
+      let productsResult = products.map((item, index)=>{
         let {
           description,
           title,
@@ -49,7 +49,8 @@ export default {
             ownerId,
             id,
             keywords,
-            links
+            links,
+            index
           };
       });
 

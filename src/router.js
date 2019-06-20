@@ -4,7 +4,7 @@ import Settings from './views/profile/childrens/Settings';
 import Dashboard from './views/profile/childrens/Dashboard';
 import DashboardAdmin from './views/admin/childrens/DashboardAdmin';
 import InboxAdmin from './views/admin/childrens/InboxAdmin';
-import Cart from './views/profile/childrens/Cart';
+import Checkout from './views/profile/childrens/Checkout';
 import Inbox from './views/profile/childrens/Inbox';
 import RegistrationsForm from './views/RegistrationsForm';
 import Admin from './views/admin/AdminHome';
@@ -40,9 +40,9 @@ const router = new Router({
           component: Settings
         },
         {
-          path: 'cart',
-          name: 'cart',
-          component: Cart
+          path: 'checkout',
+          name: 'checkout',
+          component: Checkout
         },
         {
           path: 'inbox',

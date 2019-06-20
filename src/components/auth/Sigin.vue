@@ -99,6 +99,7 @@ export default {
             if(response.data.user) localStorage.setItem('user', JSON.stringify(response.data.user));
             if(response.data.token) {
               localStorage.setItem('jwt', response.data.token);
+              axios.defaults.headers.common['Authorization'] = `JWT ${localStorage.getItem("jwt")}`;
               this.$router.push(`/profile/${response.data.token}`);
             }
           })

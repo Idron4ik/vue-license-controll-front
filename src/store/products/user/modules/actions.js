@@ -2,8 +2,7 @@ import axios from "axios";
 
 export default {
   setProducts({commit}, products){
-    console.log(products);
-    let productsResult = products.map((item)=>{
+    let productsResult = products.map((item, index)=>{
       let {
         description,
         title,
@@ -17,7 +16,8 @@ export default {
           title,
           status,
           links,
-          id
+          id,
+          index
         };
     });
 
@@ -25,7 +25,7 @@ export default {
   },
 
   setCartProducts({commit}, products){
-    let productsResult = products.map((item)=>{
+    let productsResult = products.map((item, index)=>{
       let {
         title,
         links,
@@ -35,7 +35,8 @@ export default {
         return {
           title,
           links,
-          id
+          id,
+          index
         };
     });
     commit('setCartProducts', productsResult);
