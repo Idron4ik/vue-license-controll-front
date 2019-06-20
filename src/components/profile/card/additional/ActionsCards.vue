@@ -2,7 +2,14 @@
   <v-container fluid grid-list-md class="status__table">
 
     <div :class="['products__container', {'vue-loading': ajaxStatusCards}]">
-      <v-data-iterator content-tag="v-layout" :items="productsBody" row wrap>
+      <v-data-iterator 
+        content-tag="v-layout" 
+        :items="productsBody" 
+        row 
+        wrap
+        hide-actions
+        :pagination.sync="pagination"
+      >
         <template v-slot:item="props">
           <v-flex xs12 sm6 md4 lg3>
             <StatusCard
@@ -125,15 +132,27 @@ export default {
 
   data() {
     return {
-      isMobile: false,
       editedIndex: true,
       defaultItem: {
         title: "",
         description: "",
         status: "PENDING"
       },
-      ajaxStatusCards: false
+      ajaxStatusCards: false,
+      pagination: {
+        rowsPerPage: 4
+      },
     };
+  },
+
+  computed:{
+  pages () {
+    if (this.pagination.rowsPerPage == null ||
+      this.productsBody.length == null
+    ) return 0
+
+    return Math.ceil(this.productsBody.length / this.pagination.rowsPerPage)
+}
   },
 
   methods: {
