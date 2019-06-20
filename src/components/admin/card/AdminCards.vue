@@ -20,7 +20,14 @@
     </v-bottom-sheet>
     <div :class="['products__container', {'vue-loading': ajaxStatusCards}]">
 
-      <v-data-iterator content-tag="v-layout" :items="productsBody" row wrap>
+      <v-data-iterator 
+        content-tag="v-layout" 
+        :items="productsBody" 
+        row 
+        wrap
+        hide-actions
+        :pagination.sync="pagination"
+      >
 
         <template v-slot:item="props">
           <v-flex xs12 sm6 md4 lg3>
@@ -171,9 +178,13 @@
           </v-flex>
         </template>
 
+        
       </v-data-iterator>
 
       <AnimationAjax/>
+    </div>
+    <div class="text-xs-center pt-2">
+      <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
     </div>
   </v-container>
 </template>
@@ -200,7 +211,10 @@ export default {
       isOpenModel: false,
       selected: [],
       keywords: [],
-      index: null
+      index: null,
+      pagination: {
+        rowsPerPage: 4
+      },
     };
   },
 
@@ -208,7 +222,14 @@ export default {
     ...mapState({
       productsBody: state => state.productsAdmin.productsBody,
       productsHeaders: state => state.productsAdmin.productsHeaders
-    })
+    }),
+    pages () {
+        if (this.pagination.rowsPerPage == null ||
+          this.productsBody.length == null
+        ) return 0
+
+        return Math.ceil(this.productsBody.length / this.pagination.rowsPerPage)
+      }
   },
 
   methods: {
