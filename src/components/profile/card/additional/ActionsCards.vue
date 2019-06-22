@@ -29,147 +29,18 @@
               <template #step-1>
                 <div class="products-card__container">
                   <ul class="products-card__items">
-                    <li
-                      class="products-card__item"
-                      v-for="(item, index) in productsHeaders"
-                      :key="index"
-                    >
-                      <!-- <div 
-                        class="label"
-                      >
-                        <v-icon>{{item.icon}}</v-icon>{{item.text}}: 
-                      </div>
-                      <div class="value">
-                        <template v-if="item.text.toLowerCase() === 'status' ">
-                          <v-chip
-                            :color="
-                              props.item.status === 'PENDING' ? 'grey' : 
-                              (props.item.status === 'REJECTED') ? 'red' : 
-                              'red'
-                            "
-                            :text-color="
-                              props.item.status === 'PENDING' ? 'black' : 
-                              'white'"
-                          >{{ props.item.status }}</v-chip>
-                        </template>
-
-                        <template
-                          v-if="item.text.toLowerCase() !== 'status' && item.text.toLowerCase() !== 'actions'"
-                          class="align-end"
-                        >{{ props.item[item.text.toLowerCase()] }}</template>
-
-                        <template v-if="item.text.toLowerCase() === 'actions'" class="align-end">
-                          <v-icon small @click="deleteItem(props.item, props.item.index)">delete</v-icon>
-                        </template>
-                      </div> -->
-                      <template
-                          v-if="item.text.toLowerCase() === 'title'"
-                          class="align-end"
-                        > 
-                          <div class="products-card__title"> 
-                            {{ props.item[item.text.toLowerCase()] }}
-                          </div>
-                      </template>
-                      <template
-                          v-if="item.text.toLowerCase() === 'description'"
-                          class="align-end"
-                        > 
-                          <div class="products-card__description"> 
-                            {{ props.item[item.text.toLowerCase()] }}
-                          </div>
-                      </template>
-                      <template
-                          v-if="item.text.toLowerCase() === 'status'"
-                          class="align-end"
-                        > 
-                          <div class="products-card__status"> 
-                            <v-chip
-                            :color="
-                              props.item.status === 'PENDING' ? 'grey' : 
-                              (props.item.status === 'REJECTED') ? 'red' : 
-                              'red'
-                            "
-                            :text-color="
-                              props.item.status === 'PENDING' ? 'black' : 
-                              'white'"
-                          >{{ props.item.status }}</v-chip>
-                          <div class="products-card__icon">
-                            <v-icon large>
-                              {{
-                                props.item.status === 'PENDING' ? 'cached' : 
-                                (props.item.status === 'REJECTED') ? 'block' : 
-                                (props.item.status === 'SCRIPT_WORKING') ? 'settings_input_svideo' : 
-                                (props.item.status === 'WAITING_FOR_PAYMENT') ? 'check' : 
-                                (props.item.status === 'PAYED') ? 'business_center' : false
-                              }}
-                              </v-icon>
-                          </div>
-
-                          </div>
-                      </template>
-                    </li>
+                    <DefaultCardData :header="productsHeaders" :itemElem="props.item"/>
                   </ul>
                 </div>
               </template>
               <template #step-2>
                 <div class="products-card__container">
                   <ul class="products-card__items">
-                    <!-- <DefaultCardData :data="productsHeaders"/> -->
-                    <li
-                      class="products-card__item"
-                      v-for="(item, index) in productsHeaders"
-                      :key="index"
-                    >
-                      <template
-                          v-if="item.text.toLowerCase() === 'title'"
-                          class="align-end"
-                        > 
-                          <div class="products-card__title"> 
-                            {{ props.item[item.text.toLowerCase()] }}
-                          </div>
-                      </template>
-                      <template
-                          v-if="item.text.toLowerCase() === 'description'"
-                          class="align-end"
-                        > 
-                          <div class="products-card__description"> 
-                            {{ props.item[item.text.toLowerCase()] }}
-                          </div>
-                      </template>
-                      <template
-                          v-if="item.text.toLowerCase() === 'status'"
-                          class="align-end"
-                        > 
-                          <div class="products-card__status"> 
-                            <v-chip
-                            :color="
-                              props.item.status === 'PENDING' ? 'grey' : 
-                              (props.item.status === 'REJECTED') ? 'red' : 
-                              'red'
-                            "
-                            :text-color="
-                              props.item.status === 'PENDING' ? 'black' : 
-                              'white'"
-                          >{{ props.item.status }}</v-chip>
-                          <div class="products-card__icon">
-                            <v-icon large>
-                              {{
-                                props.item.status === 'PENDING' ? 'cached' : 
-                                (props.item.status === 'REJECTED') ? 'block' : 
-                                (props.item.status === 'SCRIPT_WORKING') ? 'settings_input_svideo' : 
-                                (props.item.status === 'WAITING_FOR_PAYMENT') ? 'check' : 
-                                (props.item.status === 'PAYED') ? 'business_center' : false
-                              }}
-                              </v-icon>
-                          </div>
-
-                          </div>
-                      </template>
-                    </li>
+                    <DefaultCardData :header="productsHeaders" :itemElem="props.item"/>
                     <LinksContainer :links="props.item.links" :indexBody="props.item.index" :productsBody="productsBody"/>
                     <li class="products-card__item">
-                      <h2>Вам потрібно оплатити</h2>
-                      <v-btn @click="goPay(props.item)">pay</v-btn>
+                      <h2>Для продовження ви повинні оплатити</h2>
+                      <v-btn @click="goPay(props.item)">Оплатити</v-btn>
                     </li>
                   </ul>
                 </div>
@@ -177,18 +48,10 @@
               <template #step-3>
                 <div class="products-card__container">
                   <ul class="products-card__items">
-                    <li class="products-card__item">
-                      <div class="label">{{productsHeaders[0].text}}</div>
-                      <div class="value">{{props.item.title}}</div>
-                    </li>
+                    <DefaultCardData :header="productsHeaders" :itemElem="props.item"/>
 
                     <li class="products-card__item">
-                      <div class="label">{{productsHeaders[1].text}}</div>
-                      <div class="value">{{props.item.description}}</div>
-                    </li>
-
-                    <li class="products-card__item">
-                      <h2>DYAKUEMO ZA POKUPKU</h2>
+                      <h2>Дякуємо вам за покупку</h2>
                     </li>
                   </ul>
                 </div>

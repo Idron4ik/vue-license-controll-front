@@ -18,14 +18,14 @@
       <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n+1">
         <v-form v-if="n===0" :ref="'form' + n" v-model="item.valid" lazy-validation>
           <v-card class="mb-5">
-            <h3 class=>Для продовження вам потрыбно пройти повну режстрацію в настройках профіля</h3>
-            <v-btn color="primary" @click="goSetting">Account Settings</v-btn>
+            <h3 class=>Для продовження вам потрібно пройти, повну реєстрацію профіля</h3>
+            <v-btn color="primary" @click="goSetting">пройти повну реєстрацію профіля</v-btn>
           </v-card>
         </v-form>
 
         <v-form v-if="n===1" :ref="'form' + n" v-model="item.valid" lazy-validation>
           <v-card class="mb-5" color="grey lighten-1">
-            <p>вам потрыбно подати наступны файли</p>
+            <p>Щоб продовжити, вам потрібно подати наступні документи</p>
             <div class="inputs__container">
                <v-btn 
                 color="primary" 
@@ -33,12 +33,12 @@
                 @click="countInputFile.push({})"
               >
                 <v-icon dark right>add</v-icon>
-                add input
+                Добавити документ
               </v-btn>
               <FileInput
                 v-for="(input, index) in countInputFile"
                 :key="index"
-                label="Твір в роздрукованому або в електронному вигляді."
+                label="Документ, який затверджує ваші права."
                 @file="fileData.push($event)"
                 :rules="vrequired"
               />
@@ -49,9 +49,8 @@
 
         <v-form v-if="n===2" :ref="'form' + n" v-model="item.valid" lazy-validation>
           <v-card class="mb-5" color="grey lighten-1">
-            <p>Вам потрібно оплатити {{needToPay}} uhy</p>
              <TextInput
-              label="Card number"
+              label="Номер карти"
               :rules="textValidate"
               placeholder="credit-card"
               :value="card"
@@ -59,7 +58,7 @@
               @onInput="card = $event"
             />
            <TextInput
-              label="Price"
+              label="Ціна"
               :rules="textValidate"
               placeholder="price"
               :value="price"
@@ -70,14 +69,14 @@
 
         <v-form v-if="n === 3" :ref="'form' + n" v-model="item.valid" lazy-validation>
           <v-card class="mb-5" color="grey lighten-1" height="200px">
-            <p>Дякую за все чекайте результатыв на пошту</p>
+            <p>Дякую за все. Ви отримуєте результати на вашу пошту.</p>
           </v-card>
         </v-form>
       </v-stepper-content>
 
       <template v-if="!success">
         <v-btn color="primary" @click="nextStep(activeStep)" :disabled="canNext">{{btnNextText}}</v-btn>
-        <v-btn color="primary" @click="prevStep(activeStep)" v-if="!canPrev" :disabled="canPrev">prev</v-btn>
+        <v-btn color="primary" @click="prevStep(activeStep)" v-if="!canPrev" :disabled="canPrev">попередній</v-btn>
       </template>
 
       <AnimationAjax/>
@@ -124,20 +123,20 @@ export default {
       stepStart: 1,
       header: [
         {
-          title: "Registrations",
-          tooltip: "lorem ipsum dplor"
+          title: "Реєстрація",
+          tooltip: "Реєстрація користувача"
         },
         {
-          title: "Load fiels",
-          tooltip: "lorem ipsum dplor"
+          title: "Завантаження документів",
+          tooltip: "Ви повинні завантажити документи, що підтверджують ваше право на вололодіння"
         },
         {
-          title: "Pay",
-          tooltip: "lorem ipsum dplor"
+          title: "Оплата",
+          tooltip: "Вам оплатити"
         },
         {
-          title: "Await results",
-          tooltip: "lorem ipsum dplor"
+          title: "Результат",
+          tooltip: "Результат, можна отримати в пошті"
         }
       ],
       fileData: [],

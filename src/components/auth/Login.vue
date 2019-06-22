@@ -86,11 +86,11 @@ export default {
               axios.defaults.headers.common['Authorization'] = `JWT ${localStorage.getItem("jwt")}`;
 
               if(JSON.parse(localStorage.getItem('user')).isAdmin) {
-                this.$router.push({name: 'admin'});
+                this.$router.push('/admin/dashboard');
                 return
               }
 
-              this.$router.push(`/profile`);
+              this.$router.push(`/profile/dashboard`);
             }
           })
           .catch(error => {

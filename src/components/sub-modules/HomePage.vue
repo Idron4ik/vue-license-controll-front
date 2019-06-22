@@ -98,12 +98,12 @@ export default {
   computed:{
     pageTitle(){
       switch(this.$route.name){
-        case 'home': return { title: 'Home', color: 'orange' };
-        case 'settings': return { title: 'Account Settings', color: 'privery'};
-        case 'admin': return { title: 'Admin Dashboard', color: 'purple',};
-        case 'approvedProducts': return { title: 'Approved Products', };
-        case 'inbox': return { title: 'Inbox', color: 'cyan', };
-        default: return { title: 'Dashboard', color: 'light-blue'};
+        case 'home': return { title: 'Панель управління', color: 'orange' };
+        case 'settings': return { title: 'Налаштування облікового запису', color: 'privery'};
+        case 'admin': return { title: 'Панель управління Адміністратора', color: 'purple',};
+        case 'approvedProducts': return { title: 'Оплачені продукти', };
+        case 'inbox': return { title: 'Підтримка', color: 'cyan', };
+        default: return { title: 'Панель управління', color: 'light-blue'};
       }
     },
 

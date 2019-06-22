@@ -143,6 +143,17 @@ body{
     }
   }
 }
+.inbox{
+  &__container{
+    height: 100%;
+  }
+  &.no-inbox{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
 
 .user {
   width: 100%;
@@ -221,6 +232,9 @@ body{
   &.v-navigation-drawer > .v-list:not(.v-list--dense) .v-list__tile{
     padding-left: 0; 
   }
+  .v-navigation-drawer__border{
+    display: none;
+  }
   &__header{
     font-size: 24px;
     padding: 0!important;
@@ -251,7 +265,8 @@ body{
     .dashboard{
       height: 100%;
       
-      .table{
+      .table,
+      .status__table{
         height: 100%;
       }
       &-products{
@@ -313,6 +328,10 @@ body{
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 10px;
+    &-data{
+      width: 100%;
+      margin-bottom: 10px;
+    }
     .label{
       width: 100%;
       font-weight: 600;

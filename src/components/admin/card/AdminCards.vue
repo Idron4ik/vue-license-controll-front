@@ -18,7 +18,13 @@
         </template>
       </v-combobox>
     </v-bottom-sheet>
-    <div :class="['products__container', {'vue-loading': ajaxStatusCards}]">
+     <div 
+      class="dashboard-products no_products"
+      v-if="!productsBody.length"
+    >
+      <div class="label">Користувач, ще не створив продукти</div>
+    </div>
+    <div v-else :class="['products__container', {'vue-loading': ajaxStatusCards}]">
       <div class="paginations" 
           v-if="productsBody.length > pagination.rowsPerPage">
         <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
@@ -55,15 +61,19 @@
                 ]"
                 >
                   <ul class="products-card__items">
+                    <DefaultCardData 
+                      :header="productsHeaders"
+                      :itemElem="props.item"
+                    />
                     <li
                       class="products-card__item"
                       v-for="(item, index) in productsHeaders"
                       :key="index"
+                      v-if="index !== 0 && index !== 1"
                     >
-                      <div class="label">{{item.text}}:</div>
                       <div class="value">
                         <template
-                          v-if="item.text.toLowerCase() !== 'actions'"
+                          v-if="item.text.toLowerCase() === 'keywords' && props.item[item.text.toLowerCase()].length > 0"
                           class="align-end"
                         >{{ props.item[item.text.toLowerCase()] }}</template>
 
@@ -72,13 +82,13 @@
                             color="success"
                             :disabled="!props.item.keywords.length > 0"
                             @click="approve(props.item, props.item.index)"
-                          >send for processing</v-btn>
-                          <v-btn color="error" @click="rejected(props.item)">rejected</v-btn>
+                          >Надіслати на опрацювання</v-btn>
+                          <v-btn color="error" @click="rejected(props.item, props.item.index)">Відмінити</v-btn>
                           <v-btn
                             color="purple"
                             dark
                             @click="openModal(props.item.keywords, props.item.index)"
-                          >Add keywords</v-btn>
+                          >Добавити ключові слова</v-btn>
                         </template>
                       </div>
                     </li>
@@ -89,18 +99,12 @@
               <template #step-2>
                 <div class="products-card__container">
                   <ul class="products-card__items">
+                   <DefaultCardData 
+                      :header="productsHeaders" 
+                      :itemElem="props.item"
+                    />
                     <li class="products-card__item">
-                      <div class="label">{{productsHeaders[0].text}}</div>
-                      <div class="value">{{props.item.title}}</div>
-                    </li>
-
-                    <li class="products-card__item">
-                      <div class="label">{{productsHeaders[1].text}}</div>
-                      <div class="value">{{props.item.description}}</div>
-                    </li>
-
-                    <li class="products-card__item">
-                      <h2>Ожидаеться пока Отработает Парсер</h2>
+                      <h2>Очікуйте, поки закінчить роботу парсер</h2>
                     </li>
                   </ul>
                 </div>
@@ -109,19 +113,14 @@
               <template #step-3>
                 <div class="products-card__container">
                   <ul class="products-card__items">
-                    <li class="products-card__item">
-                      <div class="label">{{productsHeaders[0].text}}</div>
-                      <div class="value">{{props.item.title}}</div>
-                    </li>
-
-                    <li class="products-card__item">
-                      <div class="label">{{productsHeaders[1].text}}</div>
-                      <div class="value">{{props.item.description}}</div>
-                    </li>
+                   <DefaultCardData 
+                      :header="productsHeaders" 
+                      :itemElem="props.item"
+                    />
 
                     <li class="products-card__item links">
                       <LinksContainer :links="props.item.links" :indexBody="props.item.index" :productsBody="productsBody"/>
-                      <v-btn @click="sendLinks(props.item, props.item.index)">submit</v-btn>
+                      <v-btn @click="sendLinks(props.item, props.item.index)">підтвердити</v-btn>
                     </li>
                   </ul>
                 </div>
@@ -130,18 +129,12 @@
               <template #step-4>
                 <div class="products-card__container">
                   <ul class="products-card__items">
+                    <DefaultCardData 
+                      :header="productsHeaders" 
+                      :itemElem="props.item"
+                    />
                     <li class="products-card__item">
-                      <div class="label">{{productsHeaders[0].text}}</div>
-                      <div class="value">{{props.item.title}}</div>
-                    </li>
-
-                    <li class="products-card__item">
-                      <div class="label">{{productsHeaders[1].text}}</div>
-                      <div class="value">{{props.item.description}}</div>
-                    </li>
-
-                    <li class="products-card__item">
-                      <h2>Ожидаеться пока клиен оплатит</h2>
+                      <h2>Очікується, поки клієн оплатить</h2>
                     </li>
                   </ul>
                 </div>
@@ -150,18 +143,13 @@
               <template #step-5>
                 <div class="products-card__container">
                   <ul class="products-card__items">
-                    <li class="products-card__item">
-                      <div class="label">{{productsHeaders[0].text}}</div>
-                      <div class="value">{{props.item.title}}</div>
-                    </li>
+                    <DefaultCardData 
+                      :header="productsHeaders" 
+                      :itemElem="props.item"
+                    />
 
                     <li class="products-card__item">
-                      <div class="label">{{productsHeaders[1].text}}</div>
-                      <div class="value">{{props.item.description}}</div>
-                    </li>
-
-                    <li class="products-card__item">
-                      <h2>Клиент Оплатил</h2>
+                      <h2>Клієн оплатив</h2>
                     </li>
                   </ul>
                 </div>
@@ -184,6 +172,7 @@ import axios from "axios";
 import { mapState } from "vuex";
 import StatusCard from "@/components/sub-components/default/StatusCard";
 import LinksContainer from "@/components/sub-components/default/LinksContainer";
+import DefaultCardData from "@/components/sub-components/default/DefaultCardData";
 import AnimationAjax from "@/components/sub-components/AnimationAjax";
 export default {
   name: "AdminCards",
@@ -191,7 +180,8 @@ export default {
   components: { 
     StatusCard, 
     AnimationAjax,
-    LinksContainer 
+    LinksContainer,
+    DefaultCardData
   },
 
   data() {
@@ -264,7 +254,7 @@ export default {
         });
     },
 
-    rejected(item) {
+    rejected(item, index) {
       this.ajaxStatusCards = true;
       axios
         .put(`/admin/products/${item.id}`, {
@@ -272,7 +262,10 @@ export default {
           ownerId: item.ownerId
         })
         .then(response => {
-          console.log(response);
+          this.$store.dispatch("productsAdmin/updateProduct", {
+            product: response.data,
+            index
+          });
           this.ajaxStatusCards = false;
 
         })

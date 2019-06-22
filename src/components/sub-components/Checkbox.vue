@@ -19,7 +19,7 @@ export default {
     },
     rules:{
       type: Array,
-      default: () => [v => !!v || 'You must agree to continue!']
+      default: () => [v => !!v || 'Ви повинні підтвердити, щоб продовжити!']
     },
     value:{
       type: Boolean,

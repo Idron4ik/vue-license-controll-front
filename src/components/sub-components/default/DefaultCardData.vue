@@ -1,32 +1,44 @@
 <template>
   <li class="products-card__item">
-    <div v-for="(item, index) in data" :key="index">
+    <div 
+      class="products-card__item-data" 
+      v-for="(item, index) in header" 
+      :key="index"
+    >
       <template v-if="item.text.toLowerCase() === 'title'" class="align-end">
-        <div class="products-card__title">{{ props.item[item.text.toLowerCase()] }}</div>
+        <div class="products-card__title">{{ itemElem[item.text.toLowerCase()] }}</div>
       </template>
       <template v-if="item.text.toLowerCase() === 'description'" class="align-end">
-        <div class="products-card__description">{{ props.item[item.text.toLowerCase()] }}</div>
+        <div class="products-card__description">{{ itemElem[item.text.toLowerCase()] }}</div>
       </template>
       <template v-if="item.text.toLowerCase() === 'status'" class="align-end">
         <div class="products-card__status">
           <v-chip
             :color="
-              props.item.status === 'PENDING' ? 'grey' : 
-              (props.item.status === 'REJECTED') ? 'red' : 
+              itemElem.status === 'PENDING' ? 'grey' : 
+              (itemElem.status === 'REJECTED') ? 'red' : 
               'red'
             "
             :text-color="
-              props.item.status === 'PENDING' ? 'black' : 
+              itemElem.status === 'PENDING' ? 'black' : 
               'white'"
-          >{{ props.item.status }}</v-chip>
+          >{{ itemElem.status }}</v-chip>
           <div class="products-card__icon">
-            <v-icon large>
+            <v-icon large
+              :color="itemElem.status === 'PENDING' ? 'grey' :
+              (itemElem.status === 'REJECTED') ? 'block' :
+              (itemElem.status === 'SCRIPT_WORKING') ? 'teal' :
+              (itemElem.status === 'WAITING_FOR_PAYMENT') ? 'orange' :
+              (itemElem.status === 'WAITING_FOR_RESULTS_REVIEW') ? 'primary' :
+              (itemElem.status === 'PAYED') ? 'green' : false"
+            >
               {{
-              props.item.status === 'PENDING' ? 'cached' :
-              (props.item.status === 'REJECTED') ? 'block' :
-              (props.item.status === 'SCRIPT_WORKING') ? 'settings_input_svideo' :
-              (props.item.status === 'WAITING_FOR_PAYMENT') ? 'check' :
-              (props.item.status === 'PAYED') ? 'business_center' : false
+                itemElem.status === 'PENDING' ? 'cached' :
+                (itemElem.status === 'REJECTED') ? 'block' :
+                (itemElem.status === 'SCRIPT_WORKING') ? 'settings_input_svideo' :
+                (itemElem.status === 'WAITING_FOR_PAYMENT') ? 'check' :
+                (itemElem.status === 'WAITING_FOR_RESULTS_REVIEW') ? 'visibility' :
+                (itemElem.status === 'PAYED') ? 'business_center' : false
               }}
             </v-icon>
           </div>
@@ -41,8 +53,10 @@ export default {
   name: "defaultCardDate",
 
   props: {
-    data: {
+    header:{
       type: Array
+    },
+    itemElem:{
     }
   }
 };

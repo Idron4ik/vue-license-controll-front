@@ -11,6 +11,7 @@ export default {
       },
       { text: "Description", value: "description" },
       { text: "Keywords", value: "keywords", sortable: false },
+      { text: "Status", value: "status" },
       { text: "Actions", value: "actions" },
     ],
     productsBody: []
@@ -20,7 +21,6 @@ export default {
 
    mutations: {
     setProducts(state, products){
-      console.log(state);
       state.productsBody = products;
     },
     updateProduct(state, {product, index}){

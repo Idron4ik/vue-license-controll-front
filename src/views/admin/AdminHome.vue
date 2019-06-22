@@ -1,8 +1,5 @@
 <template>
-  <div>
-      <HomePage :categories="categories" indexPage="admin" />
-  </div>
-
+    <HomePage :categories="categories" indexPage="admin" />
 </template>
 <script>
 import axios from "axios";
@@ -20,17 +17,17 @@ export default {
       categories: [
         {
           icon: "dashboard",
-          title: "Dashboard",
+          title: "Панель управління",
           link: "dashboardAdmin"
         },
         {
           icon: "mail",
-          title: "Inbox",
+          title: "Підтримка",
           link: "inboxAdmin"
         },
         {
           icon: "power_settings_new",
-          title: "Log out",
+          title: "Вихід",
           link: "logout"
         }
       ]

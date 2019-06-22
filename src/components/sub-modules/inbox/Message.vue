@@ -50,13 +50,6 @@
           <v-icon>send</v-icon>
         </v-btn>
         </v-card-actions>
-        <!-- <v-textarea placeholder="Enter yout text ..." v-model="textareaText"/> -->
-
-        <!-- <v-text-field
-          placeholder="Enter yout text ..."
-          :value="textareaText"
-          @keypress="textareaText = $event"
-        ></v-text-field> -->
     </v-card>
   </div>
 </template>

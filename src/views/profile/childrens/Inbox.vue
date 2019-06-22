@@ -1,9 +1,5 @@
 <template>
-  <v-layout row>
-    <v-flex xs12 lg6 offset-lg3>
-      <InboxPage :items="items" url="products"  :loading='loadedMes'/>
-    </v-flex>
-  </v-layout>
+  <InboxPage :items="items" url="products"  :loading='loadedMes'/>
 </template>
 
 <script>

@@ -27,14 +27,14 @@
                 disabled="disabled"
                 :prependiIcon="user.icon"
                 :mask="user.mask"
-                :value="profile[user.placeholder]"
+                :value="profile[user.value]"
                ></TextInput>
             </v-list-tile>
           </v-list>
         </v-card>
       </v-flex>
       <v-flex xs12 md8 class="settings">
-        <div v-if="profile.accountPlus" style="text-align: right">Congratulations on your account completely filled</div>
+        <div v-if="profile.accountPlus" style="text-align: right">Вітаємо! Ви повністю заповнили свій обліковий запис</div>
         <v-form ref="form" v-model="valid" lazy-validation>
           <div v-for="(user, index) in accountFullData" :key="index">
             <TextInput
@@ -63,12 +63,12 @@
             />
             <Checkbox 
               v-if="user.uniqueField === 'checkbox'" 
-              label="Do you agree?"
+              label="Підтвердити"
               :value="profile[user.value]"
               @onInput="onInput(index, $event)"
               />
           </div>
-          <v-btn color="primary" @click="updateProfile">Update Profile</v-btn>
+          <v-btn color="primary" @click="updateProfile">Оновити профіль</v-btn>
         </v-form>
       </v-flex>
     </v-layout>
@@ -105,52 +105,52 @@ export default {
       valid: false,
       accountFullData: [
         {
-          label: "First name",
-          placeholder: "firstName",
+          label: "Ім'я",
+          placeholder: "Ваше ім'я",
           value: 'firstName',
           rules: textValidate
         },
         {
-          label: "Last name",
-          placeholder: "lastName",
+          label: "Фамілія",
+          placeholder: "Фамілія",
           value: "lastName",
           rules: textValidate
         },
         {
-          label: "Avatar",
+          label: "Ваше фото",
           value: 'avatar.src',
           uniqueField: "avatar"
         },
         {
-          label: "Age",
+          label: "Вік",
           value: 'age',
           placeholder: "age",
         },
         {
-          label: "Email address",
-          placeholder: "email",
+          label: "Поштова адреса",
+          placeholder: "Поштова адреса",
           value: "email",
           rules: emailValidate
         },
         {
-          label: "Password",
-          placeholder: "password",
+          label: "Пароль",
+          placeholder: "Пароль",
           value: "password",
           uniqueField: "password"
         },
         {
-          label: "Phone",
-          placeholder: "",
+          label: "Мобільний телефон",
+          placeholder: "(000)-000-0-000",
           value: "phone",
           mask: "phone",
         },
         {
-          label: "Address",
-          placeholder: "address",
+          label: "Адреса",
+          placeholder: "Адреса",
           value: "address",
         },
         {
-          label: "Do you agree?",
+          label: "Ви впевнені?",
           placeholder: "",
           value: "agree",
           uniqueField: "checkbox"
@@ -158,19 +158,22 @@ export default {
       ],
       accountMiniData: [
         {
-          label: "Email address",
-          placeholder: "email",
+          label: "Ваша почтова адреса",
+          placeholder: "johndove@gmail.com",
+          value: "email",
           icon: 'mail'
         },
         {
-          label: "Phone",
-          placeholder: "phone",
+          label: "Ваш мобільний телефон",
+          placeholder: "(000)-000-0-000",
+          value: "phone",
           icon: 'phone',
           mask: "phone",
         },
         {
-          label: "Address",
-          placeholder: "address",
+          label: "Ваша адреса",
+          placeholder: "Марс",
+          value: "address",
           icon: 'location_on'
         }
       ],

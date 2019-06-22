@@ -1,7 +1,12 @@
 <template>
     <div :class="['inbox__container', {'vue-loading': loading}]">
-
-      <v-card>
+      <h2 
+        class="inbox no-inbox"
+        v-if="!items.length"
+      >
+        На разі у вас нема оплаченик продуктів
+      </h2>
+      <v-card v-else>
         <v-list
           three-line
           v-if="activeMessageBox"
@@ -35,7 +40,6 @@
         />
 
       </v-card>
-
       <AnimationAjax/>
     </div>
 </template>

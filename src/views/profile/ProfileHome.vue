@@ -17,28 +17,23 @@ export default {
       categories: [
         {
           icon: "dashboard",
-          title: "Dashboard",
+          title: "Панель управління",
           link: "dashboard",
         },
-        // {
-        //   icon: "shopping_cart",
-        //   title: "Cart",
-        //   link: "cart"
-        // },
         {
           icon: "mail",
-          title: "Inbox",
+          title: "Підтримка",
           link: "inbox",
         },
         {
           icon: "settings",
-          title: "Settings",
+          title: "Налаштування облікового запису",
           link: "settings",
         },
         
         {
           icon: "power_settings_new",
-          title: "Log out",
+          title: "Вихід",
           link: "logout"
         }
       ]

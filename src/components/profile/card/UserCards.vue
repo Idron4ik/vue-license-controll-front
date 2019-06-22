@@ -10,10 +10,10 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.title" label="Title"/>
+                  <v-text-field v-model="editedItem.title" label="Заголовок"/>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-textarea v-model="editedItem.description" label="Description"/>
+                  <v-textarea v-model="editedItem.description" label="Опис"/>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -21,35 +21,35 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-            <v-btn color="primary" @click="save">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="close">Відмінити</v-btn>
+            <v-btn color="primary" @click="save">Відправити</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     <div 
-      class="dashboard-products"
+      class="dashboard-step"
       v-if="productsBody.length && loadedproducts"
     >
-    <v-toolbar flat light>
-      <v-toolbar-title>Your products</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn color="primary" class="mb-2" @click="dialog = true"> 
-        <v-icon color="white">add</v-icon>Add new Product
-      </v-btn>
-    </v-toolbar>
+      <v-toolbar flat light>
+        <v-toolbar-title>Ваші продукти</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" class="mb-2" @click="dialog = true"> 
+          <v-icon color="white">add</v-icon>Створити новий продукт
+        </v-btn>
+      </v-toolbar>
 
-    <!-- Start Mobile -->
+      <!-- Start Mobile -->
       <ActionsCards 
         :productsBody="productsBody" 
         :productsHeaders="productsHeaders"
       />
-    <!-- End Mobile -->
+      <!-- End Mobile -->
     </div>
     <div v-else class="dashboard-products no_products"> 
-      <div class="label">no data</div>
+      <div class="label">Ви ще не створили свій продукт</div>
       <br>
       <v-btn color="primary" class="mb-2" @click="dialog = true"> 
-        <v-icon color="white">add</v-icon>Add new Product</v-btn>
+        <v-icon color="white">add</v-icon>Створити продукт</v-btn>
       </div> 
 
   </div>
@@ -90,7 +90,7 @@ export default {
       productsHeaders: state => state.products.productsHeaders
     }),
     formTitle() {
-      return this.editedIndex ? "Add new product" : "Edit new product";
+      return this.editedIndex ? "Добавити свій продукт" : "Редагувати продукт";
     }
   },
   watch: {
