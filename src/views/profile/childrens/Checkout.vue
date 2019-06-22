@@ -1,6 +1,6 @@
 <template>
   <v-stepper :value="activeStep">
-    <h2>Product - {{this.$route.params.title}}</h2>
+    <!-- <h2>Product - {{this.$route.params.title}}</h2> -->
     <v-stepper-header>
       <div v-for="(item, n) in header" :key="`${n}-stepper`">
         <v-stepper-step :complete="completeStep > n+1" :step="n+1" edit-icon="create">
@@ -18,16 +18,23 @@
     <v-stepper-items :class="{'vue-loading': loadingPay}">
       <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n+1">
         <v-form v-if="n===0" :ref="'form' + n" v-model="item.valid" lazy-validation>
-          <v-card class="mb-5" color="grey lighten-1" height="200px">
-            <p>Для продовження вам потрыбно пройти повну режстрацію в настройках профіля</p>
-            <v-btn color="main" @click="goSetting">Account Settings</v-btn>
+          <v-card height="200px" class="checkout-card">
+            <h3 class="checkout-card__title">Для продовження вам потрыбно пройти повну режстрацію в настройках профіля</h3>
+            <v-btn color="primary" @click="goSetting">Account Settings</v-btn>
           </v-card>
         </v-form>
 
         <v-form v-if="n===1" :ref="'form' + n" v-model="item.valid" lazy-validation>
-          <v-card class="mb-5" color="grey lighten-1">
-            <p>вам потрыбно подати наступны файли</p>
+          <v-card class="checkout-card">
+            <h3 class="checkout-card__title">вам потрыбно подати наступны файли</h3>
             <div class="inputs__container">
+                 <FileInput
+                v-for="(input, index) in countInputFile"
+                :key="index"
+                label="Твір в роздрукованому або в електронному вигляді."
+                @file="fileData.push($event)"
+                :rules="vrequired"
+              />
                <v-btn 
                 color="primary" 
                 dark
@@ -36,21 +43,23 @@
                 <v-icon dark right>add</v-icon>
                 add input
               </v-btn>
-              <FileInput
-                v-for="(input, index) in countInputFile"
-                :key="index"
-                label="Твір в роздрукованому або в електронному вигляді."
-                @file="fileData.push($event)"
-                :rules="vrequired"
-              />
+           
             </div>
             <v-textarea label="Additional information" v-model="additionalInformation"/>
           </v-card>
         </v-form>
 
         <v-form v-if="n===2" :ref="'form' + n" v-model="item.valid" lazy-validation>
-          <v-card class="mb-5" color="grey lighten-1">
-            <p>Вам потрібно оплатити  uhy</p>
+           <v-card class="checkout-card">
+            <h3 class="checkout-card__title">Вам потрібно оплатити  uhy</h3>
+            <TextInput
+              disabled="disabled"
+              label="Price"
+              placeholder="price"
+              :value="400"
+              @onInput="price = $event"
+              appendIcon="euro_symbol"
+            />
              <TextInput
               label="Card number"
               :rules="textValidate"
@@ -58,20 +67,39 @@
               :value="card"
               mask="credit-card"
               @onInput="card = $event"
+              appendIcon="credit_card"
+
             />
-           <TextInput
-              label="Price"
-              :rules="textValidate"
-              placeholder="price"
-              :value="price"
-              @onInput="price = $event"
-            />
+
+            <v-menu
+              v-model="datePicker"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="cvv"
+                  label="Picker without buttons"
+                  append-icon="event"
+                  readonly
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
+            </v-menu>
+           
+           <Password label="Enter cvv" placeholder="Enter cvv"/>
           </v-card>
         </v-form>
 
         <v-form v-if="n === 3" :ref="'form' + n" v-model="item.valid" lazy-validation>
-          <v-card class="mb-5" color="grey lighten-1" height="200px">
-            <p>Дякую за все чекайте результатыв на пошту</p>
+           <v-card class="checkout-card">
+            <h3 class="checkout-card__title">Дякую за все чекайте результатыв на пошту</h3>
           </v-card>
         </v-form>
       </v-stepper-content>
@@ -91,6 +119,7 @@ import { vrequired, textValidate } from "@/utils/validate";
 import { mapState, mapGetters, mapActions } from "vuex";
 import FileInput from "@/components/sub-components/FileInput";
 import TextInput from "@/components/sub-components/TextInput";
+import Password from "@/components/sub-components/Password";
 import AnimationAjax from "@/components/sub-components/AnimationAjax";
 import { setTimeout } from 'timers';
 import axios from "axios";
@@ -102,7 +131,8 @@ export default {
   components: { 
     FileInput, 
     TextInput,
-    AnimationAjax
+    AnimationAjax,
+    Password
   },
   data() {
     return {
@@ -112,6 +142,8 @@ export default {
       textValidate,
       activeStep: 1,
       stepStart: 1,
+      cvv: new Date().toISOString().substr(0, 10),
+      datePicker: false,
       header: [
         {
           title: "Registrations",

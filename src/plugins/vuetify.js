@@ -9,7 +9,7 @@ Vue.use(Vuetify, {
     VLayout
   },
   theme: {
-    main: '#5CA28B',
+    main: '#4FC38C',
     primary: '#3f51b5',
     secondary: '#b0bec5',
     accent: '#8c9eff',

@@ -4,7 +4,7 @@
     :label="label"
     :rules="rules"
     required
-    color="main"
+    color="primary"
     @change="$emit('onInput', $event)"
   ></v-checkbox>
 </template>

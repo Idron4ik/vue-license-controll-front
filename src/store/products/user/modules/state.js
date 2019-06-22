@@ -4,7 +4,7 @@ export default {
       text: "Title",
       align: "left",
       value: "title",
-      sortable: false
+      sortable: false,
     },
     { text: "Description", value: "description", sortable: false },
     { text: "Status", value: "status" },

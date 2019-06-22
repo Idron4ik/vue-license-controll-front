@@ -43,7 +43,7 @@
         <v-btn 
           flat 
           icon
-          color="main" 
+          color="primary" 
           :disabled="textareaText.length === 0"
           @click="sendMessage"
         >

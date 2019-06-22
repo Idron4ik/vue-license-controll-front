@@ -7,7 +7,7 @@
       :placeholde="placeholder"
       :value="value"
       @click:append="show = !show"
-      color="main"
+      color="primary"
       @input="$emit('onInput', $event)"
     ></v-text-field>
 </template>
@@ -33,6 +33,9 @@
         type: Array,
         default: () => []
       },
+      appendIcon:{
+        type: String
+      }
     },
 
     data(){

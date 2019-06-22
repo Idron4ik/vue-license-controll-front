@@ -4,24 +4,30 @@
       <v-flex xs12 md4 class="profile__settings_info">
         <v-card class="card" dark>
           <div class="card__header">
-            <v-img
-              class="avatar"
+            <div class="avatar">
+              <img
+              v-if="profile.avatar.src"
               :src="profile.avatar.src"
               :alt="profile.avatar.title"
               height="200px"
               width="200px"
+              class="img"
               contain
-            ></v-img>
+            />
+            <v-icon color="primary" v-else>face</v-icon>
+              </div>  
             <h2 class="card__name">{{userName}}</h2>
           </div>
 
-          <v-list class="card__body" dark>
+          <v-list class="card__body">
             <v-list-tile v-for="(user, index) in accountMiniData" :key="index">
-
                <TextInput
                 :label="user.label"
                 :placeholder="profile[user.placeholder]"
                 disabled="disabled"
+                :prependiIcon="user.icon"
+                :mask="user.mask"
+                :value="profile[user.placeholder]"
                ></TextInput>
             </v-list-tile>
           </v-list>
@@ -62,7 +68,7 @@
               @onInput="onInput(index, $event)"
               />
           </div>
-          <v-btn color="info" @click="updateProfile">Update Profile</v-btn>
+          <v-btn color="primary" @click="updateProfile">Update Profile</v-btn>
         </v-form>
       </v-flex>
     </v-layout>
@@ -153,15 +159,19 @@ export default {
       accountMiniData: [
         {
           label: "Email address",
-          placeholder: "email"
+          placeholder: "email",
+          icon: 'mail'
         },
         {
           label: "Phone",
-          placeholder: "phone"
+          placeholder: "phone",
+          icon: 'phone',
+          mask: "phone",
         },
         {
           label: "Address",
-          placeholder: "address"
+          placeholder: "address",
+          icon: 'location_on'
         }
       ],
       ajaxProfile: false

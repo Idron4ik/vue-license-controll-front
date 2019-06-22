@@ -17,9 +17,9 @@
     <v-stepper-items :class="{'vue-loading': loadingPay}">
       <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n+1">
         <v-form v-if="n===0" :ref="'form' + n" v-model="item.valid" lazy-validation>
-          <v-card class="mb-5" color="grey lighten-1" height="200px">
-            <p>Для продовження вам потрыбно пройти повну режстрацію в настройках профіля</p>
-            <v-btn color="main" @click="goSetting">Account Settings</v-btn>
+          <v-card class="mb-5">
+            <h3 class=>Для продовження вам потрыбно пройти повну режстрацію в настройках профіля</h3>
+            <v-btn color="primary" @click="goSetting">Account Settings</v-btn>
           </v-card>
         </v-form>
 

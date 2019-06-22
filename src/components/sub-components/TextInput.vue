@@ -5,9 +5,11 @@
     :mask="mask"
     :value="value"
     :placeholder="placeholder"
-    color="main"
+    color="primary"
     :disabled="disabled"
     @input="$emit('onInput', $event)"
+    :prepend-icon="prependiIcon"
+    :append-icon="appendIcon"
   ></v-text-field>
 </template>
 
@@ -38,6 +40,12 @@ export default {
     disabled:{
       type: Boolean,
       default: false,
+    },
+    prependiIcon:{
+      type: String
+    },
+    appendIcon:{
+      type: String
     }
    
   },

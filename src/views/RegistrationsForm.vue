@@ -1,7 +1,7 @@
 <template>
     <v-layout align-center justify-center fill-height>
       <div :class="['user', {'errors-border': !!msgErrors}]">
-        <h1 class="user__title">{{textHeader}}</h1>
+        <h1 class="user__title"><v-icon color="primary">{{textHeader}}</v-icon></h1>
         <Sigin v-if="activeTab" @errors="msgErrors = $event"/>
         <Login v-else @errors="msgErrors = $event"/>
         <a
@@ -44,7 +44,7 @@ export default {
 
   computed: {
       textHeader() {
-          return this.activeTab ? "Sigin Up" : "Login";
+          return this.activeTab ? "perm_identity" : "account_circle";
       },
     textFooter() {
       return this.activeTab ? "Already a Member? Login" : "Sigin";

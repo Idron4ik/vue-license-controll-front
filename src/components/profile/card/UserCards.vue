@@ -1,12 +1,6 @@
 <template>
   <div class="table">
-    <v-toolbar flat dark>
-      <v-toolbar-title>Your products</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-dialog v-model="dialog" max-width="500px" dark>
-        <template v-slot:activator="{ on }">
-          <v-btn color="primary" dark class="mb-2" v-on="on"> <v-icon dark>add</v-icon>Add new Product</v-btn>
-        </template>
+      <v-dialog v-model="dialog" max-width="500px" class="dashboard__modal">
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
@@ -28,20 +22,36 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
+            <v-btn color="primary" @click="save">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
+    <div 
+      class="dashboard-products"
+      v-if="productsBody.length && loadedproducts"
+    >
+    <v-toolbar flat light>
+      <v-toolbar-title>Your products</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn color="primary" class="mb-2" @click="dialog = true"> 
+        <v-icon color="white">add</v-icon>Add new Product
+      </v-btn>
     </v-toolbar>
 
     <!-- Start Mobile -->
-    <div class="table__mobile">
       <ActionsCards 
         :productsBody="productsBody" 
         :productsHeaders="productsHeaders"
       />
-    </div>
     <!-- End Mobile -->
+    </div>
+    <div v-else class="dashboard-products no_products"> 
+      <div class="label">no data</div>
+      <br>
+      <v-btn color="primary" class="mb-2" @click="dialog = true"> 
+        <v-icon color="white">add</v-icon>Add new Product</v-btn>
+      </div> 
+
   </div>
 </template>
 
@@ -54,6 +64,14 @@ export default {
   components: {
     ActionsCards
   },
+
+  props:{
+    loadedproducts:{
+      type: Boolean,
+      default: false,
+    }
+  },
+
   data() {
     return {
       dialog: false,
@@ -95,7 +113,5 @@ export default {
       this.close();
     }
   },
-
-  mounted() {}
 };
 </script>

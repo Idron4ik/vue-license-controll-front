@@ -11,7 +11,7 @@ export const profile = {
     address: '',
     accountPlus: null,
     avatar:{
-      src: 'https://previews.123rf.com/images/stalkerstudent/stalkerstudent1601/stalkerstudent160101173/50961996-user-icon-vector-flat-design-style-eps-10.jpg',
+      src: '',
       title: 'persnal avarat',
       file: ''
     },

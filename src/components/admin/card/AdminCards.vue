@@ -146,6 +146,7 @@
                   </ul>
                 </div>
               </template>
+              
               <template #step-5>
                 <div class="products-card__container">
                   <ul class="products-card__items">

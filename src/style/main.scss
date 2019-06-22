@@ -1,4 +1,4 @@
-$main: #5CA28B;
+$main: #3f51b5;
 $error: #b71c1c;
 
 @import './category-m';
@@ -15,7 +15,7 @@ body{
 .theme--light{
   &.application,
   .main{
-    background-color: #999999!important;
+    background-color: #F5F5F5!important;
   }
   &.v-input:not(.v-input--is-disabled) input,
   &.v-input:not(.v-input--is-disabled) textarea{
@@ -30,8 +30,30 @@ body{
   &.v-sheet{
     height: 100%;
   }
+  
+  .v-input__slot,
+  .v-text-field__slot{
+    .v-label{
+      color: #747d8a;
+      font-size: 18px;
+      letter-spacing: 0.50px;
+    }
+    input,
+    textarea {
+      color: #333!important;
+      &:placeholder{
+        color: #547d8a!important;
+      }
+    }
+  }
+  
   .container.grid-list-md .layout .flex{
     
+  }
+  .v-dialog{
+    .v-card__actions{
+      padding: 0 24px 24px;
+    }
   }
 }
 .errors-border{
@@ -51,22 +73,38 @@ body{
   .settings{
     margin-top: 25px;
     padding: 30px 20px;
-    background-color: #263238;
-    .v-label{
-      color: #747d8a;
-    }
-    input{
-      color: #547d8a!important;
-      &:placeholder{
-        color: #547d8a!important;
+    background-color: white;
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+    .v-input__slot{
+      .v-label{
+        color: #747d8a;
+        font-size: 18px;
+        letter-spacing: 0.50px;
       }
+      input{
+        color: #333!important;
+        &:placeholder{
+          color: #547d8a!important;
+        }
+      }
+    }
+    .v-icon{
+      color: #3F51B5!important;
+      opacity: 1;
     }
   }
   .card {
-    background-color: #263238;
+    background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.125);
     &__header{
       padding: 30px;
+    }
+    .v-list{
+      background-color: #3F51B5!important;
+      .v-icon{
+        color: white!important;
+        opacity: 1;
+      }
     }
     &__body{
       padding: 30px 0;
@@ -76,6 +114,14 @@ body{
       .v-input__slot{
         .v-label{
           color: white;
+          font-weight: 500;
+          font-size: 18px;
+          letter-spacing: 0.50px;
+      
+        }
+        input{
+          color: #ccc!important;
+          font-weight: 500;;
         }
         &:before{
           display: none;
@@ -85,9 +131,16 @@ body{
     }
   }
   .avatar {
-    border-radius: 50% !important;
-    margin: 0 auto;
-  }
+    text-align: center;
+      .img{
+        display: inline-block;
+        border-radius: 50% !important;
+        object-fit: cover;
+      }
+      .v-icon{
+        font-size: 150px;  
+      }
+    }
   }
 }
 
@@ -99,6 +152,8 @@ body{
   border: 2px solid transparent;
   border-radius: 10px;
   position: relative;
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+  background-color: white;
   &.errors-border{
     .user{
       &__errors{
@@ -114,11 +169,20 @@ body{
   }
   &__sign {
   }
-
+  .v-input__icon{
+    .v-icon{
+      color: $main;
+    }
+  }
   &__login {
+    
   }
   &__title{
     margin-bottom: 18px;
+    text-align: center;
+    .v-icon{
+      font-size: 105px;  
+    }
   }
   .v-input{
     margin-bottom: 8px;
@@ -131,7 +195,13 @@ body{
     color: #FDFDFD!important;
     margin-left: 0;
     margin-right: 0;
+    &.theme--light.v-btn.v-btn--disabled:not(.v-btn--icon):not(.v-btn--flat):not(.v-btn--outline).v-btn--disabled{
+      background-color: $main!important;
+      color: #FDFDFD!important;
+      opacity: 0.8;
+    }
   }
+  
   &__footer{
     display: inline-block;
     width: 100%;
@@ -147,7 +217,64 @@ body{
 .v-overlay--active:before{
   opacity: 0.1;
 }
-
+.navbar-menu{
+  &.v-navigation-drawer > .v-list:not(.v-list--dense) .v-list__tile{
+    padding-left: 0; 
+  }
+  &__header{
+    font-size: 24px;
+    padding: 0!important;
+    background-color: $main!important;
+    color: white!important;
+    .v-list__tile__title{
+      font-size: 18px;
+      letter-spacing: 0.45px;
+    }
+  }
+  .navbar-active{
+    .v-list__tile{
+      &__content{
+      color: $main;
+      }
+      &__action{
+        .v-icon{
+          color: $main;
+        }
+      }
+    }
+  }
+}
+.content__main{
+  height: 100%;
+  .main{
+    height: 100%;
+    .dashboard{
+      height: 100%;
+      
+      .table{
+        height: 100%;
+      }
+      &-products{
+        &.no_products{
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          .label{
+            width: 100%;
+            font-size: 24px;
+            text-align: center;
+          }
+        }
+        .v-toolbar__content{
+          box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+        }
+      }
+    }
+  }
+}
 @media screen and (min-width: 960px){
   .profile{
     &__settings{
@@ -175,17 +302,19 @@ body{
   }
 .products-card{
   &__container{
-    background-color: #303030;
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
     height: 100%;
   }
   &__items{
     padding: 20px;
+    position: relative;
   }
   &__item{
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 10px;
     .label{
-      width: 100px;
+      width: 100%;
       font-weight: 600;
     }
     .value{
@@ -225,9 +354,39 @@ body{
       }
     }
   }
+  &__title{
+    font-weight: 500;
+    font-weight: 500;
+    font-size: 24px;
+  }
+  &__icon{
+    position: absolute;
+    top: 17px;
+    right: 22px;
+  }
 }
 }
-
+.checkout-card{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  &__title{
+    font-size: 20px;
+    font-weight: 400;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
+ .inputs__container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    .v-btn{
+      align-self: flex-end;
+    }
+  }
+}
 .chat{
   &__main{
     overflow-y: scroll;
@@ -240,7 +399,8 @@ body{
         border-radius: 10px;
         padding: 10px 20px;
         display: inline-block;
-        background-color: #212121;
+        background-color: $main;
+        color: white;
       }
     }
     &__admin{

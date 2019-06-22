@@ -1,8 +1,5 @@
 <template>
-  <div>
       <HomePage :categories="categories" indexPage="home" />
-  </div>
-
 </template>
 <script>
 import axios from "axios";
@@ -21,7 +18,7 @@ export default {
         {
           icon: "dashboard",
           title: "Dashboard",
-          link: "dashboard"
+          link: "dashboard",
         },
         // {
         //   icon: "shopping_cart",
@@ -31,12 +28,12 @@ export default {
         {
           icon: "mail",
           title: "Inbox",
-          link: "inbox"
+          link: "inbox",
         },
         {
           icon: "settings",
           title: "Settings",
-          link: "settings"
+          link: "settings",
         },
         
         {

@@ -20,7 +20,7 @@
 
       <v-btn
         :disabled="!valid"
-        color="transparent"
+        color="primary"
         class="user__btn"
         @click="loginAction"
       >

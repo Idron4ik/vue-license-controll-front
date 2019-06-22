@@ -18,7 +18,7 @@
               </v-list-tile-content>
 
               <v-list-tile-action>
-                <v-icon :color="true ? 'main' : 'grey'">chat_bubble</v-icon>
+                <v-icon :color="true ? 'primary' : 'grey'">chat_bubble</v-icon>
               </v-list-tile-action>
             </v-list-tile>
               <v-divider/>

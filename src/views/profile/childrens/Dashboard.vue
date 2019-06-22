@@ -1,6 +1,6 @@
 <template>
   <div :class="['dashboard', {'vue-loading': loading}]">
-      <UserCards/>
+      <UserCards :loadedproducts="!loading"/>
       <AnimationAjax/>
   </div>
     

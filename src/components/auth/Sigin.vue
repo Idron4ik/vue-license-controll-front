@@ -25,7 +25,7 @@
 
       </div>
 
-      <v-btn :disabled="!valid" class="user__btn" color="transparent" @click="signAction">Sign Up</v-btn>
+      <v-btn :disabled="!valid" class="user__btn" color="primary" @click="signAction">Sign Up</v-btn>
     </v-form>
   </div>
 </template>

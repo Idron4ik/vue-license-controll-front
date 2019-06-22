@@ -1,19 +1,17 @@
 <template>
-   <div>
-    <v-toolbar :color="pageTitle.color" flat>
-      <v-btn icon light @click="showMenu = !showMenu">
-      <!-- <v-btn icon light @click="turnBack"> -->
-        <!-- <v-icon color="grey darken-2">{{homePage ? 'menu' : 'arrow_back'}}</v-icon> -->
-        <v-icon color="grey darken-2">menu</v-icon>
+   <div class="content__main">
+    <v-toolbar color="primary" dark> 
+      <v-btn icon @click="showMenu = !showMenu">
+        <v-icon>menu</v-icon>
       </v-btn>
 
-      <v-toolbar-title class="grey--text text--darken-4">{{pageTitle.title}}</v-toolbar-title>
+      <v-toolbar-title class="white--text">{{pageTitle.title}}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn icon light>
-        <v-icon color="grey darken-2">search</v-icon>
-      </v-btn>
+      <!-- <v-btn icon>
+        <v-icon color="white--text">search</v-icon>
+      </v-btn> -->
     </v-toolbar>
 
     <ul class="category" v-if="homePage">
@@ -28,11 +26,12 @@
       v-model="showMenu"
       absolute
       temporary
+      class="navbar-menu"
     >
-      <v-list class="pa-1">
+      <v-list class="pa-1 navbar-menu__header">
         <v-list-tile avatar >
           <v-list-tile-avatar>
-            <v-icon>lock</v-icon>
+            <v-icon color="white">lock</v-icon>
           </v-list-tile-avatar>
 
           <v-list-tile-content>
@@ -40,6 +39,7 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
+
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
 
@@ -47,6 +47,7 @@
           v-for="(category, index) in categories" 
           :key="index"
           @click="switchContent(category.link)"
+          :class="{'navbar-active': $route.name === category.link}"
         >
           <v-list-tile-action>
             <v-icon>{{ category.icon }}</v-icon>
@@ -98,10 +99,10 @@ export default {
     pageTitle(){
       switch(this.$route.name){
         case 'home': return { title: 'Home', color: 'orange' };
-        case 'settings': return { title: 'Account Settings', color: 'teal'};
-        case 'admin': return { title: 'Admin Dashboard', color: 'purple'};
-        case 'approvedProducts': return { title: 'Approved Products', color: 'pink'};
-        case 'inbox': return { title: 'Inbox', color: 'cyan'};
+        case 'settings': return { title: 'Account Settings', color: 'privery'};
+        case 'admin': return { title: 'Admin Dashboard', color: 'purple',};
+        case 'approvedProducts': return { title: 'Approved Products', };
+        case 'inbox': return { title: 'Inbox', color: 'cyan', };
         default: return { title: 'Dashboard', color: 'light-blue'};
       }
     },
