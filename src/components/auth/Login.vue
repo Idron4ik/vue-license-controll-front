@@ -90,7 +90,7 @@ export default {
                 return
               }
 
-              this.$router.push(`/profile/${response.data.token}`);
+              this.$router.push(`/profile`);
             }
           })
           .catch(error => {

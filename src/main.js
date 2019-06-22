@@ -11,8 +11,6 @@ Vue.config.productionTip = false;
 axios.defaults.baseURL = 'https://frozen-headland-66798.herokuapp.com/';
 axios.defaults.headers.common['Authorization'] = `JWT ${localStorage.getItem("jwt")}`;
 
-console.log(123123);
-
 new Vue({
   router,
   store,

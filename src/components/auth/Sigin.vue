@@ -87,7 +87,6 @@ export default {
           firstName: this.sign[0].value,
           lastName: this.sign[1].value,
           email: this.sign[2].value,
-          //  gender: this.gender,
           password: this.sign[3].value
         };
 
@@ -100,7 +99,7 @@ export default {
             if(response.data.token) {
               localStorage.setItem('jwt', response.data.token);
               axios.defaults.headers.common['Authorization'] = `JWT ${localStorage.getItem("jwt")}`;
-              this.$router.push(`/profile/${response.data.token}`);
+              this.$router.push(`/profile`);
             }
           })
           .catch(error => {

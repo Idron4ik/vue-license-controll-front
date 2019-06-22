@@ -60,7 +60,9 @@
 
     </v-navigation-drawer>
     <div class="main">
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>

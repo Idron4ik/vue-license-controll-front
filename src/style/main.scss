@@ -6,20 +6,27 @@ $error: #b71c1c;
 
 
 body{
-  background-color: #303030;
+  // background-color: #303030;
 }
 *{
   box-sizing: border-box
 }
 
-.theme--dark{
-  &.application{
-    background-color: #303030!important;
+.theme--light{
+  &.application,
+  .main{
+    background-color: #999999!important;
   }
-  //&.v-input:not(.v-input--is-disabled) input,
-  //&.v-input:not(.v-input--is-disabled) textarea{
-  //  color: $main;
-  //}
+  &.v-input:not(.v-input--is-disabled) input,
+  &.v-input:not(.v-input--is-disabled) textarea{
+   color: $main;
+  }
+  &.v-label{
+    color: white;
+  }
+  &.v-text-field > .v-input__control > .v-input__slot:befor{
+    color: white;
+  }
   &.v-sheet{
     height: 100%;
   }
@@ -210,7 +217,9 @@ body{
             display: inline-block;
             vertical-align: middle;
             margin-left: 10px;
-
+          }
+          a{
+            word-break: break-all;
           }
         }
       }
@@ -250,4 +259,23 @@ body{
 .paginations{
   text-align: center;
   margin-bottom: 20px;   
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+.child-view {
+  position: absolute;
+  transition: all .5s cubic-bezier(.55,0,.1,1);
+}
+.slide-left-enter, .slide-right-leave-active {
+  opacity: 0;
+  transform: translate(100%, 0);
+}
+.slide-left-leave-active, .slide-right-enter {
+  opacity: 0;
+  transform: translate(-100%, 0);
 }

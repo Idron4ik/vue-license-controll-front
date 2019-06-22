@@ -22,7 +22,7 @@ const router = new Router({
       component: RegistrationsForm
     },
     {
-      path: '/profile/:id',
+      path: '/profile',
       name: 'home',
       meta: {
         requiresAuth: true,

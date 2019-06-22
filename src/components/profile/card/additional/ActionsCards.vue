@@ -175,7 +175,27 @@ export default {
     },
 
     goPay(item){
-      this.$router.push({ name: "checkout", params: item });
+      console.log(item);
+      this.ajaxStatusCards = true;
+
+      axios
+        .put(`/products/${item.id}`, {
+          status: "WAITING_FOR_PAYMENT",
+          links: this.productsBody[item.index].links,
+          ownerId: item.ownerId
+        })
+        .then(response => {
+          this.$store.dispatch("productsAdmin/updateProduct", {
+            product: response.data,
+            index: item.index
+          });
+          this.ajaxStatusCards = false;
+
+          this.$router.push({ name: "checkout", params: item });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };
