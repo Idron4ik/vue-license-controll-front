@@ -49,12 +49,12 @@ export default {
     return {
       login:[
         {
-          label: "Email address",
+          label: "Пошта",
           rules: emailValidate,
           value:''
         },
         {
-          label: "Password",
+          label: "Пароль",
           placeholder: "password",
           uniqueField: "password",
           value:''

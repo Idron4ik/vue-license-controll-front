@@ -36,7 +36,7 @@
       </v-card-text>
         <v-card-actions class="chat__footer">
           <TextInput
-          placeholder="Enter yout text ..."
+          placeholder="Ваше повідомлення ..."
           :value="textareaText"
           @onInput="writeText($event)"
         />

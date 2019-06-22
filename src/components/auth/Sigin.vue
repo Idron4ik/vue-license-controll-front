@@ -49,22 +49,22 @@ export default {
     return {
       sign:[
         {
-          label: "First name",
+          label: "Ім'я",
           value: '',
           rules: textValidate,
         },
         {
-          label: "Last name",
+          label: "Фамілія",
           value: '',
           rules: textValidate,
         },
         {
-          label: "Email address",
+          label: "Пошта",
           value: '',
           rules: emailValidate,
         },
         {
-          label: "Password",
+          label: "Пароль",
           value: '',
           uniqueField: "password",
         },
