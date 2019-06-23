@@ -1,12 +1,13 @@
 <template>
   <v-slider
-    v-model="age"
     color="primary"
     :label="label"
     :min="min"
     :max="max"
-    :value="20"
+    :value="value"
     thumb-label="always"
+    :step="step"
+    @input="onInput"
   ></v-slider>
 </template>
 
@@ -28,12 +29,16 @@ export default {
     },
     value:{
       type: Number
+    },
+    step:{
+      type: Number
     }
   },
 
-  data(){
-    return{
-      age: null
+  methods:{
+    onInput(e){
+      this.$emit('range', e)
+
     }
   }
 };

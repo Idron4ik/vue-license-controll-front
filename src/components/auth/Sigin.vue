@@ -25,7 +25,7 @@
 
       </div>
 
-      <v-btn :disabled="!valid" class="user__btn" color="primary" @click="signAction">Sign Up</v-btn>
+      <v-btn :disabled="!valid" class="user__btn" color="primary" @click="signAction">Зареєструватись</v-btn>
     </v-form>
   </div>
 </template>
@@ -54,7 +54,7 @@ export default {
           rules: textValidate,
         },
         {
-          label: "Фамілія",
+          label: "Прізвище",
           value: '',
           rules: textValidate,
         },

@@ -25,11 +25,17 @@ export default {
           title: "Підтримка",
           link: "inboxAdmin"
         },
+        // {
+        //   icon: "next_week",
+        //   title: "Оплачені продукти",
+        //   link: "payedProducts"
+        // },
         {
           icon: "power_settings_new",
           title: "Вихід",
           link: "logout"
-        }
+        },
+
       ]
     }
   }

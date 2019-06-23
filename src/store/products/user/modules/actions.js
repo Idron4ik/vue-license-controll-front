@@ -8,7 +8,8 @@ export default {
         title,
         status,
         links,
-        _id: id
+        _id: id,
+        price
       } = item;
 
         return {
@@ -17,7 +18,8 @@ export default {
           status,
           links,
           id,
-          index
+          index,
+          price
         };
     });
 
@@ -29,14 +31,16 @@ export default {
       let {
         title,
         links,
-        _id: id
+        _id: id,
+        price
       } = item;
 
         return {
           title,
           links,
           id,
-          index
+          index,
+          price
         };
     });
     commit('setCartProducts', productsResult);

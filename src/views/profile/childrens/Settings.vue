@@ -68,7 +68,7 @@
               @onInput="onInput(index, $event)"
               />
           </div>
-          <v-btn color="primary" @click="updateProfile">Оновити профіль</v-btn>
+          <v-btn color="primary" @click="updateProfile">{{updateProfileText}}</v-btn>
         </v-form>
       </v-flex>
     </v-layout>
@@ -111,8 +111,8 @@ export default {
           rules: textValidate
         },
         {
-          label: "Фамілія",
-          placeholder: "Фамілія",
+          label: "Прізвище",
+          placeholder: "Прізвище",
           value: "lastName",
           rules: textValidate
         },
@@ -177,7 +177,7 @@ export default {
           icon: 'location_on'
         }
       ],
-      ajaxProfile: false
+      ajaxProfile: false,
     };
   },
 
@@ -188,6 +188,10 @@ export default {
     ...mapGetters("profile", {
       userName: "userFullName"
     }),
+
+    updateProfileText(){
+      return !!localStorage.getItem('checkout')  ? 'Оновити профіль та перейти до оплати': 'Оновити профіль'
+    }
   },
   methods: {
     updateProfile() {
@@ -199,8 +203,16 @@ export default {
         .put("/auth/me", rest)
         .then(response => {
           this.ajaxProfile = false;
-          console.log('success');
           this.$store.dispatch("profile/setProfileData", response.data);
+          // console.log(response.data.accountPlus);
+          // console.log(!!localStorage.getItem('checkout'));
+          // console.log(response.data.accountPlus && !!localStorage.getItem('checkout') );
+          if(response.data.accountPlus && (!!localStorage.getItem('checkout')) ){
+            localStorage.removeItem('checkout');
+            this.$router.push({ name: "checkout" });
+            
+          }
+
         })
         .catch(error => {
           console.log(error);

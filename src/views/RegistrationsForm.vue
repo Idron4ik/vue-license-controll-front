@@ -8,8 +8,9 @@
             href="#"
             @click="switchForm"
             class="user__footer"
+            v-html=" textFooter"
         >
-            {{textFooter}}
+           
         </a>
         <ValidateErrors :msg="msgErrors" classes="user__errors"/>
       </div>
@@ -47,7 +48,7 @@ export default {
           return this.activeTab ? "perm_identity" : "account_circle";
       },
     textFooter() {
-      return this.activeTab ? "Already a Member? Login" : "Sigin";
+      return this.activeTab ? "У вас уже є акаунт? Увійти" : "У вас немає акаунта? <br> Зареєструвати акаунт";
     }
   },
 

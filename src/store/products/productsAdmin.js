@@ -39,7 +39,8 @@ export default {
           ownerId,
           _id: id,
           keywords,
-          links
+          links,
+          documents
         } = item;
   
           return {
@@ -50,7 +51,9 @@ export default {
             id,
             keywords,
             links,
-            index
+            index,
+            documents,
+            linksCount: 5
           };
       });
 

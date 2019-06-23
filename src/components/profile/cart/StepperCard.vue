@@ -18,7 +18,7 @@
       <v-stepper-content v-for="(item, n) in header" :key="`${n}-content`" :step="n+1">
         <v-form v-if="n===0" :ref="'form' + n" v-model="item.valid" lazy-validation>
           <v-card class="mb-5">
-            <h3 class=>Для продовження вам потрібно пройти, повну реєстрацію профіля</h3>
+            <h3 class>Для продовження вам потрібно пройти, повну реєстрацію профіля</h3> <br>
             <v-btn color="primary" @click="goSetting">пройти повну реєстрацію профіля</v-btn>
           </v-card>
         </v-form>
@@ -33,7 +33,7 @@
                 @click="countInputFile.push({})"
               >
                 <v-icon dark right>add</v-icon>
-                Добавити документ
+                Додати документ
               </v-btn>
               <FileInput
                 v-for="(input, index) in countInputFile"

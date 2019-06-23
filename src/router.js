@@ -4,6 +4,7 @@ import Settings from './views/profile/childrens/Settings';
 import Dashboard from './views/profile/childrens/Dashboard';
 import DashboardAdmin from './views/admin/childrens/DashboardAdmin';
 import InboxAdmin from './views/admin/childrens/InboxAdmin';
+import PayedProducts from './views/admin/childrens/PayedProducts';
 import Checkout from './views/profile/childrens/Checkout';
 import Inbox from './views/profile/childrens/Inbox';
 import RegistrationsForm from './views/RegistrationsForm';
@@ -13,7 +14,7 @@ import MobileHome from './views/profile/ProfileHome';//chank
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
+  // mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -70,12 +71,27 @@ const router = new Router({
           name: 'inboxAdmin',
           component: InboxAdmin
         },
+        {
+          path: 'payed-products',
+          name: 'payedProducts',
+          component: PayedProducts
+        },
       ]
     },
   ]
 });
 
 router.beforeEach((to, from, next) => {
+  if(to.name === 'registrationsForm' && localStorage.getItem('jwt')){
+    let user = JSON.parse(localStorage.getItem('user'));
+
+    if (user.isAdmin) {
+      next({ path: 'admin/dashboard' })
+    } else{
+      next({ path: 'profile/dashboard' })
+
+    }
+  }
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (localStorage.getItem('jwt') == null) {

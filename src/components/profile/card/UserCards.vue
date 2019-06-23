@@ -9,10 +9,10 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12 sm6 md4>
+                <v-flex xs12>
                   <v-text-field v-model="editedItem.title" label="Заголовок"/>
                 </v-flex>
-                <v-flex xs12 sm6 md4>
+                <v-flex xs12>
                   <v-textarea v-model="editedItem.description" label="Опис"/>
                 </v-flex>
               </v-layout>
@@ -90,7 +90,7 @@ export default {
       productsHeaders: state => state.products.productsHeaders
     }),
     formTitle() {
-      return this.editedIndex ? "Добавити свій продукт" : "Редагувати продукт";
+      return this.editedIndex ? "Додати свій продукт" : "Редагувати продукт";
     }
   },
   watch: {

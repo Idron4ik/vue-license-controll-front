@@ -24,7 +24,7 @@
         class="user__btn"
         @click="loginAction"
       >
-        Log In
+        Увійти
       </v-btn>
 
     </v-form>

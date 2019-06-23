@@ -30,7 +30,11 @@
                 <div class="products-card__container">
                   <ul class="products-card__items">
                     <DefaultCardData :header="productsHeaders" :itemElem="props.item"/>
+                    <li class="products-card__item">
+                      <v-btn @click="deleteItem(props.item, props.item.index)">Видалити</v-btn>
+                    </li>
                   </ul>
+
                 </div>
               </template>
               <template #step-2>
@@ -132,9 +136,6 @@ export default {
     },
 
     goPay(item){
-      console.log(item);
-      this.ajaxStatusCards = true;
-
       axios
         .put(`/products/${item.id}`, {
           status: "WAITING_FOR_PAYMENT",

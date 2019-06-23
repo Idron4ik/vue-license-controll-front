@@ -103,6 +103,7 @@ export default {
         case 'admin': return { title: 'Панель управління Адміністратора', color: 'purple',};
         case 'approvedProducts': return { title: 'Оплачені продукти', };
         case 'inbox': return { title: 'Підтримка', color: 'cyan', };
+        case 'payedProducts': return { title: 'Оплачені продукти', color: 'cyan', };
         default: return { title: 'Панель управління', color: 'light-blue'};
       }
     },

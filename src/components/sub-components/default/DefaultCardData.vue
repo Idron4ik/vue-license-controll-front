@@ -14,19 +14,32 @@
       <template v-if="item.text.toLowerCase() === 'status'" class="align-end">
         <div class="products-card__status">
           <v-chip
-            :color="
-              itemElem.status === 'PENDING' ? 'grey' : 
-              (itemElem.status === 'REJECTED') ? 'red' : 
-              'red'
-            "
+            :color="itemElem.status === 'PENDING' ? 'grey' :
+              (itemElem.status === 'REJECTED') ? 'red' :
+              (itemElem.status === 'SCRIPT_WORKING') ? 'teal' :
+              (itemElem.status === 'WAITING_FOR_PAYMENT') ? 'orange' :
+              (itemElem.status === 'WAITING_FOR_RESULTS_REVIEW') ? 'primary' :
+              (itemElem.status === 'PAYED') ? 'green' : false"
             :text-color="
-              itemElem.status === 'PENDING' ? 'black' : 
-              'white'"
-          >{{ itemElem.status }}</v-chip>
+              itemElem.status === 'PENDING' ? 'white' :
+              (itemElem.status === 'REJECTED') ? 'white' :
+              (itemElem.status === 'SCRIPT_WORKING') ? 'white' :
+              (itemElem.status === 'WAITING_FOR_PAYMENT') ? 'white' :
+              (itemElem.status === 'WAITING_FOR_RESULTS_REVIEW') ? 'white' :
+              (itemElem.status === 'PAYED') ? 'white' : false "
+          >{{ 
+
+            itemElem.status === 'PENDING' ? 'Очікується перевірки адміністратором' :
+              (itemElem.status === 'REJECTED') ? 'Відмовлено адміністратором' :
+              (itemElem.status === 'SCRIPT_WORKING') ? 'Опрацювання' :
+              (itemElem.status === 'WAITING_FOR_PAYMENT') ? 'Очікується оплата користувачем' :
+              (itemElem.status === 'WAITING_FOR_RESULTS_REVIEW') ? 'В процесі перевірки адміністратором' :
+              (itemElem.status === 'PAYED') ? 'Оплачено та передано на опрацювання виконавцеві' : false
+           }}</v-chip>
           <div class="products-card__icon">
             <v-icon large
               :color="itemElem.status === 'PENDING' ? 'grey' :
-              (itemElem.status === 'REJECTED') ? 'block' :
+              (itemElem.status === 'REJECTED') ? 'red' :
               (itemElem.status === 'SCRIPT_WORKING') ? 'teal' :
               (itemElem.status === 'WAITING_FOR_PAYMENT') ? 'orange' :
               (itemElem.status === 'WAITING_FOR_RESULTS_REVIEW') ? 'primary' :

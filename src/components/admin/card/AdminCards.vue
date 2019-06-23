@@ -3,7 +3,7 @@
     <v-bottom-sheet v-model="isOpenModel">
       <v-combobox
         v-model="keywords"
-        label="Your keywords"
+        label="Введіть ключові слова"
         chips
         clearable
         solo
@@ -12,7 +12,7 @@
         @click:append="addKeywords"
       >
         <template v-slot:selection="data">
-          <v-chip :selected="data.selected" close @input="remove(keywords, data.item)">
+          <v-chip :selected="data.selected" close class="keywords" @input="remove(keywords, data.item)">
             <strong>{{ data.item }}</strong>
           </v-chip>
         </template>
@@ -41,10 +41,10 @@
         <template v-slot:item="props">
           <v-flex xs12 sm6 md4 lg3>
             <StatusCard
-              :countStep="5"
+              :countStep="6"
               :activeStep="
                 (props.item.status === 'PENDING') ? (1) : 
-                (props.item.status === 'REJECTED') ? (1) : 
+                (props.item.status === 'REJECTED') ? (6) : 
                 (props.item.status === 'SCRIPT_WORKING') ? (2) : 
                 (props.item.status === 'WAITING_FOR_RESULTS_REVIEW') ? (3) :
                 (props.item.status === 'WAITING_FOR_PAYMENT') ? (4) :
@@ -75,7 +75,29 @@
                         <template
                           v-if="item.text.toLowerCase() === 'keywords' && props.item[item.text.toLowerCase()].length > 0"
                           class="align-end"
-                        >{{ props.item[item.text.toLowerCase()] }}</template>
+                        >
+                          <v-chip 
+                            v-for="(label, index) in props.item[item.text.toLowerCase()]"
+                            :key="index"
+                            color="primary" 
+                            text-color="white"
+                          >
+                            <v-icon left>label</v-icon>{{label}}
+                          </v-chip>
+
+                          <div class="parse">
+                            <h3 class="parse__title">Глубина пошуку</h3>
+                            <Range
+                              class="parse__range"
+                              :step="2"
+                              :min="3"
+                              :max="10"
+                              :value="props.item.linksCount"
+                              @range="props.item.linksCount = $event"
+                            />
+                          </div>
+                        
+                        </template>
 
                         <template v-if="item.text.toLowerCase() === 'actions'" class="actions">
                           <v-btn
@@ -88,7 +110,7 @@
                             color="purple"
                             dark
                             @click="openModal(props.item.keywords, props.item.index)"
-                          >Добавити ключові слова</v-btn>
+                          >Додати ключові слова</v-btn>
                         </template>
                       </div>
                     </li>
@@ -147,10 +169,32 @@
                       :header="productsHeaders" 
                       :itemElem="props.item"
                     />
-
                     <li class="products-card__item">
                       <h2>Клієн оплатив</h2>
                     </li>
+                    <li class="products-card__item user__documents">
+                      <h3 class="title">Документи, що прикріпив користувач</h3>
+                      <ul 
+                        class="user__documents-links"
+                        v-for="(link, index) in props.item.documents"
+                        :key="index"
+                      >
+                        <li><a class="link" :href="link" >{{link}}</a></li>    
+                      </ul>
+                      
+                    </li>
+
+                  </ul>
+                </div>
+              </template>
+
+              <template #step-6>
+                <div class="products-card__container">
+                  <ul class="products-card__items">
+                    <DefaultCardData 
+                      :header="productsHeaders" 
+                      :itemElem="props.item"
+                    />
                   </ul>
                 </div>
               </template>
@@ -174,6 +218,7 @@ import StatusCard from "@/components/sub-components/default/StatusCard";
 import LinksContainer from "@/components/sub-components/default/LinksContainer";
 import DefaultCardData from "@/components/sub-components/default/DefaultCardData";
 import AnimationAjax from "@/components/sub-components/AnimationAjax";
+import Range from "@/components/sub-components/SliderInput"
 export default {
   name: "AdminCards",
 
@@ -181,7 +226,8 @@ export default {
     StatusCard, 
     AnimationAjax,
     LinksContainer,
-    DefaultCardData
+    DefaultCardData,
+    Range
   },
 
   data() {
@@ -192,6 +238,7 @@ export default {
       selected: [],
       keywords: [],
       index: null,
+      rangeParser: null,
       pagination: {
         rowsPerPage: 4
       },
@@ -240,7 +287,8 @@ export default {
         .put(`/admin/products/${item.id}`, {
           status: "SCRIPT_WORKING",
           keywords: item.keywords,
-          ownerId: item.ownerId
+          ownerId: item.ownerId,
+          linksCount: item.linksCount,
         })
         .then(response => {
           this.$store.dispatch("productsAdmin/updateProduct", {
