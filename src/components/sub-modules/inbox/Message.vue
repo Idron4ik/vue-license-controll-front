@@ -8,7 +8,7 @@
         
         <v-spacer></v-spacer>
 
-        <v-toolbar-title class="body-2 grey--text">Chat</v-toolbar-title>
+        <v-toolbar-title class="body-2 grey--text">Служба підтримки</v-toolbar-title>
       </v-toolbar>
 
       <v-divider></v-divider>

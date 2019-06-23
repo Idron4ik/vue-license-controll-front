@@ -34,7 +34,7 @@
               (itemElem.status === 'SCRIPT_WORKING') ? 'Опрацювання' :
               (itemElem.status === 'WAITING_FOR_PAYMENT') ? 'Очікується оплата користувачем' :
               (itemElem.status === 'WAITING_FOR_RESULTS_REVIEW') ? 'В процесі перевірки адміністратором' :
-              (itemElem.status === 'PAYED') ? 'Оплачено та передано на опрацювання виконавцеві' : false
+              (itemElem.status === 'PAYED') ? 'Оплачено та відправлено виконавцеві' : false
            }}</v-chip>
           <div class="products-card__icon">
             <v-icon large

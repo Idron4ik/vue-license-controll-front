@@ -43,7 +43,7 @@
                 :rules="vrequired"
               />
             </div>
-            <v-textarea label="Additional information" v-model="additionalInformation"/>
+            <v-textarea label="Додаткова інформація" v-model="additionalInformation"/>
           </v-card>
         </v-form>
 

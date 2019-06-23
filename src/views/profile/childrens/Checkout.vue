@@ -43,7 +43,7 @@
               </v-btn>
            
             </div>
-            <v-textarea label="Additional information" v-model="additionalInformation"/>
+            <v-textarea label="Додаткова інформація" v-model="additionalInformation"/>
           </v-card>
         </v-form>
 
@@ -97,7 +97,7 @@
 
         <v-form v-if="n === 3" :ref="'form' + n" v-model="item.valid" lazy-validation>
            <v-card class="checkout-card" >
-            <h3 class="checkout-card__title">Дякуємо за все! Менеджер перестане танцювати, і відпише вам на пошту. Чекайте результатів на пошту</h3>
+            <h3 class="checkout-card__title">Дякуємо, оплата пройшла успішно. Якщо у вас виникли питання - ви можете написати адміністратору в чат у вкладці "Підтримка"</h3>
           </v-card>
         </v-form>
       </v-stepper-content>
