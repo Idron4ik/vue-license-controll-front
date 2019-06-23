@@ -22,7 +22,6 @@
             <v-btn color="primary" @click="goSetting">пройти повну реєстрацію профіля</v-btn>
           </v-card>
         </v-form>
-
         <v-form v-if="n===1" :ref="'form' + n" v-model="item.valid" lazy-validation>
           <v-card class="checkout-card">
             <h3 class="checkout-card__title">Вам потрібно подати наступні файли</h3>
@@ -50,17 +49,17 @@
 
         <v-form v-if="n===2" :ref="'form' + n" v-model="item.valid" lazy-validation>
            <v-card class="checkout-card w100">
-            <h3 class="checkout-card__title">Вам потрібно оплатити {{$route.params.price}}</h3>
+            <h3 class="checkout-card__title">Вам потрібно оплатити {{productCheckout.price}}</h3>
             <TextInput
               disabled="disabled"
               label="Price"
               placeholder="price"
-              :value="$route.params.price"
+              :value="productCheckout.price"
               @onInput="price = $event"
               appendIcon="euro_symbol"
             />
              <TextInput
-              label="Card number"
+              label="Номер вашоъ карти"
               :rules="textValidate"
               placeholder="credit-card"
               :value="card"
@@ -83,7 +82,7 @@
               <template v-slot:activator="{ on }">
                 <v-text-field
                   v-model="date"
-                  label="Picker without buttons"
+                  label="Закінчення дії вашої карти"
                   append-icon="event"
                   readonly
                   v-on="on"
@@ -92,7 +91,7 @@
               <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
             </v-menu>
            
-           <Password label="Enter cvv" placeholder="Enter cvv"/>
+           <Password label="Ваш cvv" placeholder="Ваш cvv"/>
           </v-card>
         </v-form>
 
@@ -186,6 +185,9 @@ export default {
 
     btnNextText() {
       return this.activeStep === this.header.length - 1 ? "Оплатити" : "Продовжити";
+    },
+    productCheckout(){
+      return JSON.parse(localStorage.getItem('productCheckout'));
     }
   },
 
@@ -224,11 +226,12 @@ export default {
       fd.append('status', 'PAYED');
       this.loadingPay= true;
       axios
-        .put(`/products/${this.$route.params.id}`, fd)
+        .put(`/products/${this.productCheckout.id}`, fd)
         .then((response) => {
           this.activeStep = this.header.length;
           this.success = true;
           this.loadingPay= false;
+          localStorage.removeItem('productCheckout');
 
         })
         .catch(function(error) {

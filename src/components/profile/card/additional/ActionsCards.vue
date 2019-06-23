@@ -150,6 +150,8 @@ export default {
           this.ajaxStatusCards = false;
 
           this.$router.push({ name: "checkout", params: item });
+          localStorage.setItem('productCheckout', JSON.stringify(item));
+
         })
         .catch(function(error) {
           console.log(error);
