@@ -14,7 +14,7 @@
         :pagination.sync="pagination"
       >
         <template v-slot:item="props">
-          <v-flex xs12 sm6 md4 lg3>
+          <v-flex xs12 sm6 md4 lg4>
             <StatusCard
               :countStep="3"
               :activeStep="
@@ -41,9 +41,15 @@
                 <div class="products-card__container">
                   <ul class="products-card__items">
                     <DefaultCardData :header="productsHeaders" :itemElem="props.item"/>
-                    <LinksContainer :links="props.item.links" :indexBody="props.item.index" :productsBody="productsBody"/>
+                     
+                    <LinksContainer 
+                      :links="props.item.links" 
+                      :indexBody="props.item.index" 
+                      :productsBody="productsBody"
+                    ><h3 style="margin-bottom: 20px">Наша система знайшла правопорушення на наступних ресурсах, прохання перевірити та видалити непотрібні ресурси. 
+                    Після оплати робота з правопорушниками передасться нашим юристам</h3></LinksContainer>
                     <li class="products-card__item">
-                      <h2>Для продовження ви повинні оплатити</h2>
+                      <h2 style="width: 100%">Для продовження ви повинні оплатити</h2>
                       <v-btn @click="goPay(props.item)">Оплатити</v-btn>
                     </li>
                   </ul>

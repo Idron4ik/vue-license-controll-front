@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="products-card__item links">
+      <slot></slot>  
       <ul class="links__container">
         <li v-for="(link, index) in links" :key="index" class="links__item">
           {{index+1}}.

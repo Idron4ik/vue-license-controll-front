@@ -59,7 +59,7 @@
               appendIcon="euro_symbol"
             />
              <TextInput
-              label="Номер вашоъ карти"
+              label="Номер вашої карти"
               :rules="textValidate"
               placeholder="credit-card"
               :value="card"

@@ -35,7 +35,7 @@
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <v-list-tile-title>Vue License Control</v-list-tile-title>
+            <v-list-tile-title>Захисник інфопродуктів</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>

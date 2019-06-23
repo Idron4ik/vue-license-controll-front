@@ -39,7 +39,7 @@
       >
 
         <template v-slot:item="props">
-          <v-flex xs12 sm6 md4 lg3>
+          <v-flex xs12 sm6 md4 lg4>
             <StatusCard
               :countStep="6"
               :activeStep="
@@ -156,7 +156,7 @@
                       :itemElem="props.item"
                     />
                     <li class="products-card__item">
-                      <h2>Очікується, поки клієн оплатить</h2>
+                      <h2>Очікується, поки клієнт оплатить</h2>
                     </li>
                   </ul>
                 </div>
@@ -170,7 +170,7 @@
                       :itemElem="props.item"
                     />
                     <li class="products-card__item">
-                      <h2>Клієн оплатив</h2>
+                      <h2>Клієнт оплатив</h2>
                     </li>
                     <li class="products-card__item user__documents">
                       <h3 class="title">Документи, що прикріпив користувач</h3>
